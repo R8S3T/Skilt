@@ -1,63 +1,16 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import Svg, { Polygon } from 'react-native-svg';
 
 const Hexagon = ({ size = 100, color = 'red', children }) => {
-    const styles = StyleSheet.create({
-        hexagon: {
-        width: size,
-        height: (size * 55) / 100, // Hexagon height is approximately 55% of the width
-        transform: [{ rotate: '90deg' }],
-        alignItems: 'center',
-        justifyContent: 'center',
-        },
-        hexagonInner: {
-        width: '100%',
-        height: '100%',
-        backgroundColor: color,
-        },
-        hexagonAfter: {
-        position: 'absolute',
-        bottom: -(size * 25) / 100, // Position adjusted based on size
-        left: 0,
-        width: 0,
-        height: 0,
-        borderStyle: 'solid',
-        borderLeftWidth: (size * 50) / 100, // Adjusted based on size
-        borderLeftColor: 'transparent',
-        borderRightWidth: (size * 50) / 100, // Adjusted based on size
-        borderRightColor: 'transparent',
-        borderTopWidth: (size * 25.5) / 100, // Adjusted based on size
-        borderTopColor: color,
-        },
-        hexagonBefore: {
-        position: 'absolute',
-        top: -(size * 25) / 100, // Position adjusted based on size
-        left: 0,
-        width: 0,
-        height: 0,
-        borderStyle: 'solid',
-        borderLeftWidth: (size * 50) / 100, // Adjusted based on size
-        borderLeftColor: 'transparent',
-        borderRightWidth: (size * 50) / 100, // Adjusted based on size
-        borderRightColor: 'transparent',
-        borderBottomWidth: (size * 25) / 100, // Adjusted based on size
-        borderBottomColor: color,
-        },
-        textContainer: {
-            transform: [{ rotate: '-90deg' }],
-            position: 'absolute',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-            height: '100%',
-        }
-    });
-
     return (
-        <View style={styles.hexagon}>
-            <View style={styles.hexagonInner} />
-            <View style={styles.hexagonBefore} />
-            <View style={styles.hexagonAfter} />
+        <View style={{ alignItems: 'center', justifyContent: 'center', width: size, height: size * 1.15 }}>
+            <Svg width={size} height={size * 1.15} viewBox="0 0 100 115">
+                <Polygon
+                    points="50,0 100,28.87 100,86.60 50,115 0,86.60 0,28.87"
+                    fill={color}
+                />
+            </Svg>
             <View style={styles.textContainer}>
                 {children}
             </View>
@@ -65,7 +18,18 @@ const Hexagon = ({ size = 100, color = 'red', children }) => {
     );
 };
 
+const styles = StyleSheet.create({
+    textContainer: {
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        height: '100%',
+    }
+});
+
 export default Hexagon;
+
 
 
 

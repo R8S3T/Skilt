@@ -3,10 +3,29 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import LearnScreen from "../screens/LearnScreen";
+import LearnAreas from "../screens/LearnAreas";
 import { Ionicons } from "@expo/vector-icons";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Tab = createBottomTabNavigator();
 
+const LearnStack = createNativeStackNavigator();
+
+const LearnStackNavigator = () => {
+    return (
+        <LearnStack.Navigator initialRouteName='LearnMain'>
+            <LearnStack.Screen
+                name='LearnMain'
+                component={LearnScreen}
+                options={{ headerShown: false }}
+            />
+            <LearnStack.Screen
+                name='LearnAreas'
+                component={LearnAreas}
+            />
+        </LearnStack.Navigator>
+    )
+}
 function BottomTabs() {
     return (
         <Tab.Navigator
@@ -37,7 +56,7 @@ function BottomTabs() {
         />
         <Tab.Screen
             name="Lernen"
-            component={LearnScreen}
+            component={LearnStackNavigator}
             options={{
             tabBarLabel: 'Lernen',
             tabBarIcon: ({ color, size }) => (

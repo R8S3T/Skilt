@@ -2,11 +2,12 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Hexagon from "../components/Hexagon";
 
-const  LearnScreen = () => {
+
+const  LearnScreen = ({ navigation }) => {
     return (
         <View style={styles.background}>
             <View style={styles.row}>
-                <TouchableOpacity style={{ margin: 10 }} onPress={() => console.log('Top Left Pressed')}>
+                <TouchableOpacity style={{ margin: 10 }} onPress={() => navigation.navigate('LearnAreas')}>
                     <Hexagon size={120} color="#b6e1e0">
                         <Text style={styles.hexagonText}>Lernfelder</Text>
                     </Hexagon>
@@ -20,7 +21,7 @@ const  LearnScreen = () => {
 
             <View style={styles.row}>
                 <TouchableOpacity style={{ margin: 5 }} onPress={() => console.log('Top Left Pressed')}>
-                    <Hexagon size={155} color="#9cd3d3">
+                    <Hexagon size={145} color="#9cd3d3">
                         <Text style={styles.hexagonText}>Prüfungsaufgaben</Text>
                     </Hexagon>
                 </TouchableOpacity>
