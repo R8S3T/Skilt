@@ -4,6 +4,7 @@ import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import LearnScreen from "../screens/LearnScreen";
 import LearnAreas from "../screens/LearnAreas";
+import Chapters from "../screens/Chapters";
 import { Ionicons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -22,6 +23,10 @@ const LearnStackNavigator = () => {
             <LearnStack.Screen
                 name='LearnAreas'
                 component={LearnAreas}
+            />
+            <LearnStack.Screen
+                name='Chapters'
+                component={Chapters}
             />
         </LearnStack.Navigator>
     )

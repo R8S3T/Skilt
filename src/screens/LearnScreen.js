@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Hexagon from "../components/Hexagon";
 
 
+
 const  LearnScreen = ({ navigation }) => {
     return (
         <View style={styles.background}>
