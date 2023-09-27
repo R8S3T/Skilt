@@ -32,12 +32,17 @@ const LearnAreas = ({ navigation }) => {
 
             <View style={styles.bottomRow}>
                 {item.items.slice(3).map(id => (
-                    <View key={id} style={styles.hexagonWrapperBottom} >
+                    <TouchableOpacity
+                        key={id}
+                        onPress={() => handleHexagonPress(id)}
+                        style={styles.hexagonWrapperBottom}
+                    >
                         <Hexagon size={60} color={item.color} />
                         <Text style={styles.hexagonText}>{id}</Text>
-                    </View>
+                    </TouchableOpacity>
                 ))}
             </View>
+
         </View>
     );
     return (

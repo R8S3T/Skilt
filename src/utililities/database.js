@@ -4,28 +4,28 @@ import * as FileSystem from 'expo-file-system';
 
 async function openDatabase(dbAsset) {
     try {
-        // Check and create the SQLite directory if not exists
-        if (!(await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite')).exists) {
-            await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'SQLite');
-        }
-
-        // Log asset resolution
-        const asset = Asset.fromModule(dbAsset);
-        console.log("Asset URI:", asset.uri);
-
-        // Try to download the database and log any information or errors
-        const downloadResult = await FileSystem.downloadAsync(
-            asset.uri,
-            FileSystem.documentDirectory + 'SQLite/skilt.db'
-        );
-        console.log("Download Result:", downloadResult);
-
-        // Check if the directory and file exist
-        const dirInfo = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite');
-        console.log("Directory Info:", dirInfo);
-
+        // Check if the SQLite database already exists
         const fileInfo = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/skilt.db');
-        console.log("File Info:", fileInfo);
+
+        if (!fileInfo.exists) {
+            // Check and create the SQLite directory if not exists
+            if (!(await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite')).exists) {
+                await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'SQLite');
+            }
+
+            // Log asset resolution
+            const asset = Asset.fromModule(dbAsset);
+            console.log("Asset URI:", asset.uri);
+
+            // Try to download the database and log any information or errors
+            const downloadResult = await FileSystem.downloadAsync(
+                asset.uri,
+                FileSystem.documentDirectory + 'SQLite/skilt.db'
+            );
+            console.log("Download Result:", downloadResult);
+        } else {
+            console.log("Database already exists, skipping download.");
+        }
 
         // Open the SQLite database
         return SQLite.openDatabase('skilt.db');
@@ -36,4 +36,5 @@ async function openDatabase(dbAsset) {
 }
 
 export { openDatabase };
+
 
