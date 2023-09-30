@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import Hexagon3D from "../components/Hexagon3D";
 import Hexagon from "../components/Hexagon";
 import { learnGroups } from "../components/learnGroups";
 
@@ -105,9 +106,12 @@ const styles = StyleSheet.create({
         position: 'absolute',
         color: '#f6f5f5',
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 23,
         alignSelf: 'center',
         top: '30%',
+        textShadowColor: 'rgba(0, 0, 0, 0.75)', // Black shadow with 75% opacity
+        textShadowOffset: { width: -1, height: 1 },
+        textShadowRadius: 2,
     }
 });
 

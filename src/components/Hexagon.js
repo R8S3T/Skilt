@@ -9,6 +9,9 @@ const Hexagon = ({ size = 100, color = 'red', children }) => {
                 <Polygon
                     points="50,0 100,28.87 100,86.60 50,115 0,86.60 0,28.87"
                     fill={color}
+                    stroke={color}
+                    strokeWidth='1.5'
+                    strokeLinejoin='round'
                 />
             </Svg>
             <View style={styles.textContainer}>
