@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
@@ -13,45 +13,50 @@ const Tab = createBottomTabNavigator();
 
 const LearnStack = createNativeStackNavigator();
 
-const LearnStackNavigator = () => {
+const LearnStackNavigator = ({ setHeaderTitle }) => {
     return (
         <LearnStack.Navigator initialRouteName='LearnMain'>
             <LearnStack.Screen
                 name='LearnMain'
                 component={LearnScreen}
+                listeners={{
+                    focus: () => setHeaderTitle('Lernen'),
+                }}
                 options={{ headerShown: false }}
             />
             <LearnStack.Screen
                 name='LearnAreas'
                 component={LearnAreas}
+                listeners={{
+                    focus: () => setHeaderTitle('Lernenfelder'),
+                }}
+                options={{ headerShown: false }}
             />
             <LearnStack.Screen
                 name='Chapters'
                 component={Chapters}
+                options={{ headerShown: false }}
             />
             <LearnStack.Screen
                 name='Subchapters'
                 component={Subchapters}
+                options={{ headerShown: false }}
             />
         </LearnStack.Navigator>
     )
 }
 function BottomTabs() {
+    const [headerTitle, setHeaderTitle] = useState('Lernen');
+
     return (
         <Tab.Navigator
             screenOptions={{
-                headerStyle: {
-                    backgroundColor: '#2b4353',
-                },
+                headerStyle: { backgroundColor: '#2b4353'},
                 headerTintColor: '#f6f5f5',
                 tabBarActiveTintColor: '#e8630a',
                 tabBarInactiveTintColor: 'gray',
-                tabBarStyle: [
-                    {
-                        display: 'flex'
-                    },
-                    null
-                ]
+                tabBarStyle: [{ display: 'flex' }, null],
+                headerTitle: headerTitle,
             }}
         >
         <Tab.Screen
@@ -66,14 +71,15 @@ function BottomTabs() {
         />
         <Tab.Screen
             name="Lernen"
-            component={LearnStackNavigator}
+            children={() => <LearnStackNavigator setHeaderTitle={setHeaderTitle} />}
             options={{
-            tabBarLabel: 'Lernen',
-            tabBarIcon: ({ color, size }) => (
-                <Ionicons name="book" size={size} color={color} />
-            )
+                tabBarLabel: 'Lernen',
+                tabBarIcon: ({ color, size }) => (
+                    <Ionicons name="book" size={size} color={color} />
+                )
             }}
         />
+
         <Tab.Screen
             name="Einstellungen"
             component={SettingsScreen}

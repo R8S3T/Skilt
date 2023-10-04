@@ -12,7 +12,7 @@ The project is currently in the development phase. Features, functionalities, an
 2. Expo CLI: While you can use npx to run Expo commands without a global installation, frequent users may prefer installing the CLI globally:
 `npm install -g expo-cli`
 3. Clone the repository and navigate to its directory.
-4. Run `npm install` followed by `npx expo start`.
+4. Run `npx expo start`.
 
 
 
