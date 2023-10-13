@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { openDatabase } from "../utililities/database";
 import { Button } from 'react-native';
 
@@ -47,7 +47,6 @@ const Chapters = ({ route, navigation }) => {
 
     return (
         <View style={styles.container} >
-            <Text>This is the detail page for Chapter {chapterId}</Text>
             {chapter && (
                 <>
                     <Text>{chapter.ChapterName}</Text>
@@ -58,13 +57,16 @@ const Chapters = ({ route, navigation }) => {
                 data={subchapters}
                 keyExtractor={(item) => item.SubchapterId.toString()}
                 renderItem={({ item }) => (
-                    <Text style={styles.subchapterTitle}
-                    onPress={() => navigation.navigate('SubchapterDetail', { subchapterId: item.SubchapterId })}>
+                    <TouchableOpacity
+                        style={styles.subchapterButton}
+                        onPress={() => navigation.navigate('Subchapters', { chapterId: item.SubchapterId })}
+                    >
+                    <Text style={styles.subchapterTitle}>
                         {item.SubchapterName}
                     </Text>
+                    </TouchableOpacity>
                 )}
                 />
-            <Button title='Start' onPress={() => navigation.navigate('Subchapters', { chapterId })} />
         </View>
     );
 };
@@ -75,11 +77,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    subchapterTitle: {
-        fontSize: 18,
-        color: 'blue',
-        textDecorationLine: 'underline',
+    subchapterButton: {
+        backgroundColor: '#d3d3d3',
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
         marginVertical: 5,
+        /* alignItems: 'center', */
+        justifyContent: 'center',
+    },
+    subchapterTitle: {
+        fontSize: 15,
+        color: 'black',
     }
 })
 export default Chapters;

@@ -2,45 +2,41 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from 'react-native';
 import { openDatabase } from "../utililities/database";
 import Swiper from "react-native-swiper";
-
-const dbAsset = require('../../assets/skilt.db');
+import useFetchData from "../utililities/useFetchData";
 
 const Subchapters = ({ route }) => {
+    console.log('Subchapters Component Rendered');
     const { chapterId } = route.params;
-    const [subchapters, setSubchapters] = useState([]);
+    const query = 'SELECT ContentData FROM SubchapterContent WHERE SubchapterId = ?';
+    const params = [chapterId];
 
-    const fetchData = async () => {
-        const db = await openDatabase(dbAsset);
-
-        db.transaction((tx) => {
-            tx.executeSql(
-                'SELECT SubchapterName, SubchapterContent FROM Subchapters WHERE ChapterId = ?',
-                [chapterId],
-                (_, {rows: { _array} }) => {
-                    setSubchapters(_array);
-                },
-                (_, error) => {
-                    console.error(`Error fetching data for chapter ${chapterId}:`, error);
-                }
-            );
-        });
-    };
+    const { data: contentData, error } = useFetchData(query, params);
 
     useEffect(() => {
-        fetchData();
-    }, [chapterId]);
+        console.log('Subchapters is re-rendering due to change in route.params:', route.params);
+    }, [route.params]); // Dependency array
+    
+    // Additional debug for data fetching
+    useEffect(() => {
+        console.log('Subchapters is re-rendering due to change in contentData or error:', { contentData, error });
+    }, [contentData, error]);
+    
+    if (error) {
+        return <Text>Errot fetching data.</Text>
+    }
 
     return (
         <Swiper style={styles.wrapper}>
-            {subchapters.map((subchapter, index) => (
+            {contentData.map((content, index) => (
                 <View key={index} style={styles.slide} >
-                    <Text>{subchapter.SubchapterName}</Text>
-                    <Text>{subchapter.SubchapterContent}</Text>
+                    <Text>{content.ContentData}</Text>
                 </View>
             ))}
         </Swiper>
     );
 };
+
+
 
 const styles = StyleSheet.create({
     wrapper: {},
