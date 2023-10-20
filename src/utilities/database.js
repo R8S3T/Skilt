@@ -2,7 +2,7 @@ import * as SQLite from 'expo-sqlite';
 import { Asset } from 'expo-asset';
 import * as FileSystem from 'expo-file-system';
 
-async function openDatabase(dbAsset) {
+export async function initializeDatabase(dbAsset) {
     try {
         // Check if the SQLite database already exists
         const fileInfo = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/skilt.db');
@@ -17,7 +17,7 @@ async function openDatabase(dbAsset) {
             const asset = Asset.fromModule(dbAsset);
             console.log("Asset URI:", asset.uri);
 
-            // Try to download the database and log any information or errors
+            // Download the database
             const downloadResult = await FileSystem.downloadAsync(
                 asset.uri,
                 FileSystem.documentDirectory + 'SQLite/skilt.db'
@@ -27,14 +27,14 @@ async function openDatabase(dbAsset) {
             console.log("Database already exists, skipping download.");
         }
 
-        // Open the SQLite database
-        return SQLite.openDatabase('skilt.db');
     } catch (error) {
         console.error("Error in openDatabase:", error);
-        throw error;  // If you want the error to propagate to the calling function
+        throw error;
     }
 }
 
-export { openDatabase };
+export function getDatabase() {
+    return SQLite.openDatabase('skilt.db');
+}
 
 

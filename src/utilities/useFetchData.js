@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { openDatabase } from "../utililities/database";
+import { initializeDatabase, getDatabase } from "../utilities/database";
+import { isEqual } from "lodash";
+
 
 const dbAsset = require('../../assets/skilt.db');
-
-const deepEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+initializeDatabase(dbAsset);
 
 const useFetchData = (query, params) => {
     const [data, setData] = useState([]);
@@ -12,7 +13,7 @@ const useFetchData = (query, params) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const db = await openDatabase(dbAsset);
+            const db = getDatabase();
 
             db.transaction((tx) => {
                 tx.executeSql(
@@ -20,7 +21,8 @@ const useFetchData = (query, params) => {
                     params,
                     (_, { rows: { _array} }) => {
                         console.log('Fetched data: ', _array);
-                        if (!deepEqual(data, _array)) {
+                        if (!isEqual(data, _array)) {
+                            console.log('Setting new data in useFetchData');
                             setData(_array);
                         }
                     },
@@ -36,7 +38,7 @@ const useFetchData = (query, params) => {
         console.log('And params: ', params);
 
         fetchData();
-    }, [query, params, data]);
+    }, [query, params]);
 
     return { data, error };
 };

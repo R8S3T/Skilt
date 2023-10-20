@@ -10,16 +10,20 @@ const MultipleChoice = ({ question, answers, correctAnswer, onAnswer }) => {
         onAnswer(isCorrect)
     };
 
+    if (!answers || !Array.isArray(answers)) {
+        return <Text>No answers provided</Text>;
+    }
+
     return (
         <View>
             <Text>{question}</Text>
             {answers.map((answer, index) => (
-            <Button
-                key={index}
-                title={answer}
-                onPress={() => handleAnswer(answer)}
-                color={selected === answer ? 'green' : 'blue'}
-            />
+                <Button
+                    key={index}
+                    title={answer}
+                    onPress={() => handleAnswer(answer)}
+                    color={selected === answer ? 'green' : 'blue'}
+                />
             ))}
         </View>
     );

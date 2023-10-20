@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { openDatabase } from "../utililities/database";
-import { Button } from 'react-native';
+import { getDatabase } from "../utilities/database";
 
 const dbAsset = require('../../assets/skilt.db');
 
@@ -12,15 +11,15 @@ const Chapters = ({ route, navigation }) => {
     const [subchapters, setSubchapters] = useState([]);
 
     const fetchData = async () => {
-        const db = await openDatabase(dbAsset);
+        const db = getDatabase(dbAsset);
 
         db.transaction((tx) => {
             tx.executeSql(
                 'SELECT ChapterName, ChapterIntro FROM Chapters WHERE ChapterId = ?',
                 [chapterId],
-                (_, {rows: { _array } }) => {
-                    if (_array.length > 0) {
-                        setChapter(_array[0]);
+                (_, result) => {
+                    if (result && result.rows && result.rows._array && result.rows._array.length > 0) {
+                        setChapter(result.rows._array[0]);
                     }
                 },
                 (_, error) => {
