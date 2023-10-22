@@ -8,13 +8,13 @@ const Subchapters = ({ route }) => {
     console.log('Subchapters Component Rendered');
     const chapterId = useMemo(() => route.params.chapterId, [route.params.chapterId]);
 
-    const { data: contentData, error } = useSubchapterData(1);
+    const { data: contentData, error } = useSubchapterData(chapterId);
 
     useEffect(() => {
         console.log('Subchapters is re-rendering due to change in route.params:', route.params);
     }, [route.params]); // Dependency array
 
-    // Additional debug for data fetching
+
     useEffect(() => {
         console.log('Subchapters is re-rendering due to change in contentData or error:', { contentData, error });
     }, [contentData, error]);
@@ -42,14 +42,15 @@ const Subchapters = ({ route }) => {
     }
 
     return (
-        <Swiper 
+        <Swiper
+        loop={false} 
         index={0} // Set initial slide to the first slide
         onIndexChanged={(index) => console.log(index)}
         activeDotColor='blue'
         dotColor='gray'
         style={styles.wrapper}
         >
-            {combinedData.map((item, index) => {
+            {combinedData.map((item) => {
                 const key = `${item.type}-${item.data.scContentId}`;
                 return (
                     <View key={key} style={styles.slide}>
