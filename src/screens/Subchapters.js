@@ -48,10 +48,12 @@ const Subchapters = ({ route }) => {
         onIndexChanged={(index) => console.log(index)}
         activeDotColor='blue'
         dotColor='gray'
-        style={styles.wrapper}
+        // By removing style from Swiper, the inidcator dots are working correctly again
+        /* style={styles.wrapper} */
         >
             {combinedData.map((item) => {
                 const key = `${item.type}-${item.data.scContentId}`;
+                console.log(key)
                 return (
                     <View key={key} style={styles.slide}>
                         {item.type === 'content' &&
