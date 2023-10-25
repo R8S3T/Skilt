@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import useFetchData from "../../utilities/useFetchData";
 
-const QuizScreen = ({ contentId }) => {
+const QuizScreen = ({ contentId, handleQuizResult, onContinue }) => {
     const query = 'SELECT * FROM Quiz WHERE ContentId =?';
     const { data, error } = useFetchData(query, [contentId]);
 
@@ -46,14 +46,16 @@ const QuizScreen = ({ contentId }) => {
         console.log('Selected option number:', optionNumber);
         console.log('Correct answer number:', quiz.Answer);
         const correctOptionNumber = getOptionNumber(quiz.Answer);
+        const correctAnswerSelected = optionNumber === correctOptionNumber;
         setSelectedOption(optionNumber);
-        setIsCorrect(optionNumber === correctOptionNumber);
+        setIsCorrect(correctAnswerSelected);
+        handleQuizResult && handleQuizResult(optionNumber === correctOptionNumber);
     }
 
     const renderContinueButton = () => {
         if (isCorrect) {
             return (
-                <Button title='Continue' onPress={() => {/*Navigate to next chapter */}} />
+                <Button title='Continue' onPress={onContinue} />
             )
         }
     }
