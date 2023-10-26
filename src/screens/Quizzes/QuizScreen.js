@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import useFetchData from "../../utilities/useFetchData";
+import { PanGestureHandler } from "react-native-gesture-handler";
 
 const QuizScreen = ({ contentId, handleQuizResult, onContinue }) => {
     const query = 'SELECT * FROM Quiz WHERE ContentId =?';
@@ -66,7 +67,18 @@ const QuizScreen = ({ contentId, handleQuizResult, onContinue }) => {
         }
     }
 
+    const onSwipe = ({ nativeEvent }) => {
+        // Detect swipe to the right
+        if (nativeEvent.velocityX > 0) {
+            // Check if user got answer right
+            if (isCorrect) {
+                onContinue();
+            }
+        }
+    };
+
     return (
+        <PanGestureHandler onGestureEvent={onSwipe}>
         <View style={styles.container}>
             <Text style={styles.quizText}>{quiz.Question}</Text>
             {['Option1', 'Option2', 'Option3', 'Option4'].map((option, index) => {
@@ -86,6 +98,7 @@ const QuizScreen = ({ contentId, handleQuizResult, onContinue }) => {
             {renderFeedbackText()}
             {renderContinueButton()}
         </View>
+        </PanGestureHandler>
     );
 }
 

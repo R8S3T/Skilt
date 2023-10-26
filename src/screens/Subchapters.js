@@ -9,16 +9,12 @@ const Subchapters = ({ route }) => {
     const chapterId = useMemo(() => route.params.chapterId, [route.params.chapterId]);
 
     const { data: contentData, error } = useSubchapterData(chapterId);
-
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [lastCorrectIndex, setLastCorrectIndex] = useState(0);
+    const [currentSlideType, setCurrentSlideType] = useState(null);
     const swiperRef = useRef(null);
-
 
     useEffect(() => {
         console.log('Subchapters is re-rendering due to change in route.params:', route.params);
     }, [route.params]); // Dependency array
-
 
     useEffect(() => {
         console.log('Subchapters is re-rendering due to change in contentData or error:', { contentData, error });
@@ -49,6 +45,10 @@ const Subchapters = ({ route }) => {
             index={0} // Set initial slide to the first slide
             activeDotColor='blue'
             dotColor='gray'
+            onIndexChanged={(index) => {
+                setCurrentSlideType(combinedData[index].type);
+            }}
+            scrollEnabled={currentSlideType !== 'quiz'}
             // By removing style from Swiper, the inidcator dots are working correctly again
             // style={styles.wrapper}
         >
