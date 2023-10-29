@@ -1,50 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
-import LearnScreen from "../screens/LearnScreen";
-import LearnAreas from "../screens/LearnAreas";
-import Chapters from "../screens/Chapters";
-import Subchapters from "../screens/Subchapters";
 import { Ionicons } from "@expo/vector-icons";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import LearnStackNavigator from "./LearnStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
-const LearnStack = createNativeStackNavigator();
-
-const LearnStackNavigator = ({ setHeaderTitle }) => {
-    return (
-        <LearnStack.Navigator initialRouteName='LearnMain'>
-            <LearnStack.Screen
-                name='LearnMain'
-                component={LearnScreen}
-                listeners={{
-                    focus: () => setHeaderTitle('Lernen'),
-                }}
-                options={{ headerShown: false }}
-            />
-            <LearnStack.Screen
-                name='LearnAreas'
-                component={LearnAreas}
-                listeners={{
-                    focus: () => setHeaderTitle('Lernenfelder'),
-                }}
-                options={{ headerShown: false }}
-            />
-            <LearnStack.Screen
-                name='Chapters'
-                component={Chapters}
-                options={{ headerShown: false }}
-            />
-            <LearnStack.Screen
-                name='Subchapters'
-                component={Subchapters}
-                options={{ headerShown: false }}
-            />
-        </LearnStack.Navigator>
-    )
-}
 function BottomTabs() {
     const [headerTitle, setHeaderTitle] = useState('Lernen');
 
@@ -79,7 +41,6 @@ function BottomTabs() {
                 )
             }}
         />
-
         <Tab.Screen
             name="Einstellungen"
             component={SettingsScreen}

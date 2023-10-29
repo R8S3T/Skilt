@@ -16,9 +16,6 @@ const useFetchData = (query, params) => {
             const db = getDatabase();
 
             db.transaction((tx) => {
-                console.log('Executing query:', query);  // Log query
-                console.log('With params:', params);  // Log params
-
                 tx.executeSql(
                     query,
                     params,
@@ -30,15 +27,13 @@ const useFetchData = (query, params) => {
                         }
                     },
                     (_, err) => {
-                        console.error('Error fetching data:', err);
-                        setError(err);
+                        if (error != err) {
+                            setError(err);
+                        }
                     }
                 );
             });
         };
-
-        console.log('Fetching Data with query: ', query);
-        console.log('And params: ', params);
 
         fetchData();
     }, [query, params]);
