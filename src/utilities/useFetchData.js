@@ -20,9 +20,7 @@ const useFetchData = (query, params) => {
                     query,
                     params,
                     (_, { rows: { _array} }) => {
-                        console.log('Fetched data: ', _array);
                         if (!isEqual(data, _array)) {
-                            console.log('Setting new data in useFetchData');
                             setData(_array);
                         }
                     },

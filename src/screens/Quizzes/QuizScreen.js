@@ -44,8 +44,6 @@ const QuizScreen = ({ contentId, handleQuizResult, onContinue }) => {
     }
 
     const handleAnswer = (optionNumber) => {
-/*         console.log('Selected option number:', optionNumber);
-        console.log('Correct answer number:', quiz.Answer); */
         const correctOptionNumber = getOptionNumber(quiz.Answer);
         const correctAnswerSelected = optionNumber === correctOptionNumber;
         setSelectedOption(optionNumber);

@@ -15,20 +15,17 @@ export async function initializeDatabase(dbAsset) {
 
             // Log asset resolution
             const asset = Asset.fromModule(dbAsset);
-            console.log("Asset URI:", asset.uri);
 
             // Download the database
             const downloadResult = await FileSystem.downloadAsync(
                 asset.uri,
                 FileSystem.documentDirectory + 'SQLite/skilt.db'
             );
-            console.log("Download Result:", downloadResult);
         } else {
             console.log("Database already exists, skipping download.");
         }
 
     } catch (error) {
-        console.error("Error in openDatabase:", error);
         throw error;
     }
 }

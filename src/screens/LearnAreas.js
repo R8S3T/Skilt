@@ -13,7 +13,6 @@ const LearnAreas = ({ navigation }) => {
     }, [navigation]);
 
     const handleHexagonPress = (id) => {
-        console.log(`Chapter with ID ${id} pressed`);
         navigation.navigate('Chapters', { chapterId: id })
     };
 

@@ -2,7 +2,6 @@ import { useEffect, useMemo } from "react";
 import useFetchData from "./useFetchData";
 
 const useSubchapterData = (chapterId) => {
-    console.log('Input chapterId:', chapterId);
     const query = useMemo(() => `
         SELECT SubchapterContent.ContentId AS scContentId, ContentData, q.QuizId, q.ContentId AS quizContentId, q.Question, q.Option1, q.Option2, q.Option3, q.Option4
         FROM SubchapterContent
@@ -17,9 +16,8 @@ const useSubchapterData = (chapterId) => {
     const { data, error } = useFetchData(query, params);
     useEffect(() => {
         if(error) {
-            console.log('Error:', error);
-        }else {
-            console.log('Fetched data: ', data)
+        } else {
+
         }
     }, [data, error])
     return { data, error };
