@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import useFetchData from "../../utilities/useFetchData";
 import MultipleChoice from "./MultipleChoice";
+import FillInTheBlanks from "./FillInTheBlanks";
 
 const QuizScreen = ({ contentId, onContinue }) => {
     const query = 'SELECT * FROM Quiz WHERE ContentId =?';
@@ -17,18 +18,21 @@ const QuizScreen = ({ contentId, onContinue }) => {
 
     const quiz = data[0];
 
-    return (
-        <View style={StyleSheet.container}>
-            <MultipleChoice quiz={quiz} onContinue={onContinue}/>
-        </View>
-    );
-}
+    if (quiz.type === 'multiple_choice') {
+        return (
+            <View style={styles.container}>
+                <MultipleChoice quiz={quiz} onContinue={onContinue}/>
+            </View>
+        );
+    } else if (quiz.type === 'fill_in_the_blanks') {
+        return (
+            <View style={styles.container}>
+                <FillInTheBlanks quiz={quiz} onContinue={onContinue}/>
+            </View>
+        );
+    }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f2f2f2',
-    },
-});
+    return <Text>Unsupported quiz type.</Text>
+}
 
 export default QuizScreen;
