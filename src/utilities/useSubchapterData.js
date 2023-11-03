@@ -14,13 +14,23 @@ const useSubchapterData = (chapterId) => {
     //The first [chapterId] is defining what is being memoized, and the second [chapterId] is defining when to recompute the memoized value.
     const params = useMemo(() => [chapterId], [chapterId]);
     const { data, error } = useFetchData(query, params);
-    useEffect(() => {
-        if(error) {
-        } else {
 
+    const processedData = data.map(item => {
+        if (item.QuizId) {
+            const optionsQuery = `
+                SELECT OptionText
+                FROM MultipleChoiceOptions
+                WHERE QuizId = ?
+                ORDER BY OptionId ASC
+            `;
+            const optionsParams = [item.QuizId];
+            const optionsData = useFetchData(optionsQuery, optionsParams).data;
+
+            item.options = optionsData.map(opt => opt.OptionText);
         }
-    }, [data, error])
-    return { data, error };
+        return item;
+    });
+    return { data: processedData, error };
 };
 
 export default useSubchapterData;

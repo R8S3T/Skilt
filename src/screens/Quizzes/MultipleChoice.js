@@ -37,7 +37,7 @@ const MultipleChoice = ({ quiz, onContinue }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.quizText}>{quiz.Question}</Text>
-            {['Option1', 'Option2', 'Option3', 'Option4'].map((option, index) => {
+            {quiz.options.map((optionText, index) => {
                 const buttonStyle = getButtonStyle(index);
 
                 return (

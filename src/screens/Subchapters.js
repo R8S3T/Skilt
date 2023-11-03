@@ -21,6 +21,13 @@ const Subchapters = ({ route }) => {
         return acc;
     }, []), [contentData]);
 
+    useEffect(() => {
+        if (error) {
+            console.error(error);
+            // Handle the error - maybe set some state to show in the UI
+        }
+    }, [error]);
+
     if (error) {
         return <Text>Error fetching data.</Text>
     }

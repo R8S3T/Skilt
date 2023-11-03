@@ -10,7 +10,6 @@ const useFetchData = (query, params) => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
 
-
     useEffect(() => {
         const fetchData = async () => {
             const db = getDatabase();
@@ -25,6 +24,7 @@ const useFetchData = (query, params) => {
                         }
                     },
                     (_, err) => {
+                        console.log(err);
                         if (error != err) {
                             setError(err);
                         }
