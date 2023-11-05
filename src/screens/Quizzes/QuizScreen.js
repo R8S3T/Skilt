@@ -17,14 +17,18 @@ const QuizScreen = ({ contentId, onContinue }) => {
     }
 
     const quiz = data[0];
+    console.log('Quiz Data:', quiz);
 
-    if (quiz.type === 'multiple_choice') {
+    if (!quiz) {
+        return <Text>Quiz data is not available.</Text>;
+      }
+    if (quiz.Type === 'multiple_choice') {
         return (
             <View style={styles.container}>
                 <MultipleChoice quiz={quiz} onContinue={onContinue}/>
             </View>
         );
-    } else if (quiz.type === 'fill_in_the_blanks') {
+    } else if (quiz.Type === 'fill_in_the_blanks') {
         return (
             <View style={styles.container}>
                 <FillInTheBlanks quiz={quiz} onContinue={onContinue}/>
@@ -34,5 +38,17 @@ const QuizScreen = ({ contentId, onContinue }) => {
 
     return <Text>Unsupported quiz type.</Text>
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+        backgroundColor: '#fff', // or any color that suits your app's theme
+    },
+    // ... add more styles as needed
+});
+
 
 export default QuizScreen;

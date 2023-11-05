@@ -2,51 +2,41 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 
 const MultipleChoice = ({ quiz, onContinue }) => {
+    console.log(quiz.options); 
     const [selectedOption, setSelectedOption] = useState(null);
     const [isCorrect, setIsCorrect] = useState(null);
 
-    const handleAnswer = (optionNumber) => {
-        const correctOptionNumber = getOptionNumber(quiz.Answer);
-        const correctAnswerSelected = optionNumber === correctOptionNumber;
-        setSelectedOption(optionNumber);
+    const handleAnswer = (option) => {
+        const correctAnswerSelected = quiz.Answer === option;
+        setSelectedOption(option);
         setIsCorrect(correctAnswerSelected);
     }
 
-    const getButtonStyle = (index) => {
+    const getButtonStyle = (option) => {
         if (selectedOption === null) {
             return styles.button;
         }
-        if (selectedOption === (index + 1)) {
-            return (selectedOption === getOptionNumber(quiz.Answer)) ? styles.correctButton : styles.wrongButton;
+        if (option === quiz.Answer) {
+            return styles.correctButton;
+        } else if (option === selectedOption) {
+            return styles.wrongButton;
         }
         return styles.button;
-    }
-
-    const optionMapping = {
-        'Option1': 1,
-        'Option2': 2,
-        'Option3': 3,
-        'Option4': 4
-    }
-
-    const getOptionNumber = (answerText) => {
-        const optionKey = Object.keys(quiz).find(key => quiz[key] === answerText);
-        return optionMapping[optionKey];
     }
 
     return (
         <View style={styles.container}>
             <Text style={styles.quizText}>{quiz.Question}</Text>
-            {quiz.options.map((optionText, index) => {
-                const buttonStyle = getButtonStyle(index);
+            {quiz.options.map((option, index) => {
+                const buttonStyle = getButtonStyle(option);
 
                 return (
                     <TouchableOpacity
                         key={index}
-                        onPress={() => handleAnswer(index +1)}
+                        onPress={() => handleAnswer(option)}
                         style={buttonStyle}
                     >
-                        <Text style={styles.buttonText}>{quiz[option]}</Text>
+                        <Text style={styles.buttonText}>{option}</Text>
                     </TouchableOpacity>
                 );
             })}
