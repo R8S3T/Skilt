@@ -3,6 +3,8 @@ import { View, Text, StyleSheet } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import useSubchapterData from "../utilities/useSubchapterData";
 import QuizScreen from "./Quizzes/QuizScreen";
+import { getExplanation, getWordsWithExplanations } from "../utilities/explanationHelper";
+import ContentWithExplanations from "../components/ContentWithExplanations";
 
 const Subchapters = ({ route }) => {
     const chapterId = useMemo(() => route.params.chapterId, [route.params.chapterId]);
@@ -40,14 +42,19 @@ const Subchapters = ({ route }) => {
             onPageSelected={e => {
                 const index = e.nativeEvent.position;
                 setCurrentIndex(index);
-                setCurrentSlideType(combinedData[index].type);
+                setCurrentSlideType(combinedData[index].Type);
             }}
         >
             {(combinedData || []).map((item, index) => {
                 const key = `${item.type}-${item.data.scContentId}`;
                 return (
                     <View key={key} style={styles.slide}>
-                        {item.type === 'content' && <Text>{item.data.ContentData}</Text>}
+                        {item.type === 'content' && (
+                            <ContentWithExplanations
+                                content={item.data.ContentData}
+                                contentId={item.data.scContentId}
+                            />
+                        )}
                         {item.type === 'quiz' && <QuizScreen contentId={item.data.scContentId}
                         onContinue={() => {
                             const nextPage = index + 1;

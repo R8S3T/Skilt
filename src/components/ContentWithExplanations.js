@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
+import { getWordsWithExplanations, getExplanation } from '../utilities/explanationHelper';
 
 const ExplanationModal = ({ visible, explanation, onClose }) => {
     return (
@@ -9,10 +10,10 @@ const ExplanationModal = ({ visible, explanation, onClose }) => {
             visible={visible}
             onRequestClose={onClose}
         >
-            <View style={StyleSheet.modalView}>
+            <View style={styles.modalView}>
                 <Text>{explanation}</Text>
                 <TouchableOpacity onPress={onClose}>
-                    <Text style={StyleSheet.closeButton}>Close</Text>
+                    <Text style={styles.closeButton}>Close</Text>
                 </TouchableOpacity>
             </View>
         </Modal>
@@ -25,8 +26,8 @@ const ContentWithExplanations = ({ content, contentId }) => {
     const [wordsWithExplanations, setWordsWithExplanations] = useState([]);
 
     useEffect(() => {
-        // Fetch words with explanation for current content
-        const getExplanation = async () => {
+        // Corrected function call here
+        const fetchWordsWithExplanations = async () => {
             const words = await getWordsWithExplanations(contentId);
             setWordsWithExplanations(words);
         };
@@ -34,29 +35,38 @@ const ContentWithExplanations = ({ content, contentId }) => {
     }, [contentId]);
 
     const handleWordPress = async (word) => {
-        const explanation = await getExplanation(word);
-        setSelectedExplanation(explanation);
-        setModalVisible(true);
+        const explanation = await getExplanation(word, contentId);
+        if (explanation) { // Only show the modal if there is an explanation
+            setSelectedExplanation(explanation);
+            setModalVisible(true);
+        }
     };
 
     const renderContentWithLinks = () => {
-        return content.split(' '),map((word, index) => {
-            if (wordsWithExplanations.includes(word)) {
-                return (
-                    <Text key={index}>
-                        <TouchableOpacity onPress={() => handleWordPress(word)}>
-                            {word}<Text style={StyleSheet.explanationMarker}>?</Text>
-                        </TouchableOpacity>{' '}
-                    </Text>
-                );
-            }
-            return <Text key={index}>{word}</Text>;
-        });
+        return (
+            <Text>
+                {content.split(' ').map((word, index) => {
+                    const isWordWithExplanation = wordsWithExplanations.includes(word);
+                    return (
+                        <React.Fragment key={index}>
+                            {isWordWithExplanation ? (
+                                <TouchableOpacity onPress={() => handleWordPress(word)}>
+                                    <Text style={styles.explanationMarker}>{word}</Text>
+                                </TouchableOpacity>
+                            ) : (
+                                <Text>{word}</Text>
+                            )}
+                            {' '}
+                        </React.Fragment>
+                    )
+                })}
+            </Text>
+        )
     };
 
     return (
         <View>
-            <Text style={StyleSheet.contentText}>
+            <Text style={styles.contentText}>
                 {renderContentWithLinks()}
             </Text>
             <ExplanationModal
