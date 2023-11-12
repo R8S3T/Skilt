@@ -1,20 +1,18 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import Logo from '../../assets/Images/skilt_logo.png';
 
 const StartScreen = ({ navigation }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
             navigation.navigate('MainApp');
-        }, 2000);
+        }, 3000);
         return () => clearTimeout(timer);
     }, [navigation]);
 
     return (
         <View style={styles.container}>
-        <Text>Starting Screen</Text>
-        <Text>Animated Logo coming</Text>
-        <Text>Welcome to Skilt</Text>
-        <Text>Starting Screen disappears after 2 -3 seconds</Text>
+            <Image  source={Logo} style={styles.logo}/>
         </View>
     );
 };
@@ -22,10 +20,15 @@ const StartScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#2b4353',
         alignItems: 'center',
         justifyContent: 'center',
         },
+        logo: {
+            width: 200,
+            height: 200,
+            resizeMode: 'contain',
+        }
     });
 
 export default StartScreen;
