@@ -2,12 +2,18 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, Image } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import slides from '../utilities/homeScreenSlides';
+import LottieView from "lottie-react-native";
 
 
 const renderSlide = ({ item }) => {
     return (
         <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
-            <Image source={item.image} style={styles.image} />
+            <LottieView
+                source={item.animation}
+                autoPlay
+                loop
+                style={styles.animation}
+            />
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.text}>{item.text}</Text>
         </View>
@@ -60,10 +66,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 20,
     },
-    image: {
+    animation: {
         width: 150,
         height: 150,
-        resizeMode: 'contain',
+        alignSelf: 'center',
     },
     title: {
         fontSize: 18,

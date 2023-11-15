@@ -1,35 +1,33 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Hexagon from "../components/Hexagon";
-
 
 
 const  LearnScreen = ({ navigation }) => {
     return (
         <View style={styles.background}>
             <View style={styles.row}>
-                <TouchableOpacity style={{ margin: 10 }} onPress={() => navigation.navigate('LearnAreas')}>
-                    <Hexagon size={120} color="#b6e1e0">
-                        <Text style={styles.hexagonText}>Lernfelder</Text>
-                    </Hexagon>
+                <TouchableOpacity style={styles.learnAreasButton} onPress={() => navigation.navigate('LearnAreas')}>
+                    <View style={styles.buttonContent}>
+                        <Text style={styles.buttonText}>Lernfelder</Text>
+                    </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ margin: 30 }} onPress={() => console.log('Top Left Pressed')}>
-                    <Hexagon size={150} color="#9cd3d3">
-                        <Text style={styles.hexagonText}>Übungen</Text>
-                    </Hexagon>
+                <TouchableOpacity style={styles.learnAreasButton} onPress={() => console.log('Top Left Pressed')}>
+                    <View style={styles.buttonContent}>
+                        <Text style={styles.buttonText}>Übungen</Text>
+                    </View>
                 </TouchableOpacity>
             </View>
 
             <View style={styles.row}>
-                <TouchableOpacity style={{ margin: 5 }} onPress={() => console.log('Top Left Pressed')}>
-                    <Hexagon size={145} color="#9cd3d3">
-                        <Text style={styles.hexagonText}>Prüfungsaufgaben</Text>
-                    </Hexagon>
+                <TouchableOpacity style={styles.learnAreasButton} onPress={() => console.log('Top Left Pressed')}>
+                    <View style={styles.buttonContent}>
+                        <Text style={styles.buttonText}>Prüfungsaufgaben</Text>
+                    </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ margin: 40 }} onPress={() => console.log('Top Left Pressed')}>
-                    <Hexagon size={130} color="#b6e1e0">
-                        <Text style={styles.hexagonText}>Werkzeugkunde</Text>
-                    </Hexagon>
+                <TouchableOpacity style={styles.learnAreasButton} onPress={() => console.log('Top Left Pressed')}>
+                    <View style={styles.buttonContent}>
+                        <Text style={styles.buttonText}>Werkzeugkunde</Text>
+                    </View>
                 </TouchableOpacity>
             </View>
         </View>
@@ -37,6 +35,32 @@ const  LearnScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    background: {
+        backgroundColor: '#f6f5f5',
+        flex: 1,
+        justifyContent: 'center',
+    },
+    learnAreasButton: {
+        backgroundColor: '#9cd3d3',
+        borderRadius: 20,
+        padding: 20,
+        margin: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    buttonContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
     hexagonText: {
         textAlign: 'center',
         color: 'white', // or any other color you prefer
@@ -44,11 +68,6 @@ const styles = StyleSheet.create({
         marginBottom: 'auto', 
         marginLeft: 'auto', 
         marginRight: 'auto'
-    },
-    background: {
-        backgroundColor: '#f6f5f5',
-        flex: 1,
-        justifyContent: 'center',
     },
     row: {
         flexDirection: 'row',
