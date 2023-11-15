@@ -2,23 +2,18 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, Image } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import slides from '../utilities/homeScreenSlides';
-import LottieView from "lottie-react-native";
+import LottieAnimation from './LottieAnimation';
 
 
-const renderSlide = ({ item }) => {
+const Slide = ({ item }) => {
     return (
         <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
-            <LottieView
-                source={item.animation}
-                autoPlay
-                loop
-                style={styles.animation}
-            />
+            <LottieAnimation source={item.animation} style={styles.animation} />
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.text}>{item.text}</Text>
         </View>
-        )
-    }
+    );
+};
 
 const HomeScreen = () => {
     const [showSlides, setShowSlides] = useState(true);
@@ -39,7 +34,7 @@ const HomeScreen = () => {
         <View style={styles.background}>
             {showSlides ? (
                 <AppIntroSlider
-                    renderItem={renderSlide}
+                    renderItem={({ item }) => <Slide item={item} />}
                     data={slides}
                     onDone={handleDone}
                     renderDoneButton={renderDoneButton}
