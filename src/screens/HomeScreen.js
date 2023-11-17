@@ -1,24 +1,14 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import slides from '../utilities/homeScreenSlides';
-import LottieAnimation from './LottieAnimation';
-
-
-const Slide = ({ item }) => {
-    return (
-        <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
-            <LottieAnimation source={item.animation} style={styles.animation} />
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.text}>{item.text}</Text>
-        </View>
-    );
-};
+import { slides, renderSlideItem } from '../utilities/homeScreenSlides';
 
 const HomeScreen = () => {
     const [showSlides, setShowSlides] = useState(true);
+    const [name, setName] = useState('');
 
     const handleDone = () => {
+        console.log(name);
         setShowSlides(false);
     };
 
@@ -29,12 +19,13 @@ const HomeScreen = () => {
             </View>
         );
     };
+    console.log(slides);
 
     return (
         <View style={styles.background}>
             {showSlides ? (
                 <AppIntroSlider
-                    renderItem={({ item }) => <Slide item={item} />}
+                    renderItem={({ item }) => renderSlideItem(item, setName, styles)}
                     data={slides}
                     onDone={handleDone}
                     renderDoneButton={renderDoneButton}
