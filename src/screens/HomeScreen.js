@@ -6,9 +6,11 @@ import { slides, renderSlideItem } from '../utilities/homeScreenSlides';
 const HomeScreen = () => {
     const [showSlides, setShowSlides] = useState(true);
     const [name, setName] = useState('');
+    const [animationKey, setAnimationKey] = useState(0);
+    const [playAnimation, setPlayAnimation] = useState(false);
+
 
     const handleDone = () => {
-        console.log(name);
         setShowSlides(false);
     };
 
@@ -19,14 +21,22 @@ const HomeScreen = () => {
             </View>
         );
     };
-    console.log(slides);
+
+    const handleSlideChange = (index) => {
+        if (index === 3) { // For the fourth slide
+            setPlayAnimation(true);
+        } else {
+            setPlayAnimation(false);
+        }
+    };
 
     return (
         <View style={styles.background}>
             {showSlides ? (
                 <AppIntroSlider
-                    renderItem={({ item }) => renderSlideItem(item, setName, styles)}
+                    renderItem={({ item }) => renderSlideItem(item, setName, animationKey, playAnimation)}
                     data={slides}
+                    onSlideChange={handleSlideChange}
                     onDone={handleDone}
                     renderDoneButton={renderDoneButton}
                     dotStyle={{ backgroundColor: 'gray' }}
@@ -80,7 +90,7 @@ const styles = StyleSheet.create({
     homeText: {
         fontSize: 24,
         textAlign: 'center',
-    }
+    },
 });
 
 

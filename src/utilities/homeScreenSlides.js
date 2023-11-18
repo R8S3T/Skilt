@@ -36,35 +36,42 @@ const slides = [
     },
 ];
 
-function renderSlideItem(item, setName) {
-    if (item.renderInputField) {
-        return (
-            <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
-                <LottieView
-                    source={item.animation}
-                    style={styles.animation}
-                    autoPlay
-                    loop
-                />
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.text}>{item.text}</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder='Dein Name'
-                    onChangeText={text => setName(text)}
-                />
-            </View>
-        );
-    } else {
-        return (
-            <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
-                <LottieView source={item.animation} style={styles.animation} />
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.text}>{item.text}</Text>
-            </View>
-        );
-    }
+function renderSlideItem(item, setName, animationKey, playAnimation) {
+    // Set different styles for User Slide Animation
+    const userSlide = item.key === 'four';
+
+    const animationStyle = userSlide ? styles.userSlideAnimation : styles.animation;
+    // Plays animation only once
+    const animationProps = {
+        autoPlay: userSlide ? playAnimation : true,
+        loop: userSlide ? false : true,
+        speed: userSlide ? 0.8 : 1
+    };
+
+    return (
+        <View style={[styles.slide, { backgroundColor: item.backgroundColor }]}>
+            <LottieView
+                source={item.animation}
+                style={animationStyle}
+                {...animationProps}
+                key={animationKey}
+            />
+            <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.text}>{item.text}</Text>
+            {item.renderInputField && (
+    <TextInput
+    style={styles.input}
+    placeholder='Dein Name'
+    onChangeText={(text) => {
+        setName(text);
+        console.log('Entered name:', text);
+    }}
+/>
+            )}
+        </View>
+    );
 }
+
 
 const styles = StyleSheet.create({
     slide: {
@@ -96,7 +103,13 @@ const styles = StyleSheet.create({
         marginTop: 20,
         width: '80%',
         alignSelf: 'center',
-    }
+    },
+    userSlideAnimation: {
+        width: 110,
+        height: 110,
+        alignSelf: 'center',
+        marginBottom: 20,
+    },
 });
 
 export { slides, renderSlideItem };
