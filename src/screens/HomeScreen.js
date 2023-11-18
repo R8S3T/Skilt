@@ -1,16 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { slides, renderSlideItem } from '../utilities/homeScreenSlides';
+import { fetchData, saveUserName } from "../utilities/fetchData";
 
 const HomeScreen = () => {
     const [showSlides, setShowSlides] = useState(true);
     const [name, setName] = useState('');
     const [animationKey, setAnimationKey] = useState(0);
     const [playAnimation, setPlayAnimation] = useState(false);
+    const [greetingName, setGreetingName] = useState('');
 
-
-    const handleDone = () => {
+    const handleDone = async () => {
+        if (name) {
+            try {
+                await saveUserName(name);
+                console.log('User name saved successfully');
+            } catch (error) {
+                console.log('Error saving user name:', error);
+            }
+        }
         setShowSlides(false);
     };
 
@@ -30,6 +39,23 @@ const HomeScreen = () => {
         }
     };
 
+    useEffect(() => {
+        if (!showSlides) {
+            // Fetch latest user name from database
+            const fetchUserName = async () => {
+                try {
+                    const result = await fetchData('SELECT Name FROM User ORDER BY ID DESC LIMIT 1', []);
+                    if (result.length > 0) {
+                        setGreetingName(result[0].Name);
+                    }
+                } catch (error) {
+                    console.error('error fetching latest user name:', error);
+                }
+            };
+            fetchUserName();
+        }
+    }, [showSlides]);
+
     return (
         <View style={styles.background}>
             {showSlides ? (
@@ -43,7 +69,7 @@ const HomeScreen = () => {
                     activeDotStyle={{ backgroundColor: '#e8630a' }}
                 />
             ) : (
-                <Text style={styles.homeText}>HomeScreen</Text>
+                <Text style={styles.homeText}>Hallo, {greetingName}</Text>
             )}
 
         </View>

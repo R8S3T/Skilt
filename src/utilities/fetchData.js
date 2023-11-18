@@ -17,3 +17,14 @@ export const fetchData = async (query, params) => {
         });
     });
 };
+
+export const saveUserName = async (name) => {
+    const query = 'INSERT INTO User (Name) VALUES (?)';
+    try {
+        await fetchData(query, [name]);
+        console.log('Name saved:', name);
+    } catch (error) {
+        console.error('Error saving name:', error);
+        throw error;
+    }
+};

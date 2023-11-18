@@ -15,7 +15,7 @@ const slides = [
     {
         key: 'two',
         animation: require('../../assets/Animations/knowledge_donut_animation.json'),
-        title: 'Lernen mit kleinen Wissens-Häppchen',
+        title: 'Lernen in kleinen Wissens-Häppchen',
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Amet nisl suscipit adipiscing bibendum est. ',
         backgroundColor: '#f6f5f5',
     },
@@ -60,14 +60,14 @@ function renderSlideItem(item, setName, animationKey, playAnimation) {
             <Text style={styles.text}>{item.text}</Text>
             {item.renderInputField && (
     <TextInput
-    style={styles.input}
-    placeholder='Dein Name'
-    onChangeText={(text) => {
-        setName(text);
-        console.log('Entered name:', text);
-    }}
-/>
-            )}
+        style={styles.input}
+        placeholder='Dein Name'
+        onChangeText={(text) => {
+            setName(text);
+            console.log('Entered name:', text);
+        }}
+    />
+    )}
         </View>
     );
 }
