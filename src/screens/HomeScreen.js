@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Keyboard } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { slides, renderSlideItem } from '../utilities/homeScreenSlides';
 import { fetchData, saveUserName } from "../utilities/fetchData";
@@ -10,6 +10,18 @@ const HomeScreen = () => {
     const [animationKey, setAnimationKey] = useState(0);
     const [playAnimation, setPlayAnimation] = useState(false);
     const [greetingName, setGreetingName] = useState('');
+    const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
+        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
+
+        return () => {
+            keyboardDidShowListener.remove();
+            keyboardDidHideListener.remove();
+        };
+    }, []);
 
     const handleDone = async () => {
         if (name) {
@@ -24,14 +36,18 @@ const HomeScreen = () => {
     };
 
     const renderDoneButton = () => {
-        return (
-            <View style={styles.doneButtonView}>
-                <Text style={styles.doneButtonText}>Done</Text>
-            </View>
-        );
+        if (currentSlideIndex === slides.length - 1) {
+            return (
+                <View style={styles.doneButtonView}>
+                    <Text style={styles.doneButtonText}>Done</Text>
+                </View>
+            );
+        }
+        return null;
     };
 
     const handleSlideChange = (index) => {
+        setCurrentSlideIndex(index);
         if (index === 3) { // For the fourth slide
             setPlayAnimation(true);
         } else {
@@ -58,20 +74,28 @@ const HomeScreen = () => {
 
     return (
         <View style={styles.background}>
+            {console.log("Current slide index:", currentSlideIndex, "Keyboard visible:", isKeyboardVisible)}
             {showSlides ? (
-                <AppIntroSlider
-                    renderItem={({ item }) => renderSlideItem(item, setName, animationKey, playAnimation)}
-                    data={slides}
-                    onSlideChange={handleSlideChange}
-                    onDone={handleDone}
-                    renderDoneButton={renderDoneButton}
-                    dotStyle={{ backgroundColor: 'gray' }}
-                    activeDotStyle={{ backgroundColor: '#e8630a' }}
-                />
+                <>
+                    <ScrollView 
+                        contentContainerStyle={styles.contentContainer}
+                        keyboardShouldPersistTaps='handled'
+                    >
+                    <AppIntroSlider
+                        renderItem={({ item }) => renderSlideItem(item, setName, animationKey, playAnimation)}
+                        data={slides}
+                        onSlideChange={handleSlideChange}
+                        onDone={handleDone}
+                        dotStyle={isKeyboardVisible ? { display: 'none' } : { backgroundColor: 'gray' }}
+                        activeDotStyle={{ backgroundColor: '#e8630a' }}
+                        showPagination={!isKeyboardVisible}
+                    />
+                </ScrollView>
+                {currentSlideIndex === slides.length - 1 && !isKeyboardVisible && renderDoneButton()}
+                </>
             ) : (
                 <Text style={styles.homeText}>Hallo, {greetingName}</Text>
             )}
-
         </View>
     );
 };
@@ -116,6 +140,10 @@ const styles = StyleSheet.create({
     homeText: {
         fontSize: 24,
         textAlign: 'center',
+    },
+    contentContainer: {
+        flexGrow: 1,
+        justifyContent: 'center',
     },
 });
 
