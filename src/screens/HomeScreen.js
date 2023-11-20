@@ -3,8 +3,9 @@ import { View, Text, StyleSheet, ScrollView, Keyboard } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { slides, renderSlideItem } from '../utilities/homeScreenSlides';
 import { fetchData, saveUserName } from "../utilities/fetchData";
+import LearnScreenComponents from "../components/LearnScreenComponents";
 
-const HomeScreen = () => {
+const HomeScreen = (navigation) => {
     const [showSlides, setShowSlides] = useState(true);
     const [name, setName] = useState('');
     const [animationKey, setAnimationKey] = useState(0);
@@ -36,7 +37,8 @@ const HomeScreen = () => {
     };
 
     const renderDoneButton = () => {
-        if (currentSlideIndex === slides.length - 1) {
+        // Render the button if it's the last slide and the keyboard is not visible
+        if (currentSlideIndex === slides.length - 1 && !isKeyboardVisible) {
             return (
                 <View style={styles.doneButtonView}>
                     <Text style={styles.doneButtonText}>Done</Text>
@@ -86,15 +88,18 @@ const HomeScreen = () => {
                         data={slides}
                         onSlideChange={handleSlideChange}
                         onDone={handleDone}
+                        renderDoneButton={renderDoneButton}
                         dotStyle={isKeyboardVisible ? { display: 'none' } : { backgroundColor: 'gray' }}
-                        activeDotStyle={{ backgroundColor: '#e8630a' }}
+                        activeDotStyle={isKeyboardVisible ? { display: 'none' } : { backgroundColor: '#e8630a' }}
                         showPagination={!isKeyboardVisible}
                     />
                 </ScrollView>
-                {currentSlideIndex === slides.length - 1 && !isKeyboardVisible && renderDoneButton()}
                 </>
             ) : (
-                <Text style={styles.homeText}>Hallo, {greetingName}</Text>
+                <>
+                    <Text style={styles.homeText}>Hallo, {greetingName}</Text>
+                    <LearnScreenComponents navigation={navigation}/>
+                </>
             )}
         </View>
     );
@@ -146,6 +151,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
-
 
 export default HomeScreen;

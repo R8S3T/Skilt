@@ -103,6 +103,8 @@ const styles = StyleSheet.create({
         marginTop: 20,
         width: '80%',
         alignSelf: 'center',
+        borderRadius: 5,
+        paddingLeft: 10,
     },
     userSlideAnimation: {
         width: 110,
