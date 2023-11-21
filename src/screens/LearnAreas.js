@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native
 import Hexagon from "../components/Hexagon";
 import { learnGroups } from "../components/learnGroups";
 import { lightenColor } from "../utilities/lightenColor";
+import handleHexagonPress from "../utilities/navigationHandler";
 
 const LearnAreas = ({ navigation }) => {
 
@@ -12,10 +13,6 @@ const LearnAreas = ({ navigation }) => {
         });
     }, [navigation]);
 
-    const handleHexagonPress = (id) => {
-        navigation.navigate('Chapters', { chapterId: id })
-    };
-
     const renderGroup = ({ item }) => (
         <View style={styles.groupContainer}>
 
@@ -23,7 +20,7 @@ const LearnAreas = ({ navigation }) => {
             {item.items.slice(0, 3).map(id => (
                 <TouchableOpacity
                     key={id}
-                    onPress={() => handleHexagonPress(id)}
+                    onPress={() => handleHexagonPress(navigation, id, 'Chapters', 'chapterId')}
                     style={styles.hexagonWrapper}
                 >
                     <Hexagon size={60} color={item.color} />

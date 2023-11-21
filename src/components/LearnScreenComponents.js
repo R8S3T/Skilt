@@ -1,5 +1,6 @@
 import React from'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Swiper from "react-native-swiper";
 
 const LearnScreenComponents = ({ navigation }) => {
     return (
@@ -38,17 +39,19 @@ const styles = StyleSheet.create({
         backgroundColor: '#f6f5f5',
         flex: 1,
         justifyContent: 'center',
+        padding: 20,
     },
     learnAreasButton: {
         backgroundColor: '#9cd3d3',
         borderRadius: 20,
         padding: 20,
-        margin: 10,
+        margin: 5,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
+        width: '100%',
     },
     buttonContent: {
         flexDirection: 'row',
@@ -62,16 +65,16 @@ const styles = StyleSheet.create({
     },
     hexagonText: {
         textAlign: 'center',
-        color: 'white', // or any other color you prefer
-        marginTop: 'auto', 
-        marginBottom: 'auto', 
-        marginLeft: 'auto', 
+        color: 'white',
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        marginLeft: 'auto',
         marginRight: 'auto'
     },
     row: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 10,
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        marginBottom: 5,
     },
     box: {
         backgroundColor: 'lightgray',

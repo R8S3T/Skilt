@@ -64,7 +64,6 @@ function renderSlideItem(item, setName, animationKey, playAnimation) {
         placeholder='Dein Name'
         onChangeText={(text) => {
             setName(text);
-            console.log('Entered name:', text);
         }}
     />
     )}

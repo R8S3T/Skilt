@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Keyboard, TouchableOpacity } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { slides, renderSlideItem } from '../utilities/homeScreenSlides';
 import { fetchData, saveUserName } from "../utilities/fetchData";
 import LearnScreenComponents from "../components/LearnScreenComponents";
+import Hexagon from "../components/Hexagon";
+import handleHexagonPress from "../utilities/navigationHandler";
 
-const HomeScreen = (navigation) => {
+const HomeScreen = ({ navigation }) => {
     const [showSlides, setShowSlides] = useState(true);
     const [name, setName] = useState('');
     const [animationKey, setAnimationKey] = useState(0);
@@ -37,7 +39,7 @@ const HomeScreen = (navigation) => {
     };
 
     const renderDoneButton = () => {
-        // Render the button if it's the last slide and the keyboard is not visible
+        // Render this button if it's the last slide and the keyboard is not visible
         if (currentSlideIndex === slides.length - 1 && !isKeyboardVisible) {
             return (
                 <View style={styles.doneButtonView}>
@@ -76,7 +78,6 @@ const HomeScreen = (navigation) => {
 
     return (
         <View style={styles.background}>
-            {console.log("Current slide index:", currentSlideIndex, "Keyboard visible:", isKeyboardVisible)}
             {showSlides ? (
                 <>
                     <ScrollView 
@@ -98,6 +99,11 @@ const HomeScreen = (navigation) => {
             ) : (
                 <>
                     <Text style={styles.homeText}>Hallo, {greetingName}</Text>
+                    <TouchableOpacity onPress={() => onHexagonPress('someId')}>
+                        <Hexagon size={60} color="blue">
+                            {/* Child components, if any */}
+                        </Hexagon>
+                    </TouchableOpacity>
                     <LearnScreenComponents navigation={navigation}/>
                 </>
             )}
