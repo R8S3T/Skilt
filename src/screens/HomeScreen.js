@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, Keyboard, TouchableOpacity } from 'react-native';
-import AppIntroSlider from 'react-native-app-intro-slider';
-import { slides, renderSlideItem } from '../utilities/homeScreenSlides';
+import { View, Text, StyleSheet } from 'react-native';
 import { fetchData, saveUserName } from "../utilities/fetchData";
 import LearnScreenComponents from "../components/LearnScreenComponents";
-import Hexagon from "../components/Hexagon";
-import handleHexagonPress from "../utilities/navigationHandler";
+import IntroSlider from "../components/IntroSlider";
 
 const HomeScreen = ({ navigation }) => {
     const [showSlides, setShowSlides] = useState(true);
@@ -13,18 +10,6 @@ const HomeScreen = ({ navigation }) => {
     const [animationKey, setAnimationKey] = useState(0);
     const [playAnimation, setPlayAnimation] = useState(false);
     const [greetingName, setGreetingName] = useState('');
-    const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-
-    useEffect(() => {
-        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
-        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
-
-        return () => {
-            keyboardDidShowListener.remove();
-            keyboardDidHideListener.remove();
-        };
-    }, []);
 
     const handleDone = async () => {
         if (name) {
@@ -36,27 +21,6 @@ const HomeScreen = ({ navigation }) => {
             }
         }
         setShowSlides(false);
-    };
-
-    const renderDoneButton = () => {
-        // Render this button if it's the last slide and the keyboard is not visible
-        if (currentSlideIndex === slides.length - 1 && !isKeyboardVisible) {
-            return (
-                <View style={styles.doneButtonView}>
-                    <Text style={styles.doneButtonText}>Done</Text>
-                </View>
-            );
-        }
-        return null;
-    };
-
-    const handleSlideChange = (index) => {
-        setCurrentSlideIndex(index);
-        if (index === 3) { // For the fourth slide
-            setPlayAnimation(true);
-        } else {
-            setPlayAnimation(false);
-        }
     };
 
     useEffect(() => {
@@ -79,31 +43,14 @@ const HomeScreen = ({ navigation }) => {
     return (
         <View style={styles.background}>
             {showSlides ? (
-                <>
-                    <ScrollView 
-                        contentContainerStyle={styles.contentContainer}
-                        keyboardShouldPersistTaps='handled'
-                    >
-                    <AppIntroSlider
-                        renderItem={({ item }) => renderSlideItem(item, setName, animationKey, playAnimation)}
-                        data={slides}
-                        onSlideChange={handleSlideChange}
-                        onDone={handleDone}
-                        renderDoneButton={renderDoneButton}
-                        dotStyle={isKeyboardVisible ? { display: 'none' } : { backgroundColor: 'gray' }}
-                        activeDotStyle={isKeyboardVisible ? { display: 'none' } : { backgroundColor: '#e8630a' }}
-                        showPagination={!isKeyboardVisible}
-                    />
-                </ScrollView>
-                </>
+                <IntroSlider
+                    onDone={() => setShowSlides(false)}
+                    setName={setName}
+                    navigation={navigation}
+                />
             ) : (
                 <>
                     <Text style={styles.homeText}>Hallo, {greetingName}</Text>
-                    <TouchableOpacity onPress={() => onHexagonPress('someId')}>
-                        <Hexagon size={60} color="blue">
-                            {/* Child components, if any */}
-                        </Hexagon>
-                    </TouchableOpacity>
                     <LearnScreenComponents navigation={navigation}/>
                 </>
             )}

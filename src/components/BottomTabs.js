@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "../screens/HomeScreen";
+/* import HomeScreen from "../screens/HomeScreen"; */
 import SettingsScreen from "../screens/SettingsScreen";
 import { Ionicons } from "@expo/vector-icons";
 import LearnStackNavigator from "./LearnStackNavigator";
@@ -39,7 +39,7 @@ function BottomTabs() {
                 headerTitle: headerTitle,
             }}
         >
-        <Tab.Screen
+{/*         <Tab.Screen
             name="Startseite"
             component={HomeScreen}
             options={{
@@ -48,7 +48,7 @@ function BottomTabs() {
                 <Ionicons name="home" size={size} color={color} />
             )
             }}
-        />
+        /> */}
         <Tab.Screen
             name="Lernen"
             children={() => <LearnStackNavigator setHeaderTitle={setHeaderTitle} />}

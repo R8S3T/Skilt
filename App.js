@@ -5,6 +5,8 @@ import StartScreen from './src/screens/StartScreen';
 import BottomTabs from './src/components/BottomTabs';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import useDatabaseInitialization from './src/utilities/useDatabaseInit';
+import IntroSlider from './src/components/IntroSlider';
+import LearnScreen from './src/screens/LearnScreen';
 
 const dbAsset = require('./assets/skilt.db');
 
@@ -24,6 +26,8 @@ function App() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName='Start'>
           <Stack.Screen name='Start' component={StartScreen} />
+          <Stack.Screen name='IntroSlider' component={IntroSlider} options={{headerShown: false}} />
+          <Stack.Screen name='LearnScreen' component={LearnScreen} options={{ headerShown: false }} />
           <Stack.Screen name='MainApp' component={BottomTabs} options={{headerShown: false}} />
         </Stack.Navigator>
       </NavigationContainer>

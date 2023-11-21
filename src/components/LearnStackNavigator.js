@@ -4,6 +4,7 @@ import LearnAreas from '../screens/LearnAreas';
 import LearnScreen from '../screens/LearnScreen';
 import Chapters from '../screens/Chapters';
 import Subchapters from '../screens/Subchapters';
+import IntroSlider from './IntroSlider';
 
 const LearnStack = createNativeStackNavigator();
 
@@ -37,6 +38,11 @@ const LearnStackNavigator = ({ setHeaderTitle }) => {
             <LearnStack.Screen
                 name='Subchapters'
                 component={Subchapters}
+                options={{ headerShown: false }}
+            />
+            <LearnStack.Screen
+                name="IntroSlider"
+                component={IntroSlider}
                 options={{ headerShown: false }}
             />
         </LearnStack.Navigator>

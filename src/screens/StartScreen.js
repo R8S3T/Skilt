@@ -5,7 +5,7 @@ import Logo from '../../assets/Images/skilt_logo.png';
 const StartScreen = ({ navigation }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigation.navigate('MainApp');
+            navigation.navigate('IntroSlider');
         }, 3000);
         return () => clearTimeout(timer);
     }, [navigation]);

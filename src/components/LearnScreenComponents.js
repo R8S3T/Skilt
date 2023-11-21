@@ -1,6 +1,5 @@
 import React from'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Swiper from "react-native-swiper";
 
 const LearnScreenComponents = ({ navigation }) => {
     return (
