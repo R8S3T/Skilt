@@ -59,13 +59,13 @@ function renderSlideItem(item, setName, animationKey, playAnimation) {
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.text}>{item.text}</Text>
             {item.renderInputField && (
-    <TextInput
-        style={styles.input}
-        placeholder='Dein Name'
-        onChangeText={(text) => {
-            setName(text);
-        }}
-    />
+            <TextInput
+                style={styles.input}
+                placeholder='Dein Name'
+                onChangeText={(text) => {
+                    setName(text);
+                }}
+            />
     )}
         </View>
     );

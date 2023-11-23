@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from 'react-native';
 import { fetchData, saveUserName } from "../utilities/fetchData";
 import LearnScreenComponents from "../components/LearnScreenComponents";
-import IntroSlider from "../components/IntroSlider";
 
 const HomeScreen = ({ navigation }) => {
     const [showSlides, setShowSlides] = useState(true);

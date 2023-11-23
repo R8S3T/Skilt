@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Keyboard } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
+import { fetchData } from "../utilities/fetchData";
 import { slides, renderSlideItem } from '../utilities/homeScreenSlides';
 
-const IntroSlider = ({ onDone, setName, navigation }) => {
+const IntroSlider = ({ navigation }) => {
     const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+    const [playAnimation, setPlayAnimation] = useState(false);
+    const [name, setName] = useState('');
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
@@ -18,7 +21,13 @@ const IntroSlider = ({ onDone, setName, navigation }) => {
     }, []);
 
     const handleSlideChange = (index) => {
+        console.log('Current slide index:', index)
         setCurrentSlideIndex(index);
+        if (index === slides.length -1) {
+            setPlayAnimation(true);
+        } else {
+            setPlayAnimation(false);
+        }
     };
 
     const renderDoneButton = () => {
@@ -32,9 +41,16 @@ const IntroSlider = ({ onDone, setName, navigation }) => {
         }
         return null;
     };
-    const handleDone = () => {
-        onDone();
-        navigation.navigate('LearnScreen');
+    const handleDone = async () => {
+        if (name) {
+            try {
+                await saveUserName(name);
+                console.log('User name saved successfully');
+            } catch (error) {
+                console.log('Error saving user name:', error);
+            }
+        }
+        navigation.navigate('MainApp');
     };
 
     return (
@@ -43,7 +59,7 @@ const IntroSlider = ({ onDone, setName, navigation }) => {
         keyboardShouldPersistTaps='handled'
         >
             <AppIntroSlider
-                renderItem={({ item }) => renderSlideItem(item, setName, navigation)}
+                renderItem={({ item }) => renderSlideItem(item, setName, navigation, playAnimation)}
                 data={slides}
                 onSlideChange={handleSlideChange}
                 onDone={handleDone}

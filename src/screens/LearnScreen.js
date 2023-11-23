@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { fetchData, saveUserName } from "../utilities/fetchData";
 
 
 const  LearnScreen = ({ navigation }) => {
+    const [greetingName, setGreetingName] = useState('');
+
+    useEffect(() => {
+        const fetchUserName = async () => {
+            try {
+                const result = await fetchData('SELECT Name FROM User ORDER BY ID DESC LIMIT 1', []);
+                if (result.length > 0) {
+                    setGreetingName(result[0].Name);
+                }
+            } catch (error) {
+                console.error('Error fetching user name:', error);
+            }
+        };
+
+        fetchUserName();
+    }, []);
+
     return (
         <View style={styles.background}>
+            <Text style={styles.homeText}>Hallo, {greetingName}</Text>
             <View style={styles.row}>
                 <TouchableOpacity style={styles.learnAreasButton} onPress={() => navigation.navigate('LearnAreas')}>
                     <View style={styles.buttonContent}>
@@ -36,9 +55,12 @@ const  LearnScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     background: {
-        backgroundColor: '#f6f5f5',
         flex: 1,
         justifyContent: 'center',
+        alignItems: 'center',
+    },
+    homeText: {
+        fontSize: 24,
     },
     learnAreasButton: {
         backgroundColor: '#9cd3d3',
