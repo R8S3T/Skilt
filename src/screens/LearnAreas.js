@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import Hexagon from "../components/Hexagon";
-import { learnGroups } from "../components/learnGroups";
+import { learnGroups } from "../components/LearningAreasData";
 import { lightenColor } from "../utilities/lightenColor";
 import handleHexagonPress from "../utilities/navigationHandler";
 
@@ -119,9 +119,6 @@ const styles = StyleSheet.create({
         fontSize: 23,
         alignSelf: 'center',
         top: '30%',
-/*         textShadowColor: 'rgba(0, 0, 0, 0.75)', // Black shadow with 75% opacity
-        textShadowOffset: { width: -1, height: 1 },
-        textShadowRadius: 2, */
     },
     hexagonTextBackground: {
         position: 'absolute',

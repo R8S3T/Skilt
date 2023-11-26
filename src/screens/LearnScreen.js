@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { fetchData, saveUserName } from "../utilities/fetchData";
+import { fetchData } from "../utilities/fetchData";
+import { learningAreas } from "../components/LearningAreasData";
+import Swiper from "react-native-swiper";
 
-const  LearnScreen = ({ navigation }) => {
+const LearnScreen = ({ navigation }) => {
     const [greetingName, setGreetingName] = useState('');
 
     useEffect(() => {
@@ -20,34 +22,36 @@ const  LearnScreen = ({ navigation }) => {
         fetchUserName();
     }, []);
 
+    const renderButton = (title, onPress) => (
+        <TouchableOpacity style={styles.learnAreasButton} onPress={onPress}>
+            <Text style={styles.buttonText}>{title}</Text>
+        </TouchableOpacity>
+    );
+
     return (
         <View style={styles.background}>
-            <Text style={styles.homeText}>Hallo, {greetingName}</Text>
-            <View style={styles.row}>
-                <TouchableOpacity style={styles.learnAreasButton} onPress={() => navigation.navigate('LearnAreas')}>
-                    <View style={styles.buttonContent}>
-                        <Text style={styles.buttonText}>Lernfelder</Text>
+            <Swiper
+                style={styles.swiper}
+                showsButtons={true}
+                loop={false}
+            >
+                {learningAreas.map((area) => {
+                    console.log(area);
+                    return (
+                        <View key={area.id} style={styles.slide}>
+                        <Text style={styles.text}>{area.title}</Text>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('Chapters', { chapterId: area.id })}
+                        >
+                            <Text>Gehe zu {area.title}</Text>
+                        </TouchableOpacity>
                     </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.learnAreasButton} onPress={() => console.log('Top Left Pressed')}>
-                    <View style={styles.buttonContent}>
-                        <Text style={styles.buttonText}>Übungen</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
-
-            <View style={styles.row}>
-                <TouchableOpacity style={styles.learnAreasButton} onPress={() => console.log('Top Left Pressed')}>
-                    <View style={styles.buttonContent}>
-                        <Text style={styles.buttonText}>Prüfungsaufgaben</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.learnAreasButton} onPress={() => console.log('Top Left Pressed')}>
-                    <View style={styles.buttonContent}>
-                        <Text style={styles.buttonText}>Werkzeugkunde</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
+                    )
+                })}
+            </Swiper>
+            {renderButton('Übungen', () => console.log('Übungen Pressed'))}
+            {renderButton('Prüfungsaufgaben', () => console.log('Prüfungsaufgaben Pressed'))}
+            {renderButton('Werkzeugkunde', () => console.log('Werkzeugkunde Pressed'))}
         </View>
     );
 };
@@ -57,51 +61,35 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        padding: 20,
     },
-    homeText: {
-        fontSize: 24,
+    swiper: {
+        height: 200, // Adjust this value as needed
+        width: '100%',
+    },
+    slide: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#9DD6EB',
+    },
+    text: {
+        color: '#fff',
+        fontSize: 30,
+        fontWeight: 'bold',
     },
     learnAreasButton: {
         backgroundColor: '#9cd3d3',
-        borderRadius: 20,
+        borderRadius: 5,
         padding: 20,
-        margin: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-    },
-    buttonContent: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
+        width: '100%',
+        marginBottom: 10, // Space between buttons
     },
     buttonText: {
         color: 'white',
         fontWeight: 'bold',
         textAlign: 'center',
     },
-    hexagonText: {
-        textAlign: 'center',
-        color: 'white', // or any other color you prefer
-        marginTop: 'auto', 
-        marginBottom: 'auto', 
-        marginLeft: 'auto', 
-        marginRight: 'auto'
-    },
-    row: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 10,
-    },
-    box: {
-        backgroundColor: 'lightgray',
-        padding: 30,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 0.48,
-    }
 });
 
 export default LearnScreen;
