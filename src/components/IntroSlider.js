@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Keyboard } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import { fetchData } from "../utilities/fetchData";
+import { saveUserName } from "../utilities/fetchData";
 import { slides, renderSlideItem } from '../utilities/homeScreenSlides';
 
 const IntroSlider = ({ navigation }) => {

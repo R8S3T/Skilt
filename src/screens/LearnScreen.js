@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { fetchData, saveUserName } from "../utilities/fetchData";
 
-
 const  LearnScreen = ({ navigation }) => {
     const [greetingName, setGreetingName] = useState('');
 

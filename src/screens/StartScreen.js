@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image } from 'react-native';
-import Logo from '../../assets/Images/skilt_logo.png';
+import Logo from '../../assets/Images/logo.png';
 
 const StartScreen = ({ navigation }) => {
     useEffect(() => {
