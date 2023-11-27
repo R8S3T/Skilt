@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { fetchData } from "../utilities/fetchData";
 import { learningAreas } from "../components/LearningAreasData";
-import Swiper from "react-native-swiper";
+import { SwiperFlatList } from "react-native-swiper-flatlist";
+import { Dimensions } from "react-native";
+
 
 const LearnScreen = ({ navigation }) => {
     const [greetingName, setGreetingName] = useState('');
@@ -30,31 +32,38 @@ const LearnScreen = ({ navigation }) => {
 
     return (
         <View style={styles.background}>
-            <Swiper
-                style={styles.swiper}
-                showsButtons={true}
-                loop={false}
-            >
-                {learningAreas.map((area) => {
-                    console.log(area);
-                    return (
-                        <View key={area.id} style={styles.slide}>
-                        <Text style={styles.text}>{area.title}</Text>
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate('Chapters', { chapterId: area.id })}
-                        >
-                            <Text>Gehe zu {area.title}</Text>
-                        </TouchableOpacity>
-                    </View>
-                    )
-                })}
-            </Swiper>
+<View style={styles.swiperContainer}>
+                <SwiperFlatList
+                    autoplay
+                    autoplayDelay={2}
+                    autoplayLoop
+                    index={0}
+                    showPagination={false} // Hide built-in pagination dots
+                >
+                    {learningAreas.map((area, index) => (
+                        <View key={index} style={styles.slide}>
+                            <Text style={styles.text}>{area.title}</Text>
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate('Chapters', { chapterId: area.id })}
+                            >
+                                <Text>Go to {area.title}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    ))}
+                </SwiperFlatList>
+                <View style={styles.paginationContainer}>
+                    {/* Render custom pagination here */}
+                </View>
+            </View>
+
             {renderButton('Übungen', () => console.log('Übungen Pressed'))}
             {renderButton('Prüfungsaufgaben', () => console.log('Prüfungsaufgaben Pressed'))}
             {renderButton('Werkzeugkunde', () => console.log('Werkzeugkunde Pressed'))}
         </View>
     );
 };
+
+const screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     background: {
@@ -63,8 +72,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 20,
     },
-    swiper: {
-        height: 200, // Adjust this value as needed
+    swiperContainer: {
+        height: 150,
         width: '100%',
     },
     slide: {
@@ -72,6 +81,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#9DD6EB',
+        width: screenWidth,
     },
     text: {
         color: '#fff',
