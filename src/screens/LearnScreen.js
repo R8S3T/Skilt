@@ -24,23 +24,36 @@ const LearnScreen = ({ navigation }) => {
         fetchUserName();
     }, []);
 
-    const renderButton = (title, onPress) => (
-        <TouchableOpacity style={styles.learnAreasButton} onPress={onPress}>
+    const renderButton = (title, onPress, buttonStyle) => (
+        <TouchableOpacity style={[styles.learnAreasButton, buttonStyle]} onPress={onPress}>
             <Text style={styles.buttonText}>{title}</Text>
         </TouchableOpacity>
     );
 
     return (
         <View style={styles.background}>
-<View style={styles.swiperContainer}>
+            <View style={styles.newContainer}>
+                <Text style={styles.heading}>Überschrift</Text>
+                <Text style={styles.description}>Mehr Text der erklärt, worum es in den Lernfeldern geht</Text>
+                <View style={styles.buttonContainer}>
+                    {renderButton('Button 1', () => console.log('Button 1 Pressed'), styles.squareButton)}
+                    {renderButton('Button 2', () => console.log('Button 2 Pressed'), styles.squareButton)}
+                    {renderButton('Button 3', () => console.log('Button 3 Pressed'), styles.squareButton)}
+                </View>
+            </View>
+
+
+
+
+{/* Learnareas button with Swiper function
+            <View style={styles.swiperContainer}>
                 <SwiperFlatList
-                    autoplay
                     autoplayDelay={2}
-                    autoplayLoop
+                    autoplayLoop={false}
                     index={0}
-                    showPagination={false} // Hide built-in pagination dots
+                    showPagination// Hide built-in pagination dots
                 >
-                    {learningAreas.map((area, index) => (
+                    {learningAreas.slice(0, 3).map((area, index) => (
                         <View key={index} style={styles.slide}>
                             <Text style={styles.text}>{area.title}</Text>
                             <TouchableOpacity
@@ -50,11 +63,16 @@ const LearnScreen = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                     ))}
-                </SwiperFlatList>
+                    <View style={styles.slide}>
+                        <TouchableOpacity onPress={() => navigation.navigate('LearnAreas')}>
+                        <Text style={styles.text}>Go to All LearnAreas</Text>
+                        </TouchableOpacity>
+                    </View>
+                </SwiperFlatList> 
                 <View style={styles.paginationContainer}>
-                    {/* Render custom pagination here */}
                 </View>
-            </View>
+            </View> 
+        */}
 
             {renderButton('Übungen', () => console.log('Übungen Pressed'))}
             {renderButton('Prüfungsaufgaben', () => console.log('Prüfungsaufgaben Pressed'))}
@@ -70,11 +88,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 20,
+        padding: 10,
     },
     swiperContainer: {
         height: 150,
         width: '100%',
+        marginBottom: 10,
     },
     slide: {
         flex: 1,
@@ -85,7 +104,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#fff',
-        fontSize: 30,
+        fontSize: 20,
         fontWeight: 'bold',
     },
     learnAreasButton: {
@@ -93,13 +112,46 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 20,
         width: '100%',
-        marginBottom: 10, // Space between buttons
+        marginBottom: 10,
     },
     buttonText: {
-        color: 'white',
+        color: '#fff',
         fontWeight: 'bold',
         textAlign: 'center',
     },
+
+
+    newContainer: {
+        backgroundColor: '#2b4353',
+        alignItems: 'center',
+        padding: 20,
+        marginBottom: 10,
+    },
+    heading: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 8,
+        color: '#fff',
+    },
+    description: {
+        textAlign: 'center',
+        marginBottom: 16,
+        color: '#fff',
+    },
+    buttonContainer: {
+        // Style for the container that holds the buttons
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+    },
+    squareButton: {
+        backgroundColor: '#9cd3d3',
+        width: 70,
+        height: 70,
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 5,
+    },
+
 });
 
 export default LearnScreen;
