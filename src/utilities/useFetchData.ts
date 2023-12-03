@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getDatabase } from "../utilities/database";
+import { getDatabase } from "./database";
 import { isEqual } from "lodash";
 
 const useFetchData = (query, params) => {
@@ -12,7 +12,6 @@ const useFetchData = (query, params) => {
                 const db = getDatabase();
                 let quizzes = [];
 
-                // Wrap the transaction in a new Promise to handle transaction errors.
                 await new Promise((transactionResolve, transactionReject) => {
                     db.transaction(tx => {
                         tx.executeSql(
@@ -46,7 +45,6 @@ const useFetchData = (query, params) => {
                                             );
                                         }).catch(optionError => {
                                             console.error('Option promise error:', optionError);
-                                            // Handle option query errors here if needed
                                         });
                                     }
                                 }
@@ -55,16 +53,15 @@ const useFetchData = (query, params) => {
                                     setData(quizzes);
                                 }
 
-                                transactionResolve(); // Resolve the transaction promise here
+                                transactionResolve();
                             },
                             (_, transactionError) => {
                                 console.error('Transaction error:', transactionError);
-                                transactionReject(transactionError); // Reject the transaction promise here
+                                transactionReject(transactionError);
                             }
                         );
                     });
                 }).catch(transactionError => {
-                    // Handle the transaction error here
                     console.error('Transaction promise error:', transactionError);
                     setError(transactionError);
                 });

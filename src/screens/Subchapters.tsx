@@ -3,7 +3,6 @@ import { View, Text, StyleSheet } from 'react-native';
 import PagerView from 'react-native-pager-view';
 import useSubchapterData from "../utilities/useSubchapterData";
 import QuizScreen from "./Quizzes/QuizScreen";
-import { getExplanation, getWordsWithExplanations } from "../utilities/explanationHelper";
 import ContentWithExplanations from "../components/ContentWithExplanations";
 
 const Subchapters = ({ route }) => {

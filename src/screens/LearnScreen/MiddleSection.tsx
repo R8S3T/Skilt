@@ -9,13 +9,13 @@ const MiddleSection = ({ onButtonPress }) => {
                 title='Übungen'
                 onPress={() => onButtonPress('Übungen')}
                 buttonStyle={styles.imageButton}
-                imageSource={require('../../../assets/Images/book.png')} // Update the path as needed
+                imageSource={require('../../../assets/Images/book.png')}
             />
             <RenderButton
                 title='Werkzeugkunde'
                 onPress={() => onButtonPress('Werkzeugkunde')}
                 buttonStyle={styles.imageButton}
-                imageSource={require('../../../assets/Images/wrench.png')} // Update the path as needed
+                imageSource={require('../../../assets/Images/wrench.png')}
             />
         </View>
     );

@@ -39,16 +39,6 @@ function BottomTabs() {
                 headerTitle: headerTitle,
             }}
         >
-{/*         <Tab.Screen
-            name="Startseite"
-            component={HomeScreen}
-            options={{
-            tabBarLabel: 'Startseite',
-            tabBarIcon: ({ color, size }) => (
-                <Ionicons name="home" size={size} color={color} />
-            )
-            }}
-        /> */}
         <Tab.Screen
             name="Lernen"
             children={() => <LearnStackNavigator setHeaderTitle={setHeaderTitle} />}
