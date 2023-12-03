@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LearnAreas from '../screens/LearnAreas';
-import LearnScreen from '../screens/LearnScreen';
+import LearnScreen from '../screens/LearnScreen/LearnScreen';
 import Chapters from '../screens/Chapters';
 import Subchapters from '../screens/Subchapters';
 import IntroSlider from './IntroSlider';

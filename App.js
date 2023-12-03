@@ -6,7 +6,7 @@ import BottomTabs from './src/components/BottomTabs';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import useDatabaseInitialization from './src/utilities/useDatabaseInit';
 import IntroSlider from './src/components/IntroSlider';
-import LearnScreen from './src/screens/LearnScreen';
+import LearnScreen from './src/screens/LearnScreen/LearnScreen';
 
 const dbAsset = require('./assets/skilt.db');
 
