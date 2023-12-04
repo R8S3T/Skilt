@@ -6,11 +6,23 @@ import Chapters from '../screens/Chapters';
 import Subchapters from '../screens/Subchapters';
 import IntroSlider from './IntroSlider';
 
-const LearnStack = createNativeStackNavigator();
+type LearnStackParamList = {
+    LearnMain: undefined;
+    LearnAreas: undefined;
+    Chapters: undefined;
+    Subchapters: undefined;
+    IntroSlider: undefined;
+};
 
-const LearnStackNavigator = ({ setHeaderTitle }) => {
+const LearnStack = createNativeStackNavigator<LearnStackParamList>();
+
+interface LearnStackNavigatorProps {
+    setHeaderTitle: (title: string) => void;
+}
+
+const LearnStackNavigator: React.FC<LearnStackNavigatorProps> = ({ setHeaderTitle }) => {
     const onLearnMainFocus = useCallback(() => setHeaderTitle('Lernen'), [setHeaderTitle]);
-    const onLearnAreasFocus = useCallback(() => setHeaderTitle('LernFelder'));
+    const onLearnAreasFocus = useCallback(() => setHeaderTitle('LernFelder'), [setHeaderTitle]);
 
     return (
         <LearnStack.Navigator initialRouteName='LearnMain'>

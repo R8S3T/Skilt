@@ -2,7 +2,11 @@ import React from "react";
 import { View, Text, StyleSheet } from 'react-native';
 import RenderButton from "./RenderButton";
 
-const TopSection = ({ onButtonPress }) => {
+interface TopSectionProps {
+    onButtonPress: (title: string) => void;
+}
+
+const TopSection: React.FC<TopSectionProps> = ({ onButtonPress }) => {
     return (
         <View style={styles.newContainer}>
             <Text style={styles.heading}>Überschrift</Text>
@@ -58,11 +62,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         margin: 10,
+        borderRadius: 5,
     },
     ovalButton: {
         width: 300,
         backgroundColor: '#e8630a',
         margin: 10,
+        borderRadius: 5,
     },
 })
 export default TopSection;

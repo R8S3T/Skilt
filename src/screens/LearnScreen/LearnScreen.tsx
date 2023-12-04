@@ -6,7 +6,7 @@ import MiddleSection from "./MiddleSection";
 
 
 const LearnScreen = ({ navigation }) => {
-    const handleButtonPress = (title) => {
+    const handleButtonPress = (title: string) => {
         console.log(`${title} Pressed`);
         // Additional logic following later
     };
@@ -15,7 +15,7 @@ const LearnScreen = ({ navigation }) => {
         <View style={styles.background}>
             <TopSection onButtonPress={handleButtonPress} />
             <MiddleSection onButtonPress={handleButtonPress} />
-            {handleButtonPress('Prüfungsaufgaben', () => console.log('Prüfungsaufgaben Pressed'))}
+{/*             {handleButtonPress('Prüfungsaufgaben', () => console.log('Prüfungsaufgaben Pressed'))} */}
         </View>
     );
 };

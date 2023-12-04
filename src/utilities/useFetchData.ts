@@ -17,7 +17,7 @@ const useFetchData = (query: string, params: any[]) => {
                 const db = getDatabase();
                 let quizzes = [];
 
-                await new Promise((transactionResolve, transactionReject) => {
+                await new Promise<void>((transactionResolve, transactionReject) => {
                     db.transaction(tx => {
                         tx.executeSql(
                             query,
@@ -66,6 +66,7 @@ const useFetchData = (query: string, params: any[]) => {
                             (_, transactionError) => {
                                 console.error('Transaction error:', transactionError);
                                 transactionReject(transactionError);
+                                return true;
                             }
                         );
                     });
@@ -76,7 +77,6 @@ const useFetchData = (query: string, params: any[]) => {
 
             } catch (err) {
                 console.error('Fetch data error:', err);
-                setError(err);
             }
         };
 
