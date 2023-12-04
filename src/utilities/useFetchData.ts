@@ -2,9 +2,14 @@ import { useState, useEffect } from "react";
 import { getDatabase } from "./database";
 import { isEqual } from "lodash";
 
-const useFetchData = (query, params) => {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(null);
+const useFetchData = (query: string, params: any[]) => {
+    interface Quiz {
+        Type: string;
+        QuizId: number;
+        options?: string[];
+    }
+    const [data, setData] = useState<Quiz[]>([]);
+    const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,17 +35,20 @@ const useFetchData = (query, params) => {
                                         `;
                                         const optionsParams = [quiz.QuizId];
 
-                                        await new Promise((resolve, reject) => {
+                                        await new Promise<void>((resolve, reject) => {
                                             tx.executeSql(
                                                 optionsQuery,
                                                 optionsParams,
-                                                (_, { rows: { _array } }) => {
-                                                    quiz.options = _array.map(opt => opt.OptionText);
+                                                (_, result: any) => {
+                                                    const _array = result.rows._array;
+                                                    quiz.options = _array.map((opt: any) => opt.OptionText);
                                                     resolve();
                                                 },
-                                                (_, err) => {
-                                                    console.error('Option fetch error:', err);
+
+                                                (_, err: any) => { // Temporarily use 'any' if the exact error type is unknown
+                                                    console.error('Option fetch error:', err.message);
                                                     reject(err);
+                                                    return true; // Indicate to roll back the transaction
                                                 }
                                             );
                                         }).catch(optionError => {

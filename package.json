@@ -63,6 +63,7 @@
     "@testing-library/react-native": "^12.3.0",
     "@tsconfig/react-native": "^3.0.2",
     "@types/jest": "^29.5.10",
+    "@types/lodash": "^4.14.202",
     "@types/react": "^18.2.41",
     "@types/react-test-renderer": "^18.0.7",
     "typescript": "^5.3.2"
