@@ -5,34 +5,35 @@ interface RenderButtonProps {
     title: string;
     onPress: () => void;
     buttonStyle: StyleProp<ViewStyle>;
+    textStyle?: StyleProp<TextStyle>;
     imageSource?: ImageSourcePropType;
 }
 
-const RenderButton: React.FC<RenderButtonProps> = ({ title, onPress, buttonStyle, imageSource }) => {
+const RenderButton: React.FC<RenderButtonProps> = ({ title, onPress, buttonStyle, textStyle, imageSource }) => {
     return (
-        <TouchableOpacity style={[styles.buttonImage, buttonStyle]} onPress={onPress}>
+        <TouchableOpacity style={[styles.button, buttonStyle]} onPress={onPress}>
             {imageSource && <Image source={imageSource} style={styles.buttonImage} />}
-            <Text style={styles.buttonText}>{title}</Text>
+            <Text style={styles.buttonText, textStyle}>{title}</Text>
         </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
     button: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'center',
     },
     buttonText: {
-        color: '#fff',
+        color: '#f6f5f5',
         fontWeight: 'bold',
-        fontSize: 15,
+        fontSize: 18,
         textAlign: 'center',
-        borderRadius: 5,
     } as TextStyle,
     buttonImage: {
-        width: 30,
+        width: 50,
         height: 50,
-        marginRight: 10,
+        marginBottom: 10,
         resizeMode: 'contain',
     } as ImageStyle,
 });

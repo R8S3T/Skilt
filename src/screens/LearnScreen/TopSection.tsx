@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TextStyle } from 'react-native';
 import RenderButton from "./RenderButton";
 
 interface TopSectionProps {
@@ -18,6 +18,7 @@ const TopSection: React.FC<TopSectionProps> = ({ onButtonPress }) => {
                         title={title}
                         onPress={() => onButtonPress(title)}
                         buttonStyle={styles.squareButton}
+                        textStyle={styles.topButtonText}
                     />
                 ))}
             </View>
@@ -25,6 +26,7 @@ const TopSection: React.FC<TopSectionProps> = ({ onButtonPress }) => {
                 title='Alle Lernfelder'
                 onPress={() => onButtonPress('Alle Lernfelder')}
                 buttonStyle={styles.ovalButton}
+                textStyle={styles.topButtonText}
             />
 
         </View>
@@ -55,17 +57,24 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
     },
+    topButtonText: {
+        color: '#f6f5f5',
+        fontWeight: 'bold',
+        fontSize: 15,
+        textAlign: 'center',
+    } as TextStyle,
     squareButton: {
-        backgroundColor: '#9cd3d3',
-        width: 90,
+        backgroundColor: '#9cd3d380',
+        width: 100,
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        margin: 10,
+        margin: 5,
         borderRadius: 5,
     },
     ovalButton: {
         width: 300,
+        height: 30,
         backgroundColor: '#e8630a',
         margin: 10,
         borderRadius: 5,
