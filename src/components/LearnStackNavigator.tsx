@@ -6,7 +6,7 @@ import Chapters from '../screens/Chapters';
 import Subchapters from '../screens/Subchapters';
 import IntroSlider from './IntroSlider';
 
-type LearnStackParamList = {
+export type LearnStackParamList = {
     LearnMain: undefined;
     LearnAreas: undefined;
     Chapters: undefined;

@@ -36,16 +36,16 @@ const styles = StyleSheet.create({
     imageButton: {
         alignItems: 'center',
         backgroundColor: '#9cd3d395',
-        width: 160,
-        height: 140,
+        width: 150,
+        height: 100,
         justifyContent: 'center',
-        margin: 10,
+        margin: 20,
         borderRadius: 5,
     },
     middleButtonText: {
         color: '#2b4353',
         fontWeight: 'bold',
-        fontSize: 18,
+        fontSize: 15,
         textAlign: 'center',
     } as TextStyle,
 })

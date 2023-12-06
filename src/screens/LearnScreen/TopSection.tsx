@@ -1,12 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet, TextStyle } from 'react-native';
 import RenderButton from "./RenderButton";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { LearnStackParamList } from '../../components/LearnStackNavigator'
 
 interface TopSectionProps {
     onButtonPress: (title: string) => void;
 }
 
 const TopSection: React.FC<TopSectionProps> = ({ onButtonPress }) => {
+    const navigation = useNavigation<NavigationProp<LearnStackParamList>>();
+
     return (
         <View style={styles.newContainer}>
             <Text style={styles.heading}>Überschrift</Text>
@@ -24,7 +28,7 @@ const TopSection: React.FC<TopSectionProps> = ({ onButtonPress }) => {
             </View>
             <RenderButton
                 title='Alle Lernfelder'
-                onPress={() => onButtonPress('Alle Lernfelder')}
+                onPress={() => navigation.navigate('LearnAreas')}
                 buttonStyle={styles.ovalButton}
                 textStyle={styles.topButtonText}
             />
