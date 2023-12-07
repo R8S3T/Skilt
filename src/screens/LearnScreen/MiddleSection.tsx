@@ -35,12 +35,24 @@ const styles = StyleSheet.create({
     },
     imageButton: {
         alignItems: 'center',
-        backgroundColor: '#9cd3d395',
+        backgroundColor: '#fff',
         width: 150,
-        height: 100,
+        height: 120,
         justifyContent: 'center',
         margin: 20,
         borderRadius: 5,
+
+        // Shadow properties for iOS
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        // elevation for Android
+        elevation: 5,
     },
     middleButtonText: {
         color: '#2b4353',

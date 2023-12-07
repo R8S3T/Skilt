@@ -6,7 +6,7 @@ const StartScreen = ({ navigation }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
             navigation.navigate('IntroSlider');
-        }, 8000);
+        }, 3000);
         return () => clearTimeout(timer);
     }, [navigation]);
 

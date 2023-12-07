@@ -42,6 +42,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#2b4353',
         alignItems: 'center',
         padding: 10,
+        width: 350,
+        height: 230,
         borderRadius: 5,
         marginBottom: 10,
     },
@@ -69,7 +71,7 @@ const styles = StyleSheet.create({
     } as TextStyle,
     squareButton: {
         backgroundColor: '#9cd3d380',
-        width: 100,
+        width: 105,
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
@@ -77,10 +79,10 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     ovalButton: {
-        width: 300,
+        width: 325,
         height: 30,
         backgroundColor: '#e8630a',
-        margin: 10,
+        margin: 20,
         borderRadius: 5,
     },
 })

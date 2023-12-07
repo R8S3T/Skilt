@@ -1,8 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet } from 'react-native';
-import { Dimensions } from "react-native";
+import { ScrollView, Dimensions, StyleSheet } from 'react-native';
 import TopSection from "./TopSection";
 import MiddleSection from "./MiddleSection";
+import BottomSection from "./BottomSection";
 
 
 const LearnScreen = ({ navigation }) => {
@@ -12,11 +12,18 @@ const LearnScreen = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.background}>
+        <ScrollView
+            style={styles.background} 
+            contentContainerStyle={styles.contentContainer}
+            showsVerticalScrollIndicator={false}
+        >
             <TopSection onButtonPress={handleButtonPress} />
             <MiddleSection onButtonPress={handleButtonPress} />
-{/*             {handleButtonPress('Prüfungsaufgaben', () => console.log('Prüfungsaufgaben Pressed'))} */}
-        </View>
+            <BottomSection
+                onPress={() => console.log('Prüfungsaufgaben pressed')}
+                imageSource={require('../../../assets/Images/exam.png')}
+            />
+        </ScrollView>
     );
 };
 
@@ -25,9 +32,12 @@ const screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
     background: {
         flex: 1,
+    },
+    contentContainer: {
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
+        paddingBottom: 20,
     },
 });
 
