@@ -5,12 +5,14 @@ import SettingsScreen from "../screens/SettingsScreen";
 import { Ionicons } from "@expo/vector-icons";
 import LearnStackNavigator from "./LearnStackNavigator";
 import { Keyboard } from "react-native";
+import useFetchUserName from "../screens/LearnScreen/fetchUserName";
 
 const Tab = createBottomTabNavigator();
 
 function BottomTabs() {
-    const [headerTitle, setHeaderTitle] = useState('Lernen');
-    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+    const userName = useFetchUserName();
+    const defaultTitle = 'Lernen';
+    const headerTitle = userName ? `Hallo, ${userName}` : defaultTitle;
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener(
@@ -31,24 +33,23 @@ function BottomTabs() {
     return (
         <Tab.Navigator
             screenOptions={{
-                headerStyle: { backgroundColor: '#2b4353'},
-                headerTintColor: '#f6f5f5',
+                headerStyle: { backgroundColor: '#f6f5f5'},
+                headerTintColor: '#2b4353',
                 tabBarActiveTintColor: '#e8630a',
                 tabBarInactiveTintColor: 'gray',
-                tabBarStyle: isKeyboardVisible ? { display: 'none' } : {},
                 headerTitle: headerTitle,
             }}
         >
-        <Tab.Screen
-            name="Lernen"
-            children={() => <LearnStackNavigator setHeaderTitle={setHeaderTitle} />}
-            options={{
-                tabBarLabel: 'Lernen',
-                tabBarIcon: ({ color, size }) => (
-                    <Ionicons name="book" size={size} color={color} />
-                )
-            }}
-        />
+            <Tab.Screen
+                name="Lernen"
+                children={() => <LearnStackNavigator setHeaderTitle={(title) => {}} />}
+                options={{
+                    tabBarLabel: 'Lernen',
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="book" size={size} color={color} />
+                    )
+                }}
+            />
         <Tab.Screen
             name="Einstellungen"
             component={SettingsScreen}

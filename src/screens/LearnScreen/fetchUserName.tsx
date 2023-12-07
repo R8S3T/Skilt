@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { fetchData } from '../../utilities/fetchData';
 
-const fetchUserName = () => {
-    const [greetingName, setGreetingName] = useState('');
+
+interface User {
+    Name: string;
+}
+
+const useFetchUserName = (): string => {
+    const [greetingName, setGreetingName] = useState<string>('');
 
     useEffect(() => {
         const fetchUserName = async () => {
             try {
-                const result = await fetchData('SELECT Name FROM User ORDER BY ID DESC LIMIT 1', []);
+                const result = await fetchData<User>('SELECT Name FROM User ORDER BY ID DESC LIMIT 1', []);
                 if (result.length > 0) {
                     setGreetingName(result[0].Name);
                 }
@@ -19,9 +24,7 @@ const fetchUserName = () => {
         fetchUserName();
     }, []);
 
-    return (
-        <div>{greetingName ? `Hello, ${greetingName}` : 'Loading...'}</div>
-    );
+    return greetingName;
 };
 
-export default fetchUserName;
+export default useFetchUserName;

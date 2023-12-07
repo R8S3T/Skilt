@@ -1,24 +1,25 @@
 import { getDatabase } from "./database";
 
-export const fetchData = async (query, params) => {
+export const fetchData = async <T>(query: string, params: any[]): Promise<T[]> => {
     const db = getDatabase();
-    return new Promise((resolve, reject) => {
+    return new Promise<T[]>((resolve, reject) => {
         db.transaction(tx => {
             tx.executeSql(
                 query,
                 params,
                 (_, { rows: { _array } }) => {
-                    resolve(_array);
+                    resolve(_array as T[]);
                 },
                 (_, err) => {
                     reject(err);
+                    return false;
                 }
             );
         });
     });
 };
 
-export const saveUserName = async (name) => {
+export const saveUserName = async (name: string) => {
     const query = 'INSERT INTO User (Name) VALUES (?)';
     try {
         await fetchData(query, [name]);

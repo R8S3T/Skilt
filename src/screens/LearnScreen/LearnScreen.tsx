@@ -27,8 +27,6 @@ const LearnScreen = ({ navigation }) => {
     );
 };
 
-const screenWidth = Dimensions.get('window').width;
-
 const styles = StyleSheet.create({
     background: {
         flex: 1,
@@ -36,7 +34,7 @@ const styles = StyleSheet.create({
     contentContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 10,
+        padding: 12,
         paddingBottom: 20,
     },
 });
