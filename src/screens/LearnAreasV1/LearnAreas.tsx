@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import Hexagon from "../components/Hexagon";
-import { learnGroups } from "../components/LearningAreasData";
-import { lightenColor } from "../utilities/lightenColor";
-import handleHexagonPress from "../utilities/navigationHandler";
+import Hexagon from "./Hexagon";
+import { learnGroups } from "../../components/LearningAreasData";
+import { lightenColor } from "../../utilities/lightenColor";
+import handleHexagonPress from "../../utilities/navigationHandler";
 
 const LearnAreas = ({ navigation }) => {
 

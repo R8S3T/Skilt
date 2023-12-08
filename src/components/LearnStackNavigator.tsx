@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LearnAreas from '../screens/LearnAreas';
+/* import LearnAreas from '../screens/LearnAreasOld/LearnAreas'; */
+import LearnAreasV2 from '../screens/LearnAreasV2/LearnAreasV2';
 import LearnScreen from '../screens/LearnScreen/LearnScreen';
 import Chapters from '../screens/Chapters';
 import Subchapters from '../screens/Subchapters';
@@ -10,7 +11,7 @@ export type LearnStackParamList = {
     LearnMain: undefined;
     LearnAreas: undefined;
     Chapters: undefined;
-    Subchapters: undefined;
+    Subchapters: { subchapterId: string };
     IntroSlider: undefined;
 };
 
@@ -36,7 +37,7 @@ const LearnStackNavigator: React.FC<LearnStackNavigatorProps> = ({ setHeaderTitl
             />
             <LearnStack.Screen
                 name='LearnAreas'
-                component={LearnAreas}
+                component={LearnAreasV2}
                 listeners={{
                     focus: onLearnAreasFocus,
                 }}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 /* import HomeScreen from "../screens/HomeScreen"; */
 import SettingsScreen from "../screens/SettingsScreen";
