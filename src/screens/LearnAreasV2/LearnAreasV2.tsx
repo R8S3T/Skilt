@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
+import YearComponent from './YearComponent';
+import LearnAreaComponent from './LearnAreaComponent';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { LearnStackParamList } from '../../components/LearnStackNavigator';
+import CircleOverlay from './CircleOverlay';
 
 interface LearnArea {
     id: string;
@@ -59,74 +62,45 @@ const LearnAreasV2: React.FC<LearnAreasProps> = ({ navigation }) => {
     const [activeYear, setActiveYear] = useState<number | null>(null);
 
     const toggleYear = (year: number) => {
-        setActiveYear(activeYear === year ? null : year);
+        setActiveYear((currentActiveYear) => currentActiveYear === year ? null : year);
     }
 
-    const renderLearnArea = (learnArea: LearnArea) => (
-        <TouchableOpacity
-            key={learnArea.id}
-            onPress={() => navigation.navigate('Subchapters', {subchapterId: learnArea.id})}
-            style={styles.learnAreaContainer}
-        >
-            <Text style={styles.learnAreaText}>{learnArea.title}</Text>
-        </TouchableOpacity>
-    );
-
-    const renderYear = ({ item }: {item: EducationYear}) => (
-        <View style={styles.yearContainer}>
-            <TouchableOpacity onPress={() => toggleYear(item.year)} style={styles.yearTitleContainer}>
-                <Text style={styles.yearTitle}>{`Year ${item.year}`}</Text>
-            </TouchableOpacity>
-            {activeYear === item.year && item.learnAreas.map(renderLearnArea)}
-        </View>
-    );
+    const renderYear = ({ item }: { item: EducationYear }) => {
+        console.log('Rendering year:', item.year, 'isActive:', activeYear === item.year);
+        return (
+            <YearComponent
+            year={item.year}
+            isActive={activeYear === item.year}
+            onPress={() => toggleYear(item.year)}
+            >
+                {item.learnAreas.map((learnArea) => (
+                    <LearnAreaComponent
+                        key={learnArea.id}
+                        id={learnArea.id}
+                        title={learnArea.title}
+                        onPress={() => navigation.navigate('Subchapters', { subchapterId: learnArea.id })}
+                    />
+                ))}
+            </YearComponent>
+        );
+    };
 
     return (
-        <FlatList
-            data={educationData}
-            renderItem={renderYear}
-            keyExtractor={(item) => item.year.toString()}
-            style={styles.container}
-        />
+        <View style={styles.container}>
+            <FlatList
+                data={educationData}
+                renderItem={renderYear}
+                keyExtractor={(item) => item.year.toString()}
+                style={styles.container}
+            />
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    yearContainer: {
-        marginBottom: 20,
-        backgroundColor: '#f0f0f0',
-        borderRadius: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3, // for Android
-    },
-    yearTitleContainer: {
-        padding: 15,
-        backgroundColor: '#e7e7e7',
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-    },
-    yearTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#333',
-    },
-    learnAreaContainer: {
-        backgroundColor: '#fff',
-        padding: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#e0e0e0',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    learnAreaText: {
-        fontSize: 16,
-        color: '#555',
+        marginTop: 10,
     },
 });
 
