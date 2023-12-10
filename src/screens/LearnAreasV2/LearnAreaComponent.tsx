@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     learnAreaText: {
-        fontSize: 16,
+        fontSize: 10,
         color: '#555',
     },
 });

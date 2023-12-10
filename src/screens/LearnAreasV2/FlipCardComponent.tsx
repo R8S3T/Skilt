@@ -1,36 +1,61 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import FlipCard from 'react-native-flip-card';
+import LearnAreaComponent from './LearnAreaComponent';
+import { LearnArea } from './EducationDataComponent';
 
-export default class FlipCardComponent extends Component {
+interface FlipCardComponentProps {
+    year: number;
+    learnAreas: LearnArea[];
+    isActive: boolean;
+    backgroundColor: string;
+}
+
+export default class FlipCardComponent extends Component<FlipCardComponentProps> {
     // method to render front side of the flip card
     private _renderFront = (): JSX.Element => {
+        const { year } = this.props;
         return (
             <View style={styles.cardFront}>
-                <Text>Hello front page</Text>
+                <Text>{`Lehrjahr ${year}`}</Text>
             </View>
         );
     };
 
     // method to render back of the card
     private _renderBack = (): JSX.Element => {
+        const { learnAreas } = this.props;
         return (
             <View style={styles.cardBack}>
-                <Text>Hello back page</Text>
+                {learnAreas.map((learnArea: LearnArea) => (
+                    <LearnAreaComponent
+                        key={learnArea.id}
+                        id={learnArea.id}
+                        title={learnArea.title}
+                        onPress={() => console.log('Learnarea ${learnArea.id} pressed')}
+                    />
+                ))}
             </View>
         );
     };
 
     render() {
+        const { year, learnAreas, isActive } = this.props;
+        const { backgroundColor } = this.props;
         return (
             <FlipCard
-                style={styles.cardStyle}
-                velocity={2} //This makes it move
-                tension={5} // This defines speed of movement
-                friction={1} // Oscillate a lot
-                renderFront={this._renderFront}
-                renderBack={this._renderBack}
-            />
+                style={[styles.cardStyle, { backgroundColor }]}
+                flip={isActive}
+                flipHorizontal={true}
+                flipVertical={false}
+            >
+                <View style={styles.cardFront}>
+                    {this._renderFront()}
+                </View>
+                <View style={styles.cardBack}>
+                    {this._renderBack()}
+                </View>
+            </FlipCard>
         );
     };
 };
@@ -38,14 +63,16 @@ export default class FlipCardComponent extends Component {
 
 const styles = StyleSheet.create({
     cardFront: {
-        backgroundColor: 'red',
         flex: 1,
-        height: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+
     },
     cardBack: {
-        backgroundColor: 'blue',
+        backgroundColor: '#e8630a',
         flex: 1,
-        height: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     cardStyle: {
         flex: 1,
