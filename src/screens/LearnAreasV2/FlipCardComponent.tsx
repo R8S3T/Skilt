@@ -77,4 +77,10 @@ const styles = StyleSheet.create({
     cardStyle: {
         flex: 1,
     },
+    textStyle: {
+        fontSize: 16, // Example font size
+        fontWeight: 'bold', // Example font weight
+        color: 'white', // Example text color
+        textAlign: 'center', // Center the text
+    },
 })

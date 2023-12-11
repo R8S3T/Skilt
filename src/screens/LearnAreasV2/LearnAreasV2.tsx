@@ -38,41 +38,48 @@ const LearnAreasV2: React.FC<LearnAreasProps> = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-<EducationDataComponent>
-    {(educationData) => (
-        <>
-            <View style={styles.row}>
-                {educationData.slice(0, 2).map((item) => renderYear(item, "#9cd3d3"))}
-            </View>
-            <View style={styles.row}>
-                {educationData.slice(2, 4).map((item) => renderYear(item, "#2b4353"))}
-            </View>
-        </>
-    )}
-</EducationDataComponent>
-
+            <EducationDataComponent>
+                {(educationData) => (
+                    <>
+                        <View style={styles.row}>
+                            {educationData.slice(0, 2).map((item, index) => 
+                                renderYear(item, (index === 0) ? '#2b4353' : '#9cd3d3'))
+                            }
+                        </View>
+                        <View style={styles.row}>
+                            {educationData.slice(2, 4).map((item, index) => 
+                                renderYear(item, (index === 0) ? '#9cd3d3' : '#2b4353'))
+                            }
+                        </View>
+                    </>
+                )}
+            </EducationDataComponent>
         </View>
     );
 };
 
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 10,
+        padding: 10, // Add padding to the container for spacing
     },
     row: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between', // This will space out the cards evenly
+        marginBottom: 10, // Margin between rows
     },
     flipCardStyle: {
-        width: '40%',
-        margin: '2%',
+        width: '48%', // Adjust width if needed
+        marginHorizontal: '1%', // Horizontal margin for spacing between cards
         minHeight: 200,
+        borderRadius: 10, // Rounded corners
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 3,
+        backgroundColor: '#fff', // Default background color, can be overridden
     },
 });
 
