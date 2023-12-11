@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import FlipCard from 'react-native-flip-card';
 import LearnAreaComponent from './LearnAreaComponent';
 import { LearnArea } from './EducationDataComponent';
@@ -8,21 +8,25 @@ interface FlipCardComponentProps {
     year: number;
     learnAreas: LearnArea[];
     isActive: boolean;
-    backgroundColor: string;
+    backgroundColor?: string;
+    backgroundImg: any;
 }
 
 export default class FlipCardComponent extends Component<FlipCardComponentProps> {
-    // method to render front side of the flip card
+
     private _renderFront = (): JSX.Element => {
-        const { year } = this.props;
+        const { year, backgroundImg } = this.props;
         return (
-            <View style={styles.cardFront}>
-                <Text>{`Lehrjahr ${year}`}</Text>
-            </View>
+            <ImageBackground
+                source={backgroundImg}
+                style={styles.cardFrontBackground} // Separate style for image
+                resizeMode="cover" // or "contain"
+            >
+                <Text style={styles.textStyle}>{`Lehrjahr ${year}`}</Text>
+            </ImageBackground>
         );
     };
 
-    // method to render back of the card
     private _renderBack = (): JSX.Element => {
         const { learnAreas } = this.props;
         return (
@@ -68,6 +72,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
     },
+    cardFrontBackground: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     cardBack: {
         backgroundColor: '#e8630a',
         flex: 1,
@@ -78,9 +89,9 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     textStyle: {
-        fontSize: 16, // Example font size
-        fontWeight: 'bold', // Example font weight
-        color: 'white', // Example text color
-        textAlign: 'center', // Center the text
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#dbd8e3',
+        textAlign: 'center',
     },
 })
