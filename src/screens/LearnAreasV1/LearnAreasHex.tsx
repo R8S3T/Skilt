@@ -5,7 +5,7 @@ import { learnGroups } from "../../components/LearningAreasData";
 import { lightenColor } from "../../utilities/lightenColor";
 import handleHexagonPress from "../../utilities/navigationHandler";
 
-const LearnAreas = ({ navigation }) => {
+const LearnAreasHex = ({ navigation }) => {
 
     useEffect(() => {
         navigation.setOptions({
@@ -133,4 +133,4 @@ const styles = StyleSheet.create({
     
 });
 
-export default LearnAreas;
+export default LearnAreasHex;

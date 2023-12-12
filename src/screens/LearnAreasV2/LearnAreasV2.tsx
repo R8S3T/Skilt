@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 3,
         backgroundColor: '#fff',
-        borderWidth: 5,       // Thickness of the border
-        borderColor: '#71a0a5',  // Color of the border
+        borderWidth: 5,
+        borderColor: '#71a0a5',
     },
 });
 
