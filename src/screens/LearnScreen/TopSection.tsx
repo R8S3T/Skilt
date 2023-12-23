@@ -13,21 +13,10 @@ const TopSection: React.FC<TopSectionProps> = ({ onButtonPress }) => {
 
     return (
         <View style={styles.newContainer}>
-            <Text style={styles.heading}>Überschrift</Text>
-            <Text style={styles.description}>Mehr Text der erklärt, worum es in den Lernfeldern geht</Text>
-            <View style={styles.buttonContainer}>
-                {['Lehrjahr 1', 'Lehrjahr 2', 'Lehrjahr 3'].map((title, index) => (
-                    <RenderButton
-                        key={index}
-                        title={title}
-                        onPress={() => onButtonPress(title)}
-                        buttonStyle={styles.squareButton}
-                        textStyle={styles.topButtonText}
-                    />
-                ))}
-            </View>
+            <Text style={styles.heading}>Meistere Dein Handwerk</Text>
+            <Text style={styles.description}>Vertiefe Dein Wissen mit maßgeschneiderten Lernhäppchen, die auf deine Ausbildung abgestimmt sind. </Text>
             <RenderButton
-                title='Alle Lernfelder'
+                title='Starte hier'
                 onPress={() => navigation.navigate('LearnAreas')}
                 buttonStyle={styles.ovalButton}
                 textStyle={styles.topButtonText}
@@ -39,51 +28,44 @@ const TopSection: React.FC<TopSectionProps> = ({ onButtonPress }) => {
 
 const styles = StyleSheet.create({
     newContainer: {
-        backgroundColor: '#2b4353',
-        alignItems: 'center',
-        padding: 10,
-        width: 340,
-        height: 230,
+        backgroundColor: '#ffffff',
+        padding: 20,
+        width: 349,
+        height: 213,
         borderRadius: 5,
-        marginBottom: 10,
+        marginBottom: 5,
+        alignItems: 'flex-start',
     },
     heading: {
+        fontFamily: 'Montserrat-Bold',
         fontSize: 20,
         fontWeight: 'bold',
-        marginBottom: 8,
-        color: '#fff',
+        marginBottom: 15,
+        color: '#2b4353',
+        textAlign: 'left',
+        width: '100%',
     },
     description: {
-        textAlign: 'center',
-        marginBottom: 16,
-        color: '#fff',
+        fontFamily: 'Montserrat-Alternates-Medium',
+        fontSize: 16,
+        textAlign: 'left',
+        color: '#2b4353',
+        width: '100%',
+        marginBottom: 15,
     },
-    buttonContainer: {
-        // Style for the container that holds the buttons
-        flexDirection: 'row',
-        justifyContent: 'space-around',
+    ovalButton: {
+        width: 315,
+        height: 40,
+        backgroundColor: '#e8630a',
+        borderRadius: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     topButtonText: {
         color: '#f6f5f5',
         fontWeight: 'bold',
-        fontSize: 15,
-        textAlign: 'center',
+        fontSize: 18,
     } as TextStyle,
-    squareButton: {
-        backgroundColor: '#9cd3d380',
-        width: 100,
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 5,
-        borderRadius: 5,
-    },
-    ovalButton: {
-        width: 315,
-        height: 30,
-        backgroundColor: '#e8630a',
-        margin: 20,
-        borderRadius: 5,
-    },
-})
+});
+
 export default TopSection;
