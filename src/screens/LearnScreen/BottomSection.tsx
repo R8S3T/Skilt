@@ -10,12 +10,13 @@ interface BottomSectionProps {
 const BottomSection: React.FC<BottomSectionProps> = ({ onPress, imageSource }) => {
     return (
         <TouchableOpacity onPress={onPress} style={styles.buttonContainer}>
-            <View style={styles.imageContainer}>
-                <Image source={imageSource} style={styles.image} />
-            </View>
             <View style={styles.textContainer}>
-                <Text style={styles.buttonText}>Prüfungsaufgaben</Text>
+                <Text style={styles.heading}>Prüfungsaufgaben</Text>
+                <Text style={styles.description}>
+                    Bereite dich optimal auf{'\n'}Deine Abschlussprüfung vor
+                </Text>
             </View>
+            <Image source={imageSource} style={styles.image} />
         </TouchableOpacity>
     );
 };
@@ -23,48 +24,33 @@ const BottomSection: React.FC<BottomSectionProps> = ({ onPress, imageSource }) =
 const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
+        width: 349,
+        height: 110,
         alignItems: 'center',
-        justifyContent: 'center',
-        margin: 5,
+        justifyContent: 'space-between',
+        backgroundColor: '#2b4353',
         borderRadius: 5,
+        margin: 5,
         overflow: 'hidden',
-        backgroundColor: '#fff',
-
-        // Shadow properties for iOS
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-
-        // Elevation for Android
-        elevation: 5,
-    },
-    imageContainer: {
-        backgroundColor: '#f6f5f5',
-        padding: 10,
-        width: 100,
-        height: 80,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     textContainer: {
         padding: 10,
-        width: 250,
-        height: 80,
         justifyContent: 'center',
-        alignItems: 'center',
+    },
+    heading: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 18,
+        marginBottom: 8,
+    },
+    description: {
+        color: '#fff',
+        fontSize: 16,
     },
     image: {
         width: 50,
         height: 50,
-    },
-    buttonText: {
-        color: '#2b4353',
-        fontWeight: 'bold',
-        fontSize: 15,
+        marginRight: 10, // Add some margin to the right of the image
     },
 });
 

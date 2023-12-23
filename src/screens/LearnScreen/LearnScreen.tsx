@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, Dimensions, StyleSheet } from 'react-native';
+import { ScrollView, View, StyleSheet } from 'react-native';
 import TopSection from "./TopSection";
 import MiddleSection from "./MiddleSection";
 import BottomSection from "./BottomSection";
@@ -17,12 +17,18 @@ const LearnScreen = ({ navigation }) => {
             contentContainerStyle={styles.contentContainer}
             showsVerticalScrollIndicator={false}
         >
-            <TopSection onButtonPress={handleButtonPress} />
-            <MiddleSection onButtonPress={handleButtonPress} />
-            <BottomSection
-                onPress={() => console.log('Prüfungsaufgaben pressed')}
-                imageSource={require('../../../assets/Images/exam.png')}
-            />
+            <View style={styles.topSection}>
+                <TopSection onButtonPress={handleButtonPress} />
+            </View>
+            <View style={styles.middleSection}>
+                <MiddleSection onButtonPress={handleButtonPress} />
+            </View>
+            <View style={styles.bottomSection}>
+                <BottomSection
+                    onPress={() => console.log('Prüfungsaufgaben pressed')}
+                    imageSource={require('../../../assets/Images/owl.png')}
+                />
+            </View>
         </ScrollView>
     );
 };
@@ -37,6 +43,16 @@ const styles = StyleSheet.create({
         padding: 12,
         paddingBottom: 20,
     },
+    topSection: {
+        marginTop: 10,
+        marginBottom: 20, // Adjust the value as needed
+      },
+      middleSection: {
+        marginBottom: 20, // Adjust the value as needed
+      },
+      bottomSection: {
+        // You may not need a marginBottom here unless you want extra space below the bottom section
+      },
 });
 
 export default LearnScreen;

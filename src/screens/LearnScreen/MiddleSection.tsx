@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TextStyle } from 'react-native';
-import RenderButton from './RenderButton';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { LearnStackParamList } from '../../components/LearnStackNavigator'
 
@@ -11,42 +10,39 @@ interface MiddleSectionProps {
 const MiddleSection: React.FC<MiddleSectionProps> = ({ onButtonPress }) => {
     const navigation = useNavigation<NavigationProp<LearnStackParamList>>();
 
+    const handlePress = () => {
+        console.log('Übungen button pressed');
+    };
+
     return (
-        <View style={styles.buttonContainer}>
-            <RenderButton
-                title='Übungen'
-                onPress={() => navigation.navigate('LearnAreasHex')}
-                buttonStyle={styles.imageButton}
-                textStyle={styles.middleButtonText}
-                imageSource={require('../../../assets/Images/book.png')}
+        <TouchableOpacity
+        style={styles.container}
+        onPress={handlePress}
+        activeOpacity={0.7}
+        >
+            <View style={styles.textContainer}>
+                <Text style={styles.title}>Übungen</Text>
+                <Text style={styles.subtitle}>Teste Dein Wissen</Text>
+            </View>
+            <Image
+                source={require('../../../assets/Images/wrench.png')}
+                style={styles.image}
             />
-            <RenderButton
-                title='Werkzeugkunde'
-                onPress={() => onButtonPress('Werkzeugkunde')}
-                buttonStyle={styles.imageButton}
-                textStyle={styles.middleButtonText}
-                imageSource={require('../../../assets/Images/wrench.png')}
-            />
-        </View>
+        </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
-    buttonContainer: {
-        // Style for the container that holds the buttons
+    container: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    imageButton: {
+        width: 349,
+        height: 100,
         alignItems: 'center',
-        backgroundColor: '#fff',
-        width: 150,
-        height: 120,
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         margin: 20,
+        padding: 20,
+        backgroundColor: '#fff',
         borderRadius: 5,
-
-        // Shadow properties for iOS
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -54,15 +50,29 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-
-        // elevation for Android
         elevation: 5,
     },
-    middleButtonText: {
+    textContainer: {
+        justifyContent: 'center',
+    },
+    title: {
         color: '#2b4353',
-        fontWeight: 'bold',
-        fontSize: 15,
-        textAlign: 'center',
-    } as TextStyle,
+        fontFamily: 'Montserrat-Bold',
+        fontSize: 20,
+        textAlign: 'left',
+        marginBottom: 5,
+    },
+    subtitle: {
+        color: '#2b4353',
+        fontFamily: 'Montserrat-Alternates-Medium',
+        fontSize: 16,
+        textAlign: 'left',
+    },
+    image: {
+        width: 50,
+        height: 50,
+        marginRight: 20,
+        resizeMode: 'contain',
+    },
 })
 export default MiddleSection;
