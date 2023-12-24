@@ -13,7 +13,7 @@ const LearnScreen = ({ navigation }) => {
 
     return (
         <ScrollView
-            style={styles.background} 
+            style={styles.background}
             contentContainerStyle={styles.contentContainer}
             showsVerticalScrollIndicator={false}
         >

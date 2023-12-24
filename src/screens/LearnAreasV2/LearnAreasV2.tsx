@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { LearnStackParamList } from '../../components/LearnStackNavigator';
-import FlipCardComponent from './FlipCardComponent';
-import EducationDataComponent from './EducationDataComponent';
-
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import YearCircle from './YearCircle';
 
 interface LearnArea {
     id: string;
@@ -16,98 +12,97 @@ interface EducationYear {
     learnAreas: LearnArea[];
 }
 
-interface LearnAreasProps {
-    navigation: NativeStackNavigationProp<LearnStackParamList, 'LearnAreas'>;
-}
-
-const LearnAreasV2: React.FC<LearnAreasProps> = ({ navigation }) => {
-    const [activeYear, setActiveYear] = useState<number | null>(null);
-
-    // Function to compute the global index
-    const getGlobalIndex = (rowIndex: number, index: number): number => {
-        return rowIndex * 2 + index;
-    };
+const LearnAreasV2: React.FC = () => {
+    const [educationData] = useState<EducationYear[]>([
+        // Mock data; replace with your actual data source
+        { year: 1, learnAreas: [{ id: '1', title: 'Area 1' }] },
+        { year: 2, learnAreas: [{ id: '2', title: 'Area 2' }] },
+        { year: 3, learnAreas: [{ id: '3', title: 'Area 3' }] },
+        { year: 4, learnAreas: [{ id: '4', title: 'Area 4' }] },
+    ]);
 
     const renderYear = (item: EducationYear, globalIndex: number) => {
-        let backgroundImg;
-
-        switch (globalIndex) {
-            case 0:
-                backgroundImg = require('../../../assets/Images/fabric.png');
-                break;
-            case 1:
-                backgroundImg = require('../../../assets/Images/asfalt-dark.png');
-                break;
-            case 2:
-                backgroundImg = require('../../../assets/Images/noise-lines.png');
-                break;
-            case 3:
-                backgroundImg = require('../../../assets/Images/gray-lines.png');
-                break;
-            // Add default case if needed
-        }
-
+        const backgroundColors = ['#7accc8', '#f4b400', '#db4437', '#1a73e8'];
         return (
-            <View style={styles.flipCardStyle} key={item.year}>
-            <FlipCardComponent
-                year={item.year}
-                learnAreas={item.learnAreas}
-                isActive={activeYear === item.year}
-                backgroundImg={backgroundImg}
-            />
-            </View>
+            <TouchableOpacity 
+                style={styles.card}
+                key={item.year.toString()}
+                onPress={() => console.log(`Year ${item.year} pressed`)}
+            >
+                <YearCircle
+                    year={item.year}
+                    backgroundColor={backgroundColors[globalIndex]}
+                />
+                <Text style={styles.description}>
+                    {`${item.learnAreas.length} Lernfelder`}
+                </Text>
+            </TouchableOpacity>
         );
     };
 
     return (
         <View style={styles.container}>
-            <EducationDataComponent>
-                {(educationData) => (
-                    <>
-                        <View style={styles.row}>
-                            {educationData.slice(0, 2).map((item, index) => 
-                                renderYear(item, getGlobalIndex(0, index)))
-                            }
-                        </View>
-                        <View style={styles.row}>
-                            {educationData.slice(2, 4).map((item, index) => 
-                                renderYear(item, getGlobalIndex(1, index)))
-                            }
-                        </View>
-                    </>
-                )}
-            </EducationDataComponent>
+            <Text style={styles.header}>Wähle Dein Lehrjahr</Text>
+            <View style={styles.row}>
+                {educationData.slice(0, 2).map((item, index) =>
+                    renderYear(item, index))
+                }
+            </View>
+            <View style={styles.row}>
+                {educationData.slice(2, 4).map((item, index) =>
+                    renderYear(item, index + 2)) // index + 2 to continue the global index
+                }
+            </View>
         </View>
-
     );
-
 };
-
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 10,
     },
+    header: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 20,
+    },
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 10,
     },
-    flipCardStyle: {
+    card: {
         width: '48%',
         marginHorizontal: '1%',
         minHeight: 200,
         borderRadius: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: '#fff',
         borderWidth: 5,
-        borderColor: '#71a0a5',
+        // borderColor will be set dynamically
+    },
+    circle: {
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    number: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#fff',
+    },
+    description: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#000',
     },
 });
 
 export default LearnAreasV2;
+

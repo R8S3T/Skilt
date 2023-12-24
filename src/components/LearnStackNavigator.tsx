@@ -6,7 +6,6 @@ import LearnScreen from '../screens/LearnScreen/LearnScreen';
 import Chapters from '../screens/Chapters';
 import Subchapters from '../screens/Subchapters';
 import IntroSlider from './IntroSlider';
-import LearnAreasHex from '../screens/LearnAreasV1/LearnAreasHex';
 
 export type LearnStackParamList = {
     LearnMain: undefined;
@@ -43,11 +42,6 @@ const LearnStackNavigator: React.FC<LearnStackNavigatorProps> = ({ setHeaderTitl
                 listeners={{
                     focus: onLearnAreasFocus,
                 }}
-                options={{ headerShown: false }}
-            />
-            <LearnStack.Screen
-                name='LearnAreasHex'
-                component={LearnAreasHex}
                 options={{ headerShown: false }}
             />
             <LearnStack.Screen

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import FlipCard from 'react-native-flip-card';
 import LearnAreaComponent from './LearnAreaComponent';
-import { LearnArea } from './EducationDataComponent';
+import { LearnArea } from '../LearnAreasV2/EducationDataComponent';
 
 interface FlipCardComponentProps {
     year: number;

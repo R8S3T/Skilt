@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginBottom: 5,
         alignItems: 'flex-start',
-        borderWidth: 1, // Set the width of the border
-        borderColor: '#e8630a', // Set the color of the border
+        borderWidth: 1,
+        borderColor: '#e8630a',
     },
     heading: {
         fontFamily: 'Montserrat-Bold',

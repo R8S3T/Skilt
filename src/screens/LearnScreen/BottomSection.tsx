@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image, ImageSourcePropType, StyleSheet } from 'react-native';
 
-
 interface BottomSectionProps {
     onPress: () => void;
     imageSource: ImageSourcePropType;
@@ -16,7 +15,7 @@ const BottomSection: React.FC<BottomSectionProps> = ({ onPress, imageSource }) =
                     Bereite dich optimal auf{'\n'}Deine Abschlussprüfung vor
                 </Text>
             </View>
-            <Image source={imageSource} style={styles.image} />
+{/*             <FontAwesomeIcon icon={ faMugSaucer } /> */}
         </TouchableOpacity>
     );
 };
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
     image: {
         width: 50,
         height: 50,
-        marginRight: 10, // Add some margin to the right of the image
+        marginRight: 10,
     },
 });
 
