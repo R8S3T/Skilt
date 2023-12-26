@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-/* import HomeScreen from "../screens/HomeScreen"; */
 import SettingsScreen from "../screens/SettingsScreen";
 import { Ionicons } from "@expo/vector-icons";
 import LearnStackNavigator from "./LearnStackNavigator";

@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-/* import LearnAreas from '../screens/LearnAreasOld/LearnAreas'; */
+
 import LearnAreasV2 from '../screens/LearnAreasV2/LearnAreasV2';
 import LearnScreen from '../screens/LearnScreen/LearnScreen';
 import Chapters from '../screens/Chapters';
 import Subchapters from '../screens/Subchapters';
 import IntroSlider from './IntroSlider';
+import YearsScreen from '../screens/YearsScreen/YearsScreen';
 
 export type LearnStackParamList = {
     LearnMain: undefined;
@@ -14,6 +15,7 @@ export type LearnStackParamList = {
     Chapters: undefined;
     Subchapters: { subchapterId: string };
     IntroSlider: undefined;
+    YearsScreen: undefined;
 };
 
 const LearnStack = createNativeStackNavigator<LearnStackParamList>();
@@ -57,6 +59,11 @@ const LearnStackNavigator: React.FC<LearnStackNavigatorProps> = ({ setHeaderTitl
             <LearnStack.Screen
                 name="IntroSlider"
                 component={IntroSlider}
+                options={{ headerShown: false }}
+            />
+            <LearnStack.Screen
+                name="YearsScreen"
+                component={YearsScreen}
                 options={{ headerShown: false }}
             />
         </LearnStack.Navigator>

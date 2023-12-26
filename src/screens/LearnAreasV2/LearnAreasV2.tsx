@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import YearCircle from './YearCircle';
 
 interface LearnArea {
@@ -13,6 +14,7 @@ interface EducationYear {
 }
 
 const LearnAreasV2: React.FC = () => {
+    const navigation = useNavigation();
     const [educationData] = useState<EducationYear[]>([
         // Mock data; replace with your actual data source
         { year: 1, learnAreas: [{ id: '1', title: 'Area 1' }] },
@@ -22,51 +24,66 @@ const LearnAreasV2: React.FC = () => {
     ]);
 
     const renderYear = (item: EducationYear, globalIndex: number) => {
-        const backgroundColors = ['#7accc8', '#f4b400', '#db4437', '#1a73e8'];
+        const backgroundColors = ['#6d93ac', '#8fc2c2', '#eab088', '#d5949d'];
+
         return (
-            <TouchableOpacity 
-                style={styles.card}
+            <View
+                style={[styles.card, { borderColor: backgroundColors[globalIndex] }]}
                 key={item.year.toString()}
-                onPress={() => console.log(`Year ${item.year} pressed`)}
             >
-                <YearCircle
+                <View style={[styles.circleContainer]}>
+                    <YearCircle
                     year={item.year}
-                    backgroundColor={backgroundColors[globalIndex]}
-                />
-                <Text style={styles.description}>
+                    color={backgroundColors[globalIndex]}
+                    />
+                </View>
+                <TouchableOpacity
+                    style={[styles.learnArea, { backgroundColor: backgroundColors[globalIndex] }]}
+                    onPress={() => navigation.navigate('YearsScreen', { year: item.year })}
+                >
+                    <Text style={styles.description}>
                     {`${item.learnAreas.length} Lernfelder`}
-                </Text>
-            </TouchableOpacity>
+                    </Text>
+                </TouchableOpacity>
+            </View>
         );
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.header}>Wähle Dein Lehrjahr</Text>
-            <View style={styles.row}>
-                {educationData.slice(0, 2).map((item, index) =>
-                    renderYear(item, index))
-                }
+        <ScrollView style={styles.scrollView}>
+            <View style={styles.container}>
+                <Text style={styles.header}>Wähle Dein Lehrjahr</Text>
+                <View style={styles.row}>
+                    {educationData.slice(0, 2).map((item, index) =>
+                        renderYear(item, index))
+                    }
+                </View>
+                <View style={styles.row}>
+                    {educationData.slice(2, 4).map((item, index) =>
+                        renderYear(item, index + 2))
+                    }
+                </View>
             </View>
-            <View style={styles.row}>
-                {educationData.slice(2, 4).map((item, index) =>
-                    renderYear(item, index + 2)) // index + 2 to continue the global index
-                }
-            </View>
-        </View>
+        </ScrollView>
+
     );
 };
 
+
 const styles = StyleSheet.create({
+    scrollView: {
+        flex: 1,
+    },
     container: {
         flex: 1,
         padding: 10,
     },
     header: {
-        fontSize: 22,
+        fontSize: 28,
+        color: '#2b4353',
         fontWeight: 'bold',
         textAlign: 'center',
-        marginBottom: 20,
+        margin: 20,
     },
     row: {
         flexDirection: 'row',
@@ -74,33 +91,48 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     card: {
-        width: '48%',
+        width: '46%',
         marginHorizontal: '1%',
-        minHeight: 200,
+        minHeight: 220,
         borderRadius: 10,
         alignItems: 'center',
+        justifyContent: 'flex-start',
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        marginBottom: 10,
+        overflow: 'hidden',
+    },
+    circleContainer: {
+        flex: 1,
         justifyContent: 'center',
-        backgroundColor: '#fff',
-        borderWidth: 5,
-        // borderColor will be set dynamically
+        alignItems: 'center',
+        width: '100%',
     },
     circle: {
-        width: 70,
-        height: 70,
+        width: 110,
+        height: 110,
         borderRadius: 35,
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 10,
     },
-    number: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#fff',
+    learnArea: {
+        width: '100%',
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderTopWidth: 1,
+        borderColor: '#ffffff',
     },
     description: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#000',
+        color: '#fff',
+    },
+    number: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#fff',
     },
 });
 

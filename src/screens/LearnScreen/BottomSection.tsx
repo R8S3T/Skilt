@@ -38,12 +38,13 @@ const styles = StyleSheet.create({
     },
     heading: {
         color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 18,
+        fontFamily: 'Montserrat-Bold',
+        fontSize: 20,
         marginBottom: 8,
     },
     description: {
         color: '#fff',
+        fontFamily: 'Montserrat-Alternates-Medium',
         fontSize: 16,
     },
     image: {
