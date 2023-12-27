@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TextStyle } from 'react-native';
 import RenderButton from "./RenderButton";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { LearnStackParamList } from '../../components/LearnStackNavigator'
-
+import { scaleFontSize, screenWidth } from "../../utilities/utils";
 interface TopSectionProps {
     onButtonPress: (title: string) => void;
 }
@@ -21,7 +21,6 @@ const TopSection: React.FC<TopSectionProps> = ({ onButtonPress }) => {
                 buttonStyle={styles.ovalButton}
                 textStyle={styles.topButtonText}
             />
-
         </View>
     );
 };
@@ -30,9 +29,10 @@ const styles = StyleSheet.create({
     newContainer: {
         backgroundColor: '#ffffff',
         padding: 20,
-        width: 349,
-        height: 213,
+        width: screenWidth * 0.90,
+        height: screenWidth * 0.55,
         borderRadius: 5,
+        marginTop: 10,
         marginBottom: 5,
         alignItems: 'flex-start',
         borderWidth: 1,
@@ -56,10 +56,11 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     ovalButton: {
-        width: 315,
-        height: 40,
+        width: screenWidth * 0.75,
+        height: screenWidth * 0.10,
         backgroundColor: '#e8630a',
         borderRadius: 5,
+        marginTop: screenWidth < 375 ? 0 : screenWidth * 0.07,
         justifyContent: 'center',
         alignItems: 'center',
     },

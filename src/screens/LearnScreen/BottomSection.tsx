@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image, ImageSourcePropType, StyleSheet } from 'react-native';
+import { scaleFontSize, screenWidth } from "../../utilities/utils";
 
 interface BottomSectionProps {
     onPress: () => void;
@@ -15,7 +16,10 @@ const BottomSection: React.FC<BottomSectionProps> = ({ onPress, imageSource }) =
                     Bereite dich optimal auf{'\n'}Deine Abschlussprüfung vor
                 </Text>
             </View>
-{/*             <FontAwesomeIcon icon={ faMugSaucer } /> */}
+            <Image
+                source={require('../../../assets/Images/modify-icon.png')}
+                style={[styles.image, { tintColor: 'white' }]} 
+            />
         </TouchableOpacity>
     );
 };
@@ -23,7 +27,7 @@ const BottomSection: React.FC<BottomSectionProps> = ({ onPress, imageSource }) =
 const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
-        width: 349,
+        width: screenWidth * 0.90,
         height: 110,
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -48,9 +52,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     image: {
-        width: 50,
-        height: 50,
-        marginRight: 10,
+        width: screenWidth * 0.1, // Example: 10% of the screen width
+        height: screenWidth * 0.1, // Keep the aspect ratio consistent
+        marginRight: screenWidth * 0.06, // Example: 2% of the screen width
     },
 });
 

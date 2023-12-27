@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { LearnStackParamList } from '../../components/LearnStackNavigator'
-
+import { scaleFontSize, screenWidth } from '../../utilities/utils';
 
 interface MiddleSectionProps {
     onButtonPress: (title: string) => void;
@@ -35,8 +35,8 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ onButtonPress }) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        width: 349,
-        height: 100,
+        width: screenWidth * 0.90,
+        height: screenWidth * 0.30,
         alignItems: 'center',
         justifyContent: 'space-between',
         margin: 20,
@@ -64,15 +64,14 @@ const styles = StyleSheet.create({
     },
     subtitle: {
         color: '#2b4353',
-        fontFamily: 'Montserrat-Alternates-Medium',
+        fontFamily: 'Montserrat-Medium',
         fontSize: 16,
         textAlign: 'left',
     },
     image: {
-        width: 50,
-        height: 50,
-        marginRight: 20,
-        resizeMode: 'contain',
+        width: screenWidth * 0.13, // Example: 10% of the screen width
+        height: screenWidth * 0.13, // Keep the aspect ratio consistent
+        marginRight: screenWidth * 0.02, // Example: 2% of the screen width
     },
 })
 export default MiddleSection;
