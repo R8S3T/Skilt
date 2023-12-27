@@ -8,7 +8,7 @@ export async function initializeDatabase(dbAsset) {
     try {
         // Check if the SQLite database already exists
         const fileInfo = await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite/skilt.db');
-        
+
         if (!fileInfo.exists) {
             console.log("Database file does not exist, creating...");
 

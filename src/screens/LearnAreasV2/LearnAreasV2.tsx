@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import EducationDataComponent from './EducationDataComponent';
 import { useNavigation } from '@react-navigation/native';
 import YearCircle from './YearCircle';
 
@@ -15,57 +16,41 @@ interface EducationYear {
 
 const LearnAreasV2: React.FC = () => {
     const navigation = useNavigation();
-    const [educationData] = useState<EducationYear[]>([
-        // Mock data; replace with your actual data source
-        { year: 1, learnAreas: [{ id: '1', title: 'Area 1' }] },
-        { year: 2, learnAreas: [{ id: '2', title: 'Area 2' }] },
-        { year: 3, learnAreas: [{ id: '3', title: 'Area 3' }] },
-        { year: 4, learnAreas: [{ id: '4', title: 'Area 4' }] },
-    ]);
 
     const renderYear = (item: EducationYear, globalIndex: number) => {
         const backgroundColors = ['#6d93ac', '#8fc2c2', '#eab088', '#d5949d'];
 
         return (
-            <View
-                style={[styles.card, { borderColor: backgroundColors[globalIndex] }]}
-                key={item.year.toString()}
-            >
-                <View style={[styles.circleContainer]}>
-                    <YearCircle
-                    year={item.year}
-                    color={backgroundColors[globalIndex]}
-                    />
+            <View style={[styles.card, { borderColor: backgroundColors[globalIndex] }]} key={item.year.toString()}>
+                <View style={styles.circleContainer}>
+                    <YearCircle year={item.year} color={backgroundColors[globalIndex]} />
                 </View>
                 <TouchableOpacity
                     style={[styles.learnArea, { backgroundColor: backgroundColors[globalIndex] }]}
                     onPress={() => navigation.navigate('YearsScreen', { year: item.year })}
                 >
-                    <Text style={styles.description}>
-                    {`${item.learnAreas.length} Lernfelder`}
-                    </Text>
+                    <Text style={styles.description}>{`${item.learnAreas.length} Lernfelder`}</Text>
                 </TouchableOpacity>
             </View>
         );
     };
 
     return (
-        <ScrollView style={styles.scrollView}>
-            <View style={styles.container}>
-                <Text style={styles.header}>Wähle Dein Lehrjahr</Text>
-                <View style={styles.row}>
-                    {educationData.slice(0, 2).map((item, index) =>
-                        renderYear(item, index))
-                    }
-                </View>
-                <View style={styles.row}>
-                    {educationData.slice(2, 4).map((item, index) =>
-                        renderYear(item, index + 2))
-                    }
-                </View>
-            </View>
-        </ScrollView>
-
+        <EducationDataComponent>
+            {educationData => (
+                <ScrollView style={styles.scrollView}>
+                    <View style={styles.container}>
+                        <Text style={styles.header}>Wähle Dein Lehrjahr</Text>
+                        <View style={styles.row}>
+                            {educationData.slice(0, 2).map((item, index) => renderYear(item, index))}
+                        </View>
+                        <View style={styles.row}>
+                            {educationData.slice(2, 4).map((item, index) => renderYear(item, index + 2))}
+                        </View>
+                    </View>
+                </ScrollView>
+            )}
+        </EducationDataComponent>
     );
 };
 

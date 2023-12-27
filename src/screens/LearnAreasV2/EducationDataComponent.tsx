@@ -40,13 +40,13 @@ const educationData: EducationYear[] = [
             { id: '9', title: 'Lernfelder 9' },
             { id: '10', title: 'Lernfelder 10' },
             { id: '11', title: 'Lernfelder 11' },
-            { id: '12', title: 'Lernfelder 12' }
+            { id: '12', title: 'Lernfelder 12' },
+            { id: '13', title: 'Lernfelder 13' }
         ]
     },
     {
         year: 4,
         learnAreas: [
-            { id: '13', title: 'Lernfelder 13' },
             { id: '14', title: 'Lernfelder 14' },
             { id: '15', title: 'Lernfelder 15' },
         ]
