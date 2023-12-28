@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         width: screenWidth * 0.90,
-        height: 110,
+        height: screenWidth * 0.35,
         alignItems: 'center',
         justifyContent: 'space-between',
         backgroundColor: '#2b4353',
@@ -43,13 +43,13 @@ const styles = StyleSheet.create({
     heading: {
         color: '#fff',
         fontFamily: 'Montserrat-Bold',
-        fontSize: 20,
+        fontSize: scaleFontSize(16),
         marginBottom: 8,
     },
     description: {
         color: '#fff',
         fontFamily: 'Montserrat-Alternates-Medium',
-        fontSize: 16,
+        fontSize: scaleFontSize(12),
     },
     image: {
         width: screenWidth * 0.1, // Example: 10% of the screen width

@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { ScrollView, View, StyleSheet } from 'react-native';
 import TopSection from "./TopSection";
 import MiddleSection from "./MiddleSection";
 import BottomSection from "./BottomSection";
 
+const LearnScreen: React.FC = () => {
 
-const LearnScreen = ({ navigation }) => {
     const handleButtonPress = (title: string) => {
         console.log(`${title} Pressed`);
         // Additional logic following later
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     },
     topSection: {
         marginTop: 10,
-        marginBottom: 20, // Adjust the value as needed
+        marginBottom: 20,
       },
       middleSection: {
         marginBottom: 20, // Adjust the value as needed

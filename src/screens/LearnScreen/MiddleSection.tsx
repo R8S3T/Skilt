@@ -58,20 +58,20 @@ const styles = StyleSheet.create({
     title: {
         color: '#2b4353',
         fontFamily: 'Montserrat-Bold',
-        fontSize: 20,
+        fontSize: scaleFontSize(16),
         textAlign: 'left',
         marginBottom: 5,
     },
     subtitle: {
         color: '#2b4353',
         fontFamily: 'Montserrat-Medium',
-        fontSize: 16,
+        fontSize: scaleFontSize(14),
         textAlign: 'left',
     },
     image: {
-        width: screenWidth * 0.13, // Example: 10% of the screen width
-        height: screenWidth * 0.13, // Keep the aspect ratio consistent
-        marginRight: screenWidth * 0.02, // Example: 2% of the screen width
+        width: screenWidth * 0.13,
+        height: screenWidth * 0.13,
+        marginRight: screenWidth * 0.02,
     },
 })
 export default MiddleSection;

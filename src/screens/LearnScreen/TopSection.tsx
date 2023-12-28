@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     },
     heading: {
         fontFamily: 'Montserrat-Bold',
-        fontSize: 20,
+        fontSize: scaleFontSize(16),
         fontWeight: 'bold',
         marginBottom: 15,
         color: '#2b4353',
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     },
     description: {
         fontFamily: 'Montserrat-Alternates-Medium',
-        fontSize: 16,
+        fontSize: scaleFontSize(12),
         textAlign: 'left',
         color: '#2b4353',
         width: '100%',
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     topButtonText: {
         color: '#f6f5f5',
         fontWeight: 'bold',
-        fontSize: 18,
+        fontSize: scaleFontSize(14),
     } as TextStyle,
 });
 

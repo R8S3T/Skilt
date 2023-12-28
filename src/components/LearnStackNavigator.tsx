@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import LearnAreasV2 from '../screens/LearnAreasV2/LearnAreasV2';
@@ -20,30 +20,17 @@ export type LearnStackParamList = {
 
 const LearnStack = createNativeStackNavigator<LearnStackParamList>();
 
-interface LearnStackNavigatorProps {
-    setHeaderTitle: (title: string) => void;
-}
-
-const LearnStackNavigator: React.FC<LearnStackNavigatorProps> = ({ setHeaderTitle }) => {
-    const onLearnMainFocus = useCallback(() => setHeaderTitle('Lernen'), [setHeaderTitle]);
-    const onLearnAreasFocus = useCallback(() => setHeaderTitle('LernFelder'), [setHeaderTitle]);
-
+const LearnStackNavigator: React.FC = () => {
     return (
         <LearnStack.Navigator initialRouteName='LearnMain'>
             <LearnStack.Screen
                 name='LearnMain'
                 component={LearnScreen}
-                listeners={{
-                    focus: onLearnMainFocus,
-                }}
                 options={{ headerShown: false }}
             />
             <LearnStack.Screen
                 name='LearnAreas'
                 component={LearnAreasV2}
-                listeners={{
-                    focus: onLearnAreasFocus,
-                }}
                 options={{ headerShown: false }}
             />
             <LearnStack.Screen
