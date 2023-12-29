@@ -1,5 +1,6 @@
 import React, { useLayoutEffect } from "react";
 import { ScrollView, View, StyleSheet } from 'react-native';
+import { dynamicMargin, screenWidth } from "../../utilities/utils";
 import TopSection from "./TopSection";
 import MiddleSection from "./MiddleSection";
 import BottomSection from "./BottomSection";
@@ -45,14 +46,14 @@ const styles = StyleSheet.create({
     },
     topSection: {
         marginTop: 10,
-        marginBottom: 20,
-      },
-      middleSection: {
-        marginBottom: 20, // Adjust the value as needed
-      },
-      bottomSection: {
-        // You may not need a marginBottom here unless you want extra space below the bottom section
-      },
+        marginBottom: dynamicMargin(15, 30),
+    },
+    middleSection: {
+        marginBottom: dynamicMargin(15, 30),
+    },
+    bottomSection: {
+        marginBottom: dynamicMargin(10, 20),
+    },
 });
 
 export default LearnScreen;

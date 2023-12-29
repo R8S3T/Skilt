@@ -1,91 +1,126 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
-import { fetchData } from "../../utilities/fetchData";
+import React, { useState } from 'react';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { dynamicMargin } from '../../utilities/utils';
+import EducationDataComponent from './EducationDataComponent';
+import { useNavigation } from '@react-navigation/native';
+import YearCircle from './YearCircle';
 
-interface Chapter {
-    ChapterId: number;
-    ChapterIntro: string;
+interface LearnArea {
+    id: string;
+    title: string;
 }
 
-/* const data = [
-    { id: '1', title: 'Bauelemente mit handgeführten Werkzeugen fertigen' },
-    { id: '2', title: 'Baugruppen herstellen und montieren' },
-    { id: '3', title: 'Technische Systeme instand halten' },
-    { id: '4', title: 'Bauelemente mit handgeführten Maschinen fertigen' },
-]; */
+interface EducationYear {
+    year: number;
+    learnAreas: LearnArea[];
+}
 
-type YearsScreenRouteProp = RouteProp<{ params: { year: number } }, 'params'>;
+const LearnAreasV2: React.FC = () => {
+    const navigation = useNavigation();
 
-const YearsScreen: React.FC = () => {
-    const route = useRoute<YearsScreenRouteProp>();
-    const [chapters, setChapters] = useState<Chapter[]>([]);
-    const selectedYear = route.params.year;
+    const renderYear = (item: EducationYear, globalIndex: number) => {
+        const backgroundColors = ['#6d93ac', '#8fc2c2', '#eab088', '#d5949d'];
 
-    useEffect(() => {
-        const loadChapters = async () => {
-            try {
-                const year = route.params.year;
-                const query = `SELECT ChapterId, ChapterIntro FROM Chapters WHERE Year = ?`;
-                const fetchedData = await fetchData<Chapter>(query, [year]);
-                setChapters(fetchedData);
-            } catch (error) {
-                console.error('Error fetching chapters:', error);
-            }
-        };
-        loadChapters();
-    }, [selectedYear]);
-
-    const renderItem = ({ item }: { item: Chapter }) => (
-        <View style={styles.chapterContainer}>
-            <TouchableOpacity onPress={() => console.log('Container pressed')}>
-
-            </TouchableOpacity>
-            <Text style={styles.chapterText}>{item.ChapterIntro}</Text>
-        </View>
-    );
-
-    return (
-        <View style={styles.container}>
-            <Text style={styles.header}>{selectedYear}. Lehrjahr</Text>
-            <FlatList
-                data={chapters}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.ChapterId.toString()}
-            />
+        return (
+            <View style={[styles.card, { borderColor: backgroundColors[globalIndex] }]} key={item.year.toString()}>
+                <View style={styles.circleContainer}>
+                    <YearCircle year={item.year} color={backgroundColors[globalIndex]} />
+                </View>
+                <TouchableOpacity
+                    style={[styles.learnArea, { backgroundColor: backgroundColors[globalIndex] }]}
+                    onPress={() => navigation.navigate('YearsScreen', { year: item.year })}
+                >
+                    <Text style={styles.description}>{`${item.learnAreas.length} Lernfelder`}</Text>
+                </TouchableOpacity>
             </View>
         );
     };
 
+    return (
+        <EducationDataComponent>
+            {educationData => (
+                <ScrollView style={styles.scrollView}>
+                    <View style={styles.container}>
+                        <Text style={styles.header}>Wähle Dein Lehrjahr</Text>
+                        <View style={styles.row}>
+                            {educationData.slice(0, 2).map((item, index) => renderYear(item, index))}
+                        </View>
+                        <View style={styles.row}>
+                            {educationData.slice(2, 4).map((item, index) => renderYear(item, index + 2))}
+                        </View>
+                    </View>
+                </ScrollView>
+            )}
+        </EducationDataComponent>
+    );
+};
+
+
 const styles = StyleSheet.create({
+    scrollView: {
+        flex: 1,
+    },
     container: {
-    flex: 1,
-    backgroundColor: 'transparent',
+        flex: 1,
+        padding: 10,
     },
     header: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginVertical: 20,
-    color: '#2b4353',
+        fontSize: 28,
+        color: '#2b4353',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        margin: 20,
     },
-    chapterContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 18,
-    marginVertical: 5,
-    margin: 18,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: '#2b4353',
-    borderRadius: 10,
-    backgroundColor: 'transparent',
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 10,
     },
-    chapterText: {
-    marginLeft: 35,
-    fontFamily: 'Montserrat-Medium',
-    color: '#2b4353',
+    card: {
+        width: '46%',
+        marginHorizontal: '1%',
+        minHeight: 220,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        marginBottom: 10,
+        overflow: 'hidden',
+    },
+    circleContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+    },
+    circle: {
+        width: 110,
+        height: 110,
+        borderRadius: 35,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    learnArea: {
+        width: '100%',
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderTopWidth: 1,
+        borderColor: '#ffffff',
+    },
+    description: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#fff',
+    },
+    number: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#fff',
     },
 });
 
-export default YearsScreen;
+export default LearnAreasV2;
+

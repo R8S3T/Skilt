@@ -1,6 +1,6 @@
-// YearCircle.tsx
 import React from "react";
 import { View, Text, StyleSheet } from 'react-native';
+import { screenWidth } from "../../utilities/utils";
 
 interface YearCircleProps {
     year: number;
@@ -19,9 +19,9 @@ const YearCircle: React.FC<YearCircleProps> = ({ year, color }) => {
 
 const styles = StyleSheet.create({
   outerCircle: {
-    width: 110,
-    height: 110,
-    borderRadius: 100,
+    width: screenWidth * 0.25,
+    height: screenWidth * 0.25,
+    borderRadius: screenWidth * 0.25 / 2,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 3,
@@ -29,18 +29,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   innerCircle: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: screenWidth * 0.18,
+    height: screenWidth * 0.18,
+    borderRadius: screenWidth * 0.20 / 2,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 3, // Adjust the border width as necessary
-    borderColor: '#ffffff', // White border for the inner circle
+    borderWidth: 3,
+    borderColor: '#ffffff',
   },
   yearText: {
-    color: '#ffffff', // White text color
+    color: '#ffffff',
     fontWeight: 'bold',
-    fontSize: 30,
+    fontSize: screenWidth * 0.075,
   },
 });
 
