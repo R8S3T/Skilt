@@ -13,3 +13,8 @@ export const scaleFontSize = (size: number): number => {
 export const dynamicMargin = (smallMargin: number, largeMargin: number): number => {
     return screenWidth > 375 ? largeMargin : smallMargin;
 };
+
+export const dynamicCardHeight = (smallHeight: number, largeHeight: number): number => {
+    const screenWidth = Dimensions.get('window').width;
+    return screenWidth > 375 ? largeHeight : smallHeight;
+};

@@ -17,7 +17,7 @@ const TopSection: React.FC<TopSectionProps> = ({ onButtonPress }) => {
             <Text style={styles.description}>Vertiefe Dein Wissen mit maßgeschneiderten Lernhäppchen, die auf deine Ausbildung abgestimmt sind. </Text>
             <RenderButton
                 title='Starte hier'
-                onPress={() => navigation.navigate('LearnAreas')}
+                onPress={() => navigation.navigate('YearsScreen')}
                 buttonStyle={styles.ovalButton}
                 textStyle={styles.topButtonText}
             />

@@ -8,10 +8,10 @@ interface Chapter {
     ChapterIntro: string;
 }
 
-type YearsScreenRouteProp = RouteProp<{ params: { year: number } }, 'params'>;
+type ChaptersScreenRouteProp = RouteProp<{ ChaptersScreen: { year: number } }, 'ChaptersScreen'>;
 
-const YearsScreen: React.FC = () => {
-    const route = useRoute<YearsScreenRouteProp>();
+const ChaptersScreen: React.FC = () => {
+    const route = useRoute<ChaptersScreenRouteProp>();
     const [chapters, setChapters] = useState<Chapter[]>([]);
     const selectedYear = route.params.year;
 
@@ -81,4 +81,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default YearsScreen;
+export default ChaptersScreen;

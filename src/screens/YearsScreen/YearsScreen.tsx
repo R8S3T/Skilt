@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { dynamicMargin } from '../../utilities/utils';
+import { dynamicCardHeight } from '../../utilities/utils';
 import EducationDataComponent from './EducationDataComponent';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import YearCircle from './YearCircle';
+import { LearnStackParamList } from '../../components/LearnStackNavigator';
 
 interface LearnArea {
     id: string;
@@ -15,20 +16,20 @@ interface EducationYear {
     learnAreas: LearnArea[];
 }
 
-const LearnAreasV2: React.FC = () => {
-    const navigation = useNavigation();
+const YearsScreen: React.FC = () => {
+    const navigation = useNavigation<NavigationProp<LearnStackParamList>>();
 
     const renderYear = (item: EducationYear, globalIndex: number) => {
         const backgroundColors = ['#6d93ac', '#8fc2c2', '#eab088', '#d5949d'];
 
         return (
-            <View style={[styles.card, { borderColor: backgroundColors[globalIndex] }]} key={item.year.toString()}>
+            <View style={[styles.card, { minHeight: dynamicCardHeight(220, 300), borderColor: backgroundColors[globalIndex] }]} key={item.year.toString()}>
                 <View style={styles.circleContainer}>
                     <YearCircle year={item.year} color={backgroundColors[globalIndex]} />
                 </View>
                 <TouchableOpacity
                     style={[styles.learnArea, { backgroundColor: backgroundColors[globalIndex] }]}
-                    onPress={() => navigation.navigate('YearsScreen', { year: item.year })}
+                    onPress={() => navigation.navigate('ChaptersScreen', { year: item.year })}
                 >
                     <Text style={styles.description}>{`${item.learnAreas.length} Lernfelder`}</Text>
                 </TouchableOpacity>
@@ -122,5 +123,5 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LearnAreasV2;
+export default YearsScreen;
 
