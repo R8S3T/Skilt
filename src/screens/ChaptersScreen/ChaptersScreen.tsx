@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
+import { useRoute, RouteProp, useNavigation, NavigationProp } from "@react-navigation/native";
 import { fetchData } from "../../utilities/fetchData";
+import { scaleFontSize, dynamicCardHeight, getDynamicIconSize } from "../../utilities/utils";
+import { LearnStackParamList } from "../../components/LearnStackNavigator";
+
 
 interface Chapter {
     ChapterId: number;
@@ -14,6 +17,8 @@ const ChaptersScreen: React.FC = () => {
     const route = useRoute<ChaptersScreenRouteProp>();
     const [chapters, setChapters] = useState<Chapter[]>([]);
     const selectedYear = route.params.year;
+    const iconSize = getDynamicIconSize(40, 50);
+    const navigation = useNavigation<NavigationProp<LearnStackParamList>>();
 
     useEffect(() => {
         const loadChapters = async () => {
@@ -31,8 +36,13 @@ const ChaptersScreen: React.FC = () => {
 
     const renderItem = ({ item }: { item: Chapter }) => (
         <View style={styles.chapterContainer}>
-            <TouchableOpacity onPress={() => console.log('Container pressed')}>
-
+            <TouchableOpacity
+                style={styles.playButton}
+                onPress={() => navigation.navigate('SubchaptersScreen', { chapterId: item.ChapterId })}>
+            <Image
+                source={require('../../../assets/Images/play.png')}
+                style={{ width: iconSize, height: iconSize, tintColor: '#e8630a' }}
+            />
             </TouchableOpacity>
             <Text style={styles.chapterText}>{item.ChapterIntro}</Text>
         </View>
@@ -56,7 +66,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     header: {
-        fontSize: 22,
+        fontSize: scaleFontSize(22),
         fontWeight: 'bold',
         textAlign: 'center',
         marginVertical: 20,
@@ -66,19 +76,29 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         padding: 18,
-        marginVertical: 5,
+        marginTop: 20,
         margin: 18,
-        marginBottom: 10,
+        marginBottom: 20,
         borderWidth: 1,
         borderColor: '#2b4353',
         borderRadius: 10,
         backgroundColor: 'transparent',
+        height: dynamicCardHeight(95, 110),
     },
     chapterText: {
-        marginLeft: 35,
+        flex: 1,
+        marginLeft: 28,
         fontFamily: 'Montserrat-Medium',
         color: '#2b4353',
+        fontSize: scaleFontSize(13),
+    },
+
+    playButton: {
+        marginRight: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 
 export default ChaptersScreen;
+

@@ -6,7 +6,9 @@ export const screenWidth = Dimensions.get('window').width;
 // Function to calculate fontsize
 export const scaleFontSize = (size: number): number => {
     const scale = screenWidth / 320;
-    return Math.round(size * scale);
+    const newSize = size * scale;
+    // Optionally add a condition to ensure a minimum font size
+    return newSize > size ? Math.round(newSize) : size;
 };
 
 // Function to calculate dynamic margin
@@ -17,4 +19,9 @@ export const dynamicMargin = (smallMargin: number, largeMargin: number): number 
 export const dynamicCardHeight = (smallHeight: number, largeHeight: number): number => {
     const screenWidth = Dimensions.get('window').width;
     return screenWidth > 375 ? largeHeight : smallHeight;
+};
+
+// Function to calculate dynamic icon size
+export const getDynamicIconSize = (smallSize: number, largeSize: number): number => {
+    return screenWidth > 375 ? largeSize : smallSize;
 };

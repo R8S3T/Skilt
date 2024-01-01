@@ -52,9 +52,9 @@ const styles = StyleSheet.create({
         fontSize: scaleFontSize(12),
     },
     image: {
-        width: screenWidth * 0.1, // Example: 10% of the screen width
-        height: screenWidth * 0.1, // Keep the aspect ratio consistent
-        marginRight: screenWidth * 0.06, // Example: 2% of the screen width
+        width: screenWidth * 0.1,
+        height: screenWidth * 0.1,
+        marginRight: screenWidth * 0.06,
     },
 });
 
