@@ -6,7 +6,7 @@ import Subchapters from '../screens/Subchapters';
 import IntroSlider from './IntroSlider';
 import YearsScreen from '../screens/YearsScreen/YearsScreen';
 import ChaptersScreen from '../screens/ChaptersScreen/ChaptersScreen';
-import SubchaptersScreen from '../screens/SubchaptersScreen/SupchaptersScreen';
+import SubchaptersScreen from '../screens/SubchaptersScreen/SubchaptersScreen';
 
 
 export type LearnStackParamList = {
@@ -50,7 +50,7 @@ const LearnStackNavigator: React.FC = () => {
                 options={{ headerShown: false }}
             />
             <LearnStack.Screen
-                name='SubchaptersScreen' // This is the new screen you're adding
+                name='SubchaptersScreen'
                 component={SubchaptersScreen}
                 options={{ headerShown: false }}
             />

@@ -39,6 +39,7 @@
     "expo-app-loading": "^2.1.1",
     "expo-asset": "~8.10.1",
     "expo-file-system": "~15.4.5",
+    "expo-linear-gradient": "~12.3.0",
     "expo-splash-screen": "~0.20.5",
     "expo-sqlite": "~11.3.3",
     "expo-status-bar": "~1.6.0",
