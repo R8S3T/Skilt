@@ -7,7 +7,10 @@ interface SubchapterNodeProps {
     onPress: () => void;
 }
 
-const SubchapterNode: React.FC<SubchapterNodeProps> = ({ isLocked, onPress }) => {
+const SubchapterNode: React.FC<SubchapterNodeProps> = ({
+    isLocked,
+    onPress,
+}) => {
     const iconSource = isLocked
         ? require('../../../assets/Images/lock_icon.png')
         : require('../../../assets/Images/play_icon.png');
@@ -79,10 +82,10 @@ const styles = StyleSheet.create({
         height: 50,
     },
     activeIcon: {
-        tintColor: '#FFA500', // Orange color for the active icon
+        tintColor: '#FFA500',
     },
     inactiveIcon: {
-        tintColor: '#FFFFFF', // White color for inactive icons
+        tintColor: '#FFFFFF',
     },
 });
 

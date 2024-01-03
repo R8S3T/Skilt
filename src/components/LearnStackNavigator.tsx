@@ -8,7 +8,6 @@ import YearsScreen from '../screens/YearsScreen/YearsScreen';
 import ChaptersScreen from '../screens/ChaptersScreen/ChaptersScreen';
 import SubchaptersScreen from '../screens/SubchaptersScreen/SubchaptersScreen';
 
-
 export type LearnStackParamList = {
     LearnMain: undefined;
     LearnAreas: undefined;
@@ -16,7 +15,7 @@ export type LearnStackParamList = {
     Subchapters: { subchapterId: string };
     IntroSlider: undefined;
     YearsScreen: undefined;
-    SubchaptersScreen: { chapterId: number }
+    SubchaptersScreen: { chapterId: number };
 };
 
 const LearnStack = createNativeStackNavigator<LearnStackParamList>();
