@@ -8,17 +8,28 @@ interface SubchapterRowsProps {
 }
 
 const SubchapterRows: React.FC<SubchapterRowsProps> = ({ subchapters }) => {
+  // Function to create pairs of subchapters
+  const createRows = (subchapters) => {
+    let rows = [];
+    for (let i = 0; i < subchapters.length; i += 2) {
+      rows.push(subchapters.slice(i, i + 2));
+    }
+    return rows;
+  };
+
+  const rows = createRows(subchapters);
+
   return (
     <View style={styles.container}>
-      {subchapters.map((subchapter, index) => (
-        <View
-          key={subchapter.id}
-          style={[styles.row, index % 2 === 0 ? styles.leftAlign : styles.rightAlign]}
-        >
-          <SubchapterNode
-            isLocked={subchapter.isLocked}
-            onPress={() => console.log('Subchapter pressed', subchapter.id)}
-          />
+      {rows.map((row, rowIndex) => (
+        <View key={rowIndex} style={styles.row}>
+          {row.map((subchapter) => (
+            <SubchapterNode
+              key={subchapter.id}
+              isLocked={subchapter.isLocked}
+              onPress={() => console.log('Subchapter pressed', subchapter.id)}
+            />
+          ))}
         </View>
       ))}
     </View>
@@ -30,17 +41,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   row: {
-    width: '100%',
-    marginBottom: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    margin: 20, // Adjust as needed
   },
-  leftAlign: {
-    alignItems: 'flex-start',
-    marginLeft: 150,
-  },
-  rightAlign: {
-    alignItems: 'flex-end',
-    marginRight: 150,
-  },
+
 });
 
 export default SubchapterRows;
