@@ -15,7 +15,10 @@ export type LearnStackParamList = {
     Subchapters: { subchapterId: string };
     IntroSlider: undefined;
     YearsScreen: undefined;
-    SubchaptersScreen: { chapterId: number };
+    SubchaptersScreen: {
+        chapterId: number;
+        chapterTitle: string;
+    };
 };
 
 const LearnStack = createNativeStackNavigator<LearnStackParamList>();

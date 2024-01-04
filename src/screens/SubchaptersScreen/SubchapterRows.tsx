@@ -9,7 +9,7 @@ interface SubchapterRowsProps {
 
 const SubchapterRows: React.FC<SubchapterRowsProps> = ({ subchapters }) => {
   // Function to create pairs of subchapters
-  const createRows = (subchapters) => {
+  const createRows = (subchapters: Subchapter[]) => {
     let rows = [];
     for (let i = 0; i < subchapters.length; i += 2) {
       rows.push(subchapters.slice(i, i + 2));
@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    margin: 20, // Adjust as needed
+    margin: 20,
+    
   },
 
 });
