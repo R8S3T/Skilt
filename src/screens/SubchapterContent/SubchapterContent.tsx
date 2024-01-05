@@ -1,18 +1,34 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { View, Text, StyleSheet } from 'react-native';
+import { RouteProp } from '@react-navigation/native';
 import PagerView from 'react-native-pager-view';
-import useSubchapterData from "../utilities/useSubchapterData";
-import QuizScreen from "./Quizzes/QuizScreen";
-import ContentWithExplanations from "../components/ContentWithExplanations";
+import useSubchapterData from "../../utilities/useSubchapterData";
+import QuizScreen from "../Quizzes/QuizScreen";
+import ContentWithExplanations from "../../components/ContentWithExplanations";
 
-const Subchapters = ({ route }) => {
-    const chapterId = useMemo(() => route.params.chapterId, [route.params.chapterId]);
+interface CombinedDataItem {
+    type: 'content' | 'quiz';
+    data: any;
+}
+
+interface SubchapterContentData {
+    QuizId?: number;
+    scContentId: number;
+}
+
+type SubchapterContentRouteParams = {
+    route: RouteProp<{ params: { chapterId: number } }, 'params'>;
+};
+
+const SubchapterContent = ({ route }: SubchapterContentRouteParams) => {
+    const chapterId = route.params.chapterId;
+    console.log(`Extracted chapterId: ${chapterId}`); 
     const { data: contentData, error } = useSubchapterData(chapterId);
-    const [currentSlideType, setCurrentSlideType] = useState(null);
-    const pagerViewRef = useRef(null);
+    const [currentSlideType, setCurrentSlideType] = useState<'content' | 'quiz' | null>(null);
+    const pagerViewRef = useRef<PagerView>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const combinedData = useMemo(() => contentData.reduce((acc, curr) => {
+    const combinedData = useMemo(() => contentData.reduce((acc: CombinedDataItem[], curr: SubchapterContentData) => {
         acc.push({ type: 'content', data: curr });
 
         if (curr.QuizId && curr.scContentId) {
@@ -86,4 +102,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Subchapters;
+export default SubchapterContent;

@@ -3,7 +3,8 @@ import React from "react";
 import { Text, View, StyleSheet, ScrollView, ImageBackground } from 'react-native';
 import SubchapterRows from "./SubchapterRows";
 import { subchapters } from "./subchaptersTitle";
-import { useRoute, RouteProp } from '@react-navigation/native'
+import { useRoute, RouteProp } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
 export interface Subchapter {
   id: number;
@@ -14,13 +15,14 @@ export interface Subchapter {
 type SubchaptersScreenRouteProp = RouteProp<{ SubchaptersScreen: { chapterId: number, chapterTitle: string } }, 'SubchaptersScreen'>;
 
 const SubchaptersScreen: React.FC = () => {
+  const navigation = useNavigation();
   const route = useRoute<SubchaptersScreenRouteProp>();
   const { chapterTitle } = route.params;
 
   return (
     <ScrollView style={styles.screenContainer}>
       <Text style={styles.heading}>{chapterTitle}</Text>
-      <SubchapterRows subchapters={subchapters} />
+      <SubchapterRows subchapters={subchapters} navigation={navigation} />
     </ScrollView>
   );
 };

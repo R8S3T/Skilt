@@ -19,7 +19,7 @@ const SubchapterNode: React.FC<SubchapterNodeProps> = ({
         ? require('../../../assets/Images/lock_icon.png')
         : require('../../../assets/Images/play_icon.png');
 
-        // Create dynamic styles within function
+    // Create dynamic styles within function
     const dynamicStyles = StyleSheet.create({
         container: {
             width: dynamicNodeSize,

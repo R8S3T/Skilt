@@ -7,7 +7,7 @@ interface SubchapterRowsProps {
   subchapters: Subchapter[];
 }
 
-const SubchapterRows: React.FC<SubchapterRowsProps> = ({ subchapters }) => {
+const SubchapterRows: React.FC<SubchapterRowsProps & { navigation: any }> = ({ subchapters, navigation }) => {
   // Function to create pairs of subchapters
   const createRows = (subchapters: Subchapter[]) => {
     let rows = [];
@@ -27,7 +27,11 @@ const SubchapterRows: React.FC<SubchapterRowsProps> = ({ subchapters }) => {
             <SubchapterNode
               key={subchapter.id}
               isLocked={subchapter.isLocked}
-              onPress={() => console.log('Subchapter pressed', subchapter.id)}
+              onPress={() => {
+                if (!subchapter.isLocked) {
+                  navigation.navigate('SubchapterContent', { chapterId: subchapter.id })
+                }
+              }}
             />
           ))}
         </View>
