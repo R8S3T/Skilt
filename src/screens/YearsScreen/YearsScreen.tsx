@@ -25,13 +25,15 @@ const YearsScreen: React.FC = () => {
         return (
             <TouchableOpacity
                 key={item.year.toString()}
-                style={[styles.card, { borderColor: backgroundColors[globalIndex] }]}
+                style={[styles.card]}
                 onPress={() => navigation.navigate('ChaptersScreen', { year: item.year })}
             >
                 <View style={[styles.yearRectangle, { backgroundColor: backgroundColors[globalIndex] }]}>
                     <Text style={styles.number}>{`${item.year}. Lehrjahr`}</Text>
                 </View>
-                <Text style={styles.learnArea}>{`${item.learnAreas.length} Lernfelder`}</Text>
+                <Text style={styles.learnArea}>
+                    {`${item.learnAreas.length} Lernfelder`}
+                </Text>
             </TouchableOpacity>
         );
     };
@@ -58,6 +60,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 10,
+        alignItems: 'center',
     },
     header: {
         fontSize: 28,
@@ -73,20 +76,22 @@ const styles = StyleSheet.create({
     },
     card: {
         width: '85%',
-        minHeight: dynamicCardHeight(80, 120),
+        minHeight: dynamicCardHeight(85, 120),
         borderRadius: 10,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: 'transparent',
-        borderWidth: 2,
-        marginBottom: 30,
+        borderWidth: 1,
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+        marginTop: 15,
+        marginBottom: 25,
         overflow: 'hidden',
         paddingTop: 0,
         paddingBottom: 30,
         paddingHorizontal: 20,
     },
     yearRectangle: {
-        width: '65%',
+        width: '75%',
         height: screenWidth > 375 ? 50 : 40,
         borderBottomRightRadius: 20,
         justifyContent: 'center',
@@ -107,7 +112,7 @@ const styles = StyleSheet.create({
     },
 
     number: {
-        fontSize: scaleFontSize(20),
+        fontSize: scaleFontSize(18),
         fontWeight: 'bold',
         color: '#fff',
     },
