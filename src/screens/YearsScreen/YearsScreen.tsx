@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { ScrollView, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { dynamicCardHeight } from '../../utilities/utils';
+import { dynamicCardHeight, scaleFontSize, screenWidth } from '../../utilities/utils';
 import EducationDataComponent from './EducationDataComponent';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import YearCircle from './YearCircle';
 import { LearnStackParamList } from '../../components/LearnStackNavigator';
 
 interface LearnArea {
@@ -19,21 +18,21 @@ interface EducationYear {
 const YearsScreen: React.FC = () => {
     const navigation = useNavigation<NavigationProp<LearnStackParamList>>();
 
-    const renderYear = (item: EducationYear, globalIndex: number) => {
-        const backgroundColors = ['#6d93ac', '#8fc2c2', '#eab088', '#d5949d'];
+    const renderYear = (item: EducationYear) => {
+        const backgroundColors = ['#a8d1d1', '#2b4353', '#e8630a', '#9ba6a5'];
+        const globalIndex = item.year - 1;
 
         return (
-            <View style={[styles.card, { minHeight: dynamicCardHeight(220, 300), borderColor: backgroundColors[globalIndex] }]} key={item.year.toString()}>
-                <View style={styles.circleContainer}>
-                    <YearCircle year={item.year} color={backgroundColors[globalIndex]} />
+            <TouchableOpacity
+                key={item.year.toString()}
+                style={[styles.card, { borderColor: backgroundColors[globalIndex] }]}
+                onPress={() => navigation.navigate('ChaptersScreen', { year: item.year })}
+            >
+                <View style={[styles.yearRectangle, { backgroundColor: backgroundColors[globalIndex] }]}>
+                    <Text style={styles.number}>{`${item.year}. Lehrjahr`}</Text>
                 </View>
-                <TouchableOpacity
-                    style={[styles.learnArea, { backgroundColor: backgroundColors[globalIndex] }]}
-                    onPress={() => navigation.navigate('ChaptersScreen', { year: item.year })}
-                >
-                    <Text style={styles.description}>{`${item.learnAreas.length} Lernfelder`}</Text>
-                </TouchableOpacity>
-            </View>
+                <Text style={styles.learnArea}>{`${item.learnAreas.length} Lernfelder`}</Text>
+            </TouchableOpacity>
         );
     };
 
@@ -41,19 +40,14 @@ const YearsScreen: React.FC = () => {
         <EducationDataComponent>
             {educationData => (
                 <ScrollView style={styles.scrollView}>
-                    <View style={styles.container}>
-                        <Text style={styles.header}>Wähle Dein Lehrjahr</Text>
-                        <View style={styles.row}>
-                            {educationData.slice(0, 2).map((item, index) => renderYear(item, index))}
-                        </View>
-                        <View style={styles.row}>
-                            {educationData.slice(2, 4).map((item, index) => renderYear(item, index + 2))}
-                        </View>
-                    </View>
+                <View style={styles.container}>
+                    <Text style={styles.header}>Wähle Dein Lehrjahr</Text>
+                    {educationData.map((item, index) => renderYear(item, index))}
+                </View>
                 </ScrollView>
             )}
-        </EducationDataComponent>
-    );
+            </EducationDataComponent>
+        );
 };
 
 
@@ -78,46 +72,42 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     card: {
-        width: '46%',
-        marginHorizontal: '1%',
-        minHeight: 220,
+        width: '85%',
+        minHeight: dynamicCardHeight(80, 120),
         borderRadius: 10,
-        alignItems: 'center',
+        alignItems: 'flex-start',
         justifyContent: 'flex-start',
         backgroundColor: 'transparent',
         borderWidth: 2,
-        marginBottom: 10,
+        marginBottom: 30,
         overflow: 'hidden',
+        paddingTop: 0,
+        paddingBottom: 30,
+        paddingHorizontal: 20,
     },
-    circleContainer: {
-        flex: 1,
+    yearRectangle: {
+        width: '65%',
+        height: screenWidth > 375 ? 50 : 40,
+        borderBottomRightRadius: 20,
         justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
+        alignItems: 'flex-start',
+        paddingHorizontal: 10,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        zIndex: 1,
     },
-    circle: {
-        width: 110,
-        height: 110,
-        borderRadius: 35,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 10,
-    },
+
     learnArea: {
-        width: '100%',
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderTopWidth: 1,
-        borderColor: '#ffffff',
+        fontSize: scaleFontSize(16),
+        color: '#2b4353',
+        position: 'absolute',
+        bottom: 15,
+        left: 10,
     },
-    description: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#fff',
-    },
+
     number: {
-        fontSize: 24,
+        fontSize: scaleFontSize(20),
         fontWeight: 'bold',
         color: '#fff',
     },

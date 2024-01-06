@@ -2,6 +2,7 @@ import React from 'react';
 import LottieView from 'lottie-react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { View, Text, StyleSheet } from 'react-native';
+import { scaleFontSize, getDynamicIconSize } from './utils';
 
 
 const slides = [
@@ -80,18 +81,18 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     animation: {
-        width: 150,
-        height: 150,
+        width: getDynamicIconSize(150, 250),
+        height: getDynamicIconSize(150, 250),
         alignSelf: 'center',
     },
     title: {
-        fontSize: 18,
+        fontSize: scaleFontSize(18),
         color: '#000',
         textAlign: 'center',
         marginVertical: 10,
     },
     text: {
-        fontSize: 16,
+        fontSize: scaleFontSize(16), 
         color: '#333',
         textAlign: 'center',
     },
