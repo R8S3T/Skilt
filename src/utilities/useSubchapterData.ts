@@ -9,7 +9,6 @@ const useSubchapterData = (chapterId) => {
     useEffect(() => {
         const loadSubchapterData = async () => {
             try {
-                console.log(`Fetching data for chapterId: ${chapterId}`); // Log the chapterId being used
                 const subchapterQuery = `
                     SELECT SubchapterContent.ContentId AS scContentId, ContentData, q.QuizId, q.ContentId AS quizContentId, q.Question
                     FROM SubchapterContent
@@ -18,11 +17,8 @@ const useSubchapterData = (chapterId) => {
                     ORDER BY SubchapterContent.ContentId ASC
                 `;
                 const subchapterParams = [chapterId];
-                console.log(`Executing query: ${subchapterQuery}`); // Log the query
-                console.log(`With parameters: ${subchapterParams}`); // Log the parameters
 
                 const subchapterData = await fetchData(subchapterQuery, subchapterParams);
-                console.log(`Query result: `, subchapterData); 
 
                 for (const item of subchapterData) {
                     if (item.QuizId) {
@@ -33,9 +29,7 @@ const useSubchapterData = (chapterId) => {
                             ORDER BY OptionId ASC
                         `;
                         const optionsParams = [item.QuizId];
-                        console.log(`Fetching options for QuizId: ${item.QuizId}`); // Log the QuizId being used
                         item.options = await fetchData(optionsQuery, optionsParams);
-                        console.log(`Options for QuizId ${item.QuizId}: `, item.options); // Log the options
                     }
                 }
                 setData(subchapterData);

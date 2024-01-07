@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     header: {
+        fontFamily: 'Lato-Bold',
         fontSize: scaleFontSize(22),
         fontWeight: 'bold',
         textAlign: 'center',
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
     chapterText: {
         flex: 1,
         marginLeft: 28,
-        fontFamily: 'Montserrat-Medium',
+        fontFamily: 'OpenSans-Regular',
         color: '#2b4353',
         fontSize: scaleFontSize(13),
     },

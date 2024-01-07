@@ -2,9 +2,12 @@ import * as Font from 'expo-font';
 
 export async function loadFonts() {
     await Font.loadAsync({
-        'Montserrat-Bold': require('../../assets/Fonts/montserrat/Montserrat-Bold.otf'),
-        'Montserrat-Medium': require('../../assets/Fonts/montserrat/Montserrat-Medium.otf'),
-        'Montserrat-Alternates-Light': require('../../assets/Fonts/montserrat/MontserratAlternates-Light.otf'),
-        'Montserrat-Alternates-Medium': require('../../assets/Fonts/montserrat/MontserratAlternates-Medium.otf')
+        // Lato for headings
+        'Lato-Medium': require('../../assets/Fonts/lato/Lato-Medium.ttf'),
+        'Lato-Regular': require('../../assets/Fonts/lato/Lato-Regular.ttf'),
+        'Lato-Bold': require('../../assets/Fonts/lato/Lato-Bold.ttf'),
+        
+        //Open Sans for body content
+        'OpenSans-Regular': require('../../assets/Fonts/open-sans/OpenSans-Regular.ttf'),
     });
 }

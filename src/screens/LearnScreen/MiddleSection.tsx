@@ -57,14 +57,14 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#2b4353',
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Lato-Bold',
         fontSize: scaleFontSize(16),
         textAlign: 'left',
         marginBottom: 5,
     },
     subtitle: {
         color: '#2b4353',
-        fontFamily: 'Montserrat-Medium',
+        fontFamily: 'OpenSans-Regular',
         fontSize: scaleFontSize(14),
         textAlign: 'left',
     },

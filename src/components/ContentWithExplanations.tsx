@@ -104,11 +104,13 @@ const styles = StyleSheet.create({
         contentText: {
         fontSize: 16,
         color: 'black',
+        fontFamily: 'OpenSans-Regular',
         },
         explanationMarker: {
         fontSize: 16,
         color: 'blue',
-        textDecorationLine: 'underline',
+        fontFamily: 'OpenSans-Regular',
+/*         textDecorationLine: 'underline', */
         }
     });
 

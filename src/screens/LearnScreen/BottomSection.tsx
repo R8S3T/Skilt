@@ -42,13 +42,13 @@ const styles = StyleSheet.create({
     },
     heading: {
         color: '#fff',
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Lato-Bold',
         fontSize: scaleFontSize(16),
         marginBottom: 8,
     },
     description: {
         color: '#fff',
-        fontFamily: 'Montserrat-Alternates-Medium',
+        fontFamily: 'OpenSans-Regular',
         fontSize: scaleFontSize(12),
     },
     image: {

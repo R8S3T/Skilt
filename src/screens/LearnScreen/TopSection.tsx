@@ -4,6 +4,8 @@ import RenderButton from "./RenderButton";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { LearnStackParamList } from '../../components/LearnStackNavigator'
 import { scaleFontSize, screenWidth } from "../../utilities/utils";
+
+
 interface TopSectionProps {
     onButtonPress: (title: string) => void;
 }
@@ -39,17 +41,16 @@ const styles = StyleSheet.create({
         borderColor: '#e8630a',
     },
     heading: {
-        fontFamily: 'Montserrat-Bold',
+        fontFamily: 'Lato-Bold',
         fontSize: scaleFontSize(16),
-        fontWeight: 'bold',
         marginBottom: 15,
         color: '#2b4353',
         textAlign: 'left',
         width: '100%',
     },
     description: {
-        fontFamily: 'Montserrat-Alternates-Medium',
-        fontSize: scaleFontSize(12),
+        fontFamily: 'OpenSans-Regular',
+        fontSize: scaleFontSize(13),
         textAlign: 'left',
         color: '#2b4353',
         width: '100%',
@@ -60,13 +61,13 @@ const styles = StyleSheet.create({
         height: screenWidth * 0.10,
         backgroundColor: '#e8630a',
         borderRadius: 5,
-        marginTop: screenWidth < 375 ? 0 : screenWidth * 0.07,
+        marginTop: screenWidth < 375 ? 0 : screenWidth * 0.04,
         justifyContent: 'center',
         alignItems: 'center',
     },
     topButtonText: {
         color: '#f6f5f5',
-        fontWeight: 'bold',
+        fontFamily: 'Lato-Bold',
         fontSize: scaleFontSize(14),
     } as TextStyle,
 });

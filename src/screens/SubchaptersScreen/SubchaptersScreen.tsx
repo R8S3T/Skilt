@@ -22,6 +22,7 @@ const SubchaptersScreen: React.FC = () => {
   return (
     <ScrollView style={styles.screenContainer}>
       <Text style={styles.heading}>{chapterTitle}</Text>
+      <View style={styles.separator} />
       <SubchapterRows subchapters={subchapters} navigation={navigation} />
     </ScrollView>
   );
@@ -33,6 +34,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(43, 67, 83, 0.8)',
   },
   heading: {
+    fontFamily: 'Lato-Bold',
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -40,10 +42,12 @@ const styles = StyleSheet.create({
     marginTop: 25,
     color: '#FFF',
     padding: 20,
-    borderWidth: 2,
-    borderColor: '#FFF',
-    borderRadius: 10,
     backgroundColor: 'transparent',
+  },
+  separator: {
+    borderBottomWidth: 0.8,
+    borderBottomColor: '#FFF',
+    marginVertical: 5,
   },
 });
 

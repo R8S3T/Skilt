@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 28,
         color: '#2b4353',
-        fontWeight: 'bold',
+        fontFamily: 'Lato-Bold',
         textAlign: 'center',
         margin: 20,
     },
@@ -102,16 +102,16 @@ const styles = StyleSheet.create({
         left: 0,
         zIndex: 1,
     },
-
     learnArea: {
-        fontSize: scaleFontSize(16),
+        fontFamily: 'OpenSans-Regular',
+        fontSize: scaleFontSize(14),
         color: '#2b4353',
         position: 'absolute',
         bottom: 15,
         left: 10,
     },
-
     number: {
+        fontFamily: 'Lato-Bold',
         fontSize: scaleFontSize(18),
         fontWeight: 'bold',
         color: '#fff',
