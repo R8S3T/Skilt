@@ -26,6 +26,7 @@ const useSubchapterData = (chapterId: number) => {
                     ORDER BY SubchapterContent.ContentId ASC
                 `;
                 const subchapterParams = [chapterId];
+                console.log("useSubchapterData params:", subchapterParams);
 
                 const subchapterData: any[] = await fetchData(subchapterQuery, subchapterParams);
 

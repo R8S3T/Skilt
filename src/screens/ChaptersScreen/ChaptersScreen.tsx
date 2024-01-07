@@ -17,6 +17,7 @@ const ChaptersScreen: React.FC = () => {
     const route = useRoute<ChaptersScreenRouteProp>();
     const [chapters, setChapters] = useState<Chapter[]>([]);
     const selectedYear = route.params.year;
+    console.log("route.params in ChaptersScreen:", route.params);
     const iconSize = getDynamicIconSize(40, 50);
     const navigation = useNavigation<NavigationProp<LearnStackParamList>>();
 

@@ -4,9 +4,19 @@ import useFetchData from "../../utilities/useFetchData";
 import MultipleChoice from "./MultipleChoice";
 import FillInTheBlanks from "./FillInTheBlanks";
 
-const QuizScreen = ({ contentId, onContinue }) => {
+
+interface QuizzScreenProps {
+    contentId: number;
+    onContinue: () => void;
+}
+
+interface QuizData {
+    Type: string;
+}
+
+const QuizScreen: React.FC<QuizzScreenProps> = ({ contentId, onContinue }) => {
     const query = 'SELECT * FROM Quiz WHERE ContentId =?';
-    const { data, error } = useFetchData(query, [contentId]);
+    const { data, error } = useFetchData<QuizData[]>(query, [contentId]);
 
     if (error) {
         return <Text>Error loading quiz.</Text>;
@@ -17,11 +27,10 @@ const QuizScreen = ({ contentId, onContinue }) => {
     }
 
     const quiz = data[0];
-    console.log('Quiz Data:', quiz);
 
     if (!quiz) {
         return <Text>Quiz data is not available.</Text>;
-      }
+    }
     if (quiz.Type === 'multiple_choice') {
         return (
             <View style={styles.container}>
@@ -45,9 +54,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
-        backgroundColor: '#fff', // or any color that suits your app's theme
+        backgroundColor: '#fff',
     },
-    // ... add more styles as needed
 });
 
 

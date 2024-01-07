@@ -25,6 +25,7 @@ type SubchapterContentProps = {
 
 const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
     const chapterId = route.params.chapterId;
+    console.log("route.params in SubchapterContent:", route.params);
     const { data: contentData, error } = useSubchapterData(chapterId);
     const pagerViewRef = useRef<PagerView>(null);
 

@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import QuizScreen from "../Quizzes/QuizScreen";
+import { View, Text, StyleSheet } from 'react-native';
+import useFetchData from "../../utilities/useFetchData";
+import MultipleChoice from '../Quizzes/MultipleChoice';
+import FillInTheBlanks from '../Quizzes/FillInTheBlanks';
 
 interface QuizSlideProps {
     quizData: {
@@ -9,13 +11,39 @@ interface QuizSlideProps {
     onContinue: () => void;
 }
 
+interface QuizData {
+    Type: string;
+}
+
 const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue }) => {
+    console.log("Quiz Data in QuizSlide:", quizData);
+    const query = 'SELECT * FROM Quiz WHERE ContentId =?';
+    
+    const { data, error } = useFetchData<QuizData[]>(query, [quizData.scContentId]);
+
+    if (error) {
+        return <Text>Error loading quiz.</Text>;
+    }
+
+    if (data.length === 0) {
+        return <Text>No quiz found for this content.</Text>;
+    }
+
+    const quiz = data[0];
+
+    if (!quiz) {
+        return <Text>Quiz data is not available.</Text>;
+    }
+
     return (
         <View style={styles.slide}>
-            <QuizScreen
-                contentId={quizData.scContentId}
-                onContinue={onContinue}
-            />
+            {quiz.Type === 'multiple_choice' ? (
+                <MultipleChoice quiz={quiz} onContinue={onContinue} />
+            ) : quiz.Type === 'fill_in_the_blanks' ? (
+                <FillInTheBlanks quiz={quiz} onContinue={onContinue} />
+            ) : (
+                <Text>Unsupported quiz type.</Text>
+            )}
         </View>
     );
 };

@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import { getDatabase } from "./database";
 import { isEqual } from "lodash";
 
-const useFetchData = (query: string, params: any[]) => {
-    interface Quiz {
-        Type: string;
-        QuizId: number;
-        options?: string[];
-    }
+interface Quiz {
+    Type: string;
+    QuizId: number;
+    options?: string[];
+}
+
+function useFetchData(query: string, parameters: any[]): { data: Quiz[]; error: any } {
     const [data, setData] = useState<Quiz[]>([]);
     const [error, setError] = useState<Error | null>(null);
 
@@ -21,7 +22,7 @@ const useFetchData = (query: string, params: any[]) => {
                     db.transaction(tx => {
                         tx.executeSql(
                             query,
-                            params,
+                            parameters,
                             async (_, { rows: { _array } }) => {
                                 quizzes = _array;
 
@@ -81,7 +82,7 @@ const useFetchData = (query: string, params: any[]) => {
         };
 
         fetchData();
-    }, [query, params]);
+    }, [query, ...parameters]);
 
     return { data, error };
 };
