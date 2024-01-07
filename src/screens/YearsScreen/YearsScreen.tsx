@@ -19,7 +19,7 @@ const YearsScreen: React.FC = () => {
     const navigation = useNavigation<NavigationProp<LearnStackParamList>>();
 
     const renderYear = (item: EducationYear) => {
-        const backgroundColors = ['#a8d1d1', '#2b4353', '#e8630a', '#9ba6a5'];
+        const backgroundColors = ['#9ba6a5', '#2b4353', '#e8630a', '#a8d1d1'];
         const globalIndex = item.year - 1;
 
         return (
@@ -66,8 +66,9 @@ const styles = StyleSheet.create({
         fontSize: 28,
         color: '#2b4353',
         fontFamily: 'Lato-Bold',
+        fontWeight: 'bold',
         textAlign: 'center',
-        margin: 20,
+        marginVertical: 20,
     },
     row: {
         flexDirection: 'row',
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     },
     yearRectangle: {
         width: '75%',
-        height: screenWidth > 375 ? 50 : 40,
+        height: screenWidth > 375 ? 45 : 35,
         borderBottomRightRadius: 20,
         justifyContent: 'center',
         alignItems: 'flex-start',
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
         fontSize: scaleFontSize(14),
         color: '#2b4353',
         position: 'absolute',
-        bottom: 15,
+        bottom: 10,
         left: 10,
     },
     number: {

@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "./fetchData";
 
-const useSubchapterData = (chapterId) => {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(null);
+interface SubchapterItem {
+    scContentId: number;
+    ContentData: string;
+    QuizId?: number;
+    quizContentId?: number;
+    Question?: string;
+    options?: string[];
+}
+
+const useSubchapterData = (chapterId: number) => {
+    const [data, setData] = useState<SubchapterItem[]>([]);
+    const [error, setError] = useState<Error | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -18,9 +27,11 @@ const useSubchapterData = (chapterId) => {
                 `;
                 const subchapterParams = [chapterId];
 
-                const subchapterData = await fetchData(subchapterQuery, subchapterParams);
+                const subchapterData: any[] = await fetchData(subchapterQuery, subchapterParams);
 
-                for (const item of subchapterData) {
+                const formattedDataPromises: Promise<SubchapterItem>[] = subchapterData.map(async (item: any) => {
+                    let options: string[] | undefined = undefined;
+
                     if (item.QuizId) {
                         const optionsQuery = `
                             SELECT OptionText
@@ -29,12 +40,25 @@ const useSubchapterData = (chapterId) => {
                             ORDER BY OptionId ASC
                         `;
                         const optionsParams = [item.QuizId];
-                        item.options = await fetchData(optionsQuery, optionsParams);
+                        options = await fetchData(optionsQuery, optionsParams);
                     }
-                }
-                setData(subchapterData);
+
+                    return {
+                        scContentId: item.scContentId,
+                        ContentData: item.ContentData,
+                        QuizId: item.QuizId,
+                        quizContentId: item.quizContentId,
+                        Question: item.Question,
+                        options: options
+                    };
+                });
+
+                const formattedData = await Promise.all(formattedDataPromises);
+                setData(formattedData);
             } catch (e) {
-                setError(e);
+                if (e instanceof Error) {
+                    setError(e);
+                }
             } finally {
                 setLoading(false);
             }
@@ -44,6 +68,6 @@ const useSubchapterData = (chapterId) => {
     }, [chapterId]);
 
     return { data, error, loading };
-}
+};
 
 export default useSubchapterData;

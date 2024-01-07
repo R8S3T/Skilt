@@ -31,7 +31,7 @@ const SubchaptersScreen: React.FC = () => {
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    backgroundColor: 'rgba(43, 67, 83, 0.8)',
+    backgroundColor: 'transparent',
   },
   heading: {
     fontFamily: 'Lato-Bold',
@@ -40,13 +40,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
     marginTop: 25,
-    color: '#FFF',
+    color: '#2b4353',
     padding: 20,
     backgroundColor: 'transparent',
   },
   separator: {
     borderBottomWidth: 0.8,
-    borderBottomColor: '#FFF',
+    borderBottomColor: '#2b4353',
     marginVertical: 5,
   },
 });
