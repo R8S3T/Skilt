@@ -1,18 +1,35 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
+import { Quiz } from "../../utilities/useFetchData";
 
-const MultipleChoice = ({ quiz, onContinue }) => {
-    console.log(quiz.options); 
-    const [selectedOption, setSelectedOption] = useState(null);
-    const [isCorrect, setIsCorrect] = useState(null);
+interface QuizData {
+    Question: string;
 
-    const handleAnswer = (option) => {
+    Answer: string;
+    options: string[]; // Adjust this based on the actual structure
+}
+
+type OptionType = string;
+
+interface MultipleChoiceProps {
+    quiz: Quiz;
+    onContinue: () => void;
+    onAnswerSubmit: (isCorrect: boolean) => void;
+}
+
+const MultipleChoice: React.FC<MultipleChoiceProps> = ({ quiz, onContinue, onAnswerSubmit }) => {
+
+    const [selectedOption, setSelectedOption] = useState<OptionType | null>(null);
+    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+
+    const handleAnswer = (option: OptionType) => {
         const correctAnswerSelected = quiz.Answer === option;
         setSelectedOption(option);
         setIsCorrect(correctAnswerSelected);
-    }
+        onAnswerSubmit(correctAnswerSelected);
+    };
 
-    const getButtonStyle = (option) => {
+    const getButtonStyle = (option:OptionType) => {
         if (selectedOption === null) {
             return styles.button;
         }
@@ -27,7 +44,7 @@ const MultipleChoice = ({ quiz, onContinue }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.quizText}>{quiz.Question}</Text>
-            {quiz.options.map((option, index) => {
+            {quiz.options && quiz.options.map((option, index) => {
                 const buttonStyle = getButtonStyle(option);
 
                 return (
@@ -40,8 +57,9 @@ const MultipleChoice = ({ quiz, onContinue }) => {
                     </TouchableOpacity>
                 );
             })}
-            {selectedOption !== null && (isCorrect ? <Text>Correct answer</Text> : <Text>Wrong answer, try again</Text>)}
-            {isCorrect && <Button title='Continue' onPress={onContinue} />}
+            {selectedOption !== null && (
+                <Text>{isCorrect ? 'Correct answer' : 'Wrong answer, please try again'}</Text>
+            )}
         </View>
     );
 }

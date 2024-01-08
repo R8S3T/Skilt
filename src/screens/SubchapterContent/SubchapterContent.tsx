@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Text, ScrollView, StyleSheet } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import PagerView from 'react-native-pager-view';
@@ -25,7 +25,6 @@ type SubchapterContentProps = {
 
 const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
     const chapterId = route.params.chapterId;
-    console.log("route.params in SubchapterContent:", route.params);
     const { data: contentData, error } = useSubchapterData(chapterId);
     const pagerViewRef = useRef<PagerView>(null);
 
@@ -51,6 +50,12 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
         }
     };
 
+    const [isNextButtonActive, setIsNextButtonActive] = useState(true); // State to manage NextButton's active state
+
+    const handleAnswerSubmit = (isCorrect: boolean) => {
+        setIsNextButtonActive(isCorrect);
+    };
+    
     return (
         <PagerView
             ref={pagerViewRef}
@@ -66,8 +71,14 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
                     contentContainerStyle={styles.slideContent}
                 >
                     {item.type === 'content' && <ContentSlide contentData={item.data} />}
-                    {item.type === 'quiz' && <QuizSlide quizData={item.data} onContinue={goToNextPage} />}
-                    <NextButton onPress={goToNextPage} />
+                    {item.type === 'quiz' && (
+                        <QuizSlide
+                            quizData={item.data}
+                            onContinue={goToNextPage}
+                            onAnswerSubmit={handleAnswerSubmit}
+                        />
+                    )}
+                    <NextButton onPress={goToNextPage} isActive={isNextButtonActive} />
                 </ScrollView>
             ))}
         </PagerView>

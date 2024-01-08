@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { getDatabase } from "./database";
 import { isEqual } from "lodash";
 
-interface Quiz {
+export interface Quiz {
     Type: string;
     QuizId: number;
+    Question: string;
+    Answer: string;
     options?: string[];
 }
 
