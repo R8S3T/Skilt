@@ -41,24 +41,30 @@ const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSub
         return <Text>Quiz data is not available.</Text>;
     }
 
-    if (quiz.Type === 'multiple_choice'){
-        return <MultipleChoice quiz={quiz} onContinue={onContinue} onAnswerSubmit={onAnswerSubmit} />;
+    const content = (() => {
+        if (quiz.Type === 'multiple_choice'){
+            return <MultipleChoice quiz={quiz} onContinue={onContinue} onAnswerSubmit={onAnswerSubmit} />;
+        } else if (quiz.Type === 'fill_in_the_blanks') {
+            return <FillInTheBlanks quiz={quiz} onContinue={onContinue} />;
+        } else {
+            return <Text>Unsupported quiz type.</Text>;
+        }
+    })();
 
-    } else if (quiz.Type === 'fill_in_the_blanks') {
-        return <FillInTheBlanks quiz={quiz} onContinue={onContinue} />
-    } else {
-        return <Text>Unsupported quiz type.</Text>
-    }
+    return (
+        <View style={styles.slide}>
+            {content}
+        </View>
+    );
 };
+
 
 const styles = StyleSheet.create({
     slide: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff',
-        paddingHorizontal: 20,
-        paddingVertical: 10,
+        backgroundColor: '#2b4353',
     },
 });
 

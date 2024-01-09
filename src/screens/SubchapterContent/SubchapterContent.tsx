@@ -55,7 +55,7 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
     const handleAnswerSubmit = (isCorrect: boolean) => {
         setIsNextButtonActive(isCorrect);
     };
-    
+
     return (
         <PagerView
             ref={pagerViewRef}
@@ -93,6 +93,8 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     slideContent: {
+        flex: 1,
+        marginTop: 20,
         paddingHorizontal: 20,
         paddingVertical: 10,
     },
