@@ -21,7 +21,8 @@ export const usePageSelectionHandler = (combinedData: CombinedDataItem[]) => {
         }
     }, [combinedData]);
 
-    const handlePageSelected = (e: PageSelectedEvent) => {        const index = e.nativeEvent.position;
+    const handlePageSelected = (e: PageSelectedEvent) => {   
+        console.log('Page selected:', e.nativeEvent.position);     const index = e.nativeEvent.position;
         if (combinedData.length > index && combinedData[index]) {
             setCurrentIndex(index);
             setCurrentSlideType(combinedData[index].type);

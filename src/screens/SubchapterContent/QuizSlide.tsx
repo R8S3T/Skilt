@@ -21,7 +21,6 @@ interface QuizData {
 }
 
 const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSubmit }) => {
-    console.log("Quiz Data in QuizSlide:", quizData);
     const query = 'SELECT * FROM Quiz WHERE ContentId =?';
 
     const { data, error } = useFetchData(query, [quizData.scContentId]);
@@ -61,8 +60,8 @@ const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSub
 
 const styles = StyleSheet.create({
     slide: {
-        flex: 1,
-        justifyContent: 'center',
+/*         flex: 1,
+ */        justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#2b4353',
     },

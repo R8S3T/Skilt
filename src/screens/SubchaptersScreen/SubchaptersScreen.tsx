@@ -18,7 +18,6 @@ const SubchaptersScreen: React.FC = () => {
   const navigation = useNavigation();
   const route = useRoute<SubchaptersScreenRouteProp>();
   const { chapterTitle } = route.params;
-  console.log("route.params in SubchaptersCreen:", route.params);
   return (
     <ScrollView style={styles.screenContainer}>
       <Text style={styles.heading}>{chapterTitle}</Text>

@@ -6,11 +6,8 @@ const dbAsset = require('../../assets/skilt.db');
 
 const Chapters = ({ route, navigation }) => {
     const { chapterId } = route.params;
-    console.log("route.params in Chapters:", route.params);
     const [chapter, setChapter] = useState(null);
-
     const [subchapters, setSubchapters] = useState([]);
-
     const fetchData = async () => {
         const db = getDatabase(dbAsset);
 
