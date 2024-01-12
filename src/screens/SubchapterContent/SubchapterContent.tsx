@@ -8,6 +8,8 @@ import QuizSlide from "./QuizSlide";
 import NextButton from "./NextButton";
 import { usePageSelectionHandler } from "./usePageSelectionHandler";
 import { LearnStackParamList } from "../../components/LearnStackNavigator";
+import { useSubchapter } from "../SubchaptersScreen/SubchapterContext";
+import { useNavigation } from "@react-navigation/native";
 
 interface CombinedDataItem {
     type: 'content' | 'quiz';
@@ -25,9 +27,11 @@ type SubchapterContentProps = {
 
 const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
     const chapterId = route.params.chapterId;
+    const nextSubchapterId = chapterId + 1;
     const { hideTabs } = route.params;
     const { data: contentData, error } = useSubchapterData(chapterId);
     const pagerViewRef = useRef<PagerView>(null);
+    const navigation = useNavigation();
 
     const combinedData = useMemo(() => contentData.reduce((acc: CombinedDataItem[], curr: SubchapterContentData) => {
         acc.push({ type: 'content', data: curr });
@@ -44,19 +48,31 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
         return <Text>Error fetching data.</Text>;
     }
 
+    const { unlockSubchapter } = useSubchapter();
+
     const goToNextPage = () => {
         if (currentIndex < combinedData.length - 1) {
-            const nextPage = currentIndex + 1;
-            pagerViewRef.current?.setPage(nextPage);
+        // existing logic to navigate to the next page
+        } else {
+        unlockSubchapter(nextSubchapterId); // Unlock the next subchapter
+        navigation.goBack(); // Assuming you want to navigate back to the subchapters screen
         }
     };
+
 
     const [isNextButtonActive, setIsNextButtonActive] = useState(true); // State to manage NextButton's active state
 
     const handleAnswerSubmit = (isCorrect: boolean) => {
         setIsNextButtonActive(isCorrect);
     };
-    
+
+    // Ensure that darker backgroundcolor only applies to quiz
+    const getContentContainerStyle = (itemType: 'content' | 'quiz') => {
+        return [
+            styles.slideContent,
+            itemType === 'quiz' ? styles.quizBackground : null,
+        ];
+    };
 
     return (
         <PagerView
@@ -70,7 +86,7 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
                 <ScrollView
                     key={`${item.type}-${item.data.scContentId}`}
                     style={styles.scrollView}
-                    contentContainerStyle={styles.slideContent}
+                    contentContainerStyle={getContentContainerStyle(item.type)}
                 >
                     {item.type === 'content' && <ContentSlide contentData={item.data} />}
                     {item.type === 'quiz' && (
@@ -94,10 +110,15 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     scrollView: {
-        flex: 1,
+        flexGrow: 1,
+        backgroundColor: 'transparent',
     },
     slideContent: {
-        flex: 1,
+        flexGrow: 1,
+        justifyContent: 'center',
+    },
+    quizBackground: {
+        backgroundColor: '#2b4353',
     },
 });
 

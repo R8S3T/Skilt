@@ -19,7 +19,10 @@ export type LearnStackParamList = {
         chapterId: number;
         chapterTitle: string;
     };
-    SubchapterContent: { chapterId: number };
+    SubchapterContent: { 
+        chapterId: number;
+        hideTabs?: boolean;
+    };
 };
 
 const LearnStack = createNativeStackNavigator<LearnStackParamList>();

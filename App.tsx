@@ -12,6 +12,8 @@ import IntroSlider from './src/components/IntroSlider';
 import LearnScreen from './src/screens/LearnScreen/LearnScreen';
 import BottomTabs from './src/components/BottomTabs';
 
+import { SubchapterProvider } from './src/screens/SubchaptersScreen/SubchapterContext';
+
 
 const dbAsset = require('./assets/skilt.db');
 const Stack = createNativeStackNavigator();
@@ -41,14 +43,16 @@ function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName='Start'>
-          <Stack.Screen name='Start' component={StartScreen} />
-          <Stack.Screen name='IntroSlider' component={IntroSlider} options={{headerShown: false}} />
-          <Stack.Screen name='LearnScreen' component={LearnScreen} options={{ headerShown: false }} />
-          <Stack.Screen name='MainApp' component={BottomTabs} options={{headerShown: false}} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <SubchapterProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName='Start'>
+            <Stack.Screen name='Start' component={StartScreen} />
+            <Stack.Screen name='IntroSlider' component={IntroSlider} options={{headerShown: false}} />
+            <Stack.Screen name='LearnScreen' component={LearnScreen} options={{ headerShown: false }} />
+            <Stack.Screen name='MainApp' component={BottomTabs} options={{headerShown: false}} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SubchapterProvider>
     </GestureHandlerRootView>
   );
 }

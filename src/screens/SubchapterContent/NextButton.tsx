@@ -20,11 +20,11 @@ const NextButton: React.FC<NextButtonProps> = ({ onPress, isActive }) => {
 
 const styles = StyleSheet.create({
     button: {
-        position: 'absolute',
-        right: 20,
-        bottom: 20,
+        minWidth: 100,
         padding: 10,
         borderRadius: 5,
+        alignSelf: 'center', // Align button to the center horizontally
+        marginVertical: 20,  // Add some margin at the top and bottom
     },
     active: {
         backgroundColor: '#ff8f00',  // Active color
@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
     },
     text: {
         color: 'white',
-        fontSize: 16,
+        fontSize: 18,
+        textAlign: 'center',
     },
 });
 
