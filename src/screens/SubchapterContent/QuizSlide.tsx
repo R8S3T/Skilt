@@ -54,11 +54,10 @@ const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSub
 const styles = StyleSheet.create({
     slide: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#fff',
-        paddingHorizontal: 20,
-        paddingVertical: 10,
+        justifyContent: 'flex-start', // Align content to the top
+        alignItems: 'stretch', // Stretch children to fill the width
+        backgroundColor: '#2b4353', // Dark background color
+        padding: 20, // Add padding around the slide
     },
 });
 

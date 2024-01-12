@@ -29,9 +29,9 @@ const SubchapterRows: React.FC<SubchapterRowsProps & { navigation: any }> = ({ s
               isLocked={subchapter.isLocked}
               onPress={() => {
                 if (!subchapter.isLocked) {
-                  navigation.navigate('SubchapterContent', { chapterId: subchapter.id })
+                    navigation.navigate('SubchapterContent', { chapterId: subchapter.id, hideTabs: true })
                 }
-              }}
+            }}
             />
           ))}
         </View>

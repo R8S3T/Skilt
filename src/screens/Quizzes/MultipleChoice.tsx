@@ -67,13 +67,15 @@ const MultipleChoice: React.FC<MultipleChoiceProps> = ({ quiz, onContinue, onAns
 const styles = StyleSheet.create({
     container: {
         padding: 16,
-        backgroundColor: '#f2f2f2',
+        backgroundColor: '#2b4353',
         marginVertical: 8,
         borderRadius: 4,
     },
     quizText: {
         fontSize: 20,
         fontWeight: 'bold',
+        color: '#fff',
+        marginBottom: 20,
     },
     button: {
         backgroundColor: '#fff',
@@ -81,24 +83,18 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         borderRadius: 4,
         alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#fff',
     },
     correctButton: {
-        backgroundColor: 'green',
-        padding: 10,
-        marginVertical: 5,
-        borderRadius: 4,
-        alignItems: 'center',
+
     },
     wrongButton: {
-        backgroundColor: 'red',
-        padding: 10,
-        marginVertical: 5,
-        borderRadius: 4,
-        alignItems: 'center',
+   
     },
     buttonText: {
         color: 'black',
-    }
+    },
 });
 
 export default MultipleChoice;

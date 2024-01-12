@@ -25,6 +25,7 @@ type SubchapterContentProps = {
 
 const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
     const chapterId = route.params.chapterId;
+    const { hideTabs } = route.params;
     const { data: contentData, error } = useSubchapterData(chapterId);
     const pagerViewRef = useRef<PagerView>(null);
 
@@ -56,6 +57,7 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
         setIsNextButtonActive(isCorrect);
     };
     
+
     return (
         <PagerView
             ref={pagerViewRef}
@@ -78,7 +80,9 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
                             onAnswerSubmit={handleAnswerSubmit}
                         />
                     )}
-                    <NextButton onPress={goToNextPage} isActive={isNextButtonActive} />
+                    {hideTabs && (
+                        <NextButton onPress={goToNextPage} isActive={isNextButtonActive} />
+                    )}
                 </ScrollView>
             ))}
         </PagerView>
