@@ -21,7 +21,6 @@ interface QuizData {
 }
 
 const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSubmit }) => {
-    console.log("Quiz Data in QuizSlide:", quizData);
     const query = 'SELECT * FROM Quiz WHERE ContentId =?';
 
     const { data, error } = useFetchData(query, [quizData.scContentId]);
@@ -41,23 +40,30 @@ const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSub
         return <Text>Quiz data is not available.</Text>;
     }
 
-    if (quiz.Type === 'multiple_choice'){
-        return <MultipleChoice quiz={quiz} onContinue={onContinue} onAnswerSubmit={onAnswerSubmit} />;
+    const content = (() => {
+        if (quiz.Type === 'multiple_choice'){
+            return <MultipleChoice quiz={quiz} onContinue={onContinue} onAnswerSubmit={onAnswerSubmit} />;
+        } else if (quiz.Type === 'fill_in_the_blanks') {
+            return <FillInTheBlanks quiz={quiz} onContinue={onContinue} />;
+        } else {
+            return <Text>Unsupported quiz type.</Text>;
+        }
+    })();
 
-    } else if (quiz.Type === 'fill_in_the_blanks') {
-        return <FillInTheBlanks quiz={quiz} onContinue={onContinue} />
-    } else {
-        return <Text>Unsupported quiz type.</Text>
-    }
+    return (
+        <View style={styles.slide}>
+            {content}
+        </View>
+    );
 };
+
 
 const styles = StyleSheet.create({
     slide: {
-        flex: 1,
-        justifyContent: 'flex-start', // Align content to the top
-        alignItems: 'stretch', // Stretch children to fill the width
-        backgroundColor: '#2b4353', // Dark background color
-        padding: 20, // Add padding around the slide
+      flex: 1,
+       justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#2b4353',
     },
 });
 

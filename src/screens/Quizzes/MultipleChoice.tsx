@@ -29,20 +29,20 @@ const MultipleChoice: React.FC<MultipleChoiceProps> = ({ quiz, onContinue, onAns
         onAnswerSubmit(correctAnswerSelected);
     };
 
-    const getButtonStyle = (option:OptionType) => {
-        if (selectedOption === null) {
-            return styles.button;
+    const getButtonStyle = (option: OptionType) => {
+        let style = styles.button;
+        if (selectedOption) {
+            if (option === quiz.Answer) {
+                style = { ...style, borderWidth: 3 };
+            } else if (option === selectedOption) {
+                style = { ...style, borderColor: 'darkred', borderWidth: 3 };
+            }
         }
-        if (option === quiz.Answer) {
-            return styles.correctButton;
-        } else if (option === selectedOption) {
-            return styles.wrongButton;
-        }
-        return styles.button;
-    }
+        return style;
+    };
 
     return (
-        <View style={styles.container}>
+        <>
             <Text style={styles.quizText}>{quiz.Question}</Text>
             {quiz.options && quiz.options.map((option, index) => {
                 const buttonStyle = getButtonStyle(option);
@@ -58,43 +58,42 @@ const MultipleChoice: React.FC<MultipleChoiceProps> = ({ quiz, onContinue, onAns
                 );
             })}
             {selectedOption !== null && (
-                <Text>{isCorrect ? 'Correct answer' : 'Wrong answer, please try again'}</Text>
+                <Text style={styles.answerText}>{isCorrect ? 'Correct answer' : 'Wrong answer, please try again'}</Text>
             )}
-        </View>
+        </>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        padding: 16,
-        backgroundColor: '#2b4353',
-        marginVertical: 8,
-        borderRadius: 4,
-    },
+
     quizText: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#fff',
-        marginBottom: 20,
+        margin: 20,
+        textAlign: 'center',
+        color: '#FFF',
     },
     button: {
-        backgroundColor: '#fff',
-        padding: 10,
-        marginVertical: 5,
-        borderRadius: 4,
-        alignItems: 'center',
+        backgroundColor: '#2b4353',
+        minWidth: '85%',
+        padding: 20,
+        marginVertical: 20,
+        marginHorizontal: 20,
+        borderRadius: 5,
         borderWidth: 1,
-        borderColor: '#fff',
-    },
-    correctButton: {
-
-    },
-    wrongButton: {
-   
+        borderColor: '#8fc2c2',
+        alignItems: 'center',
     },
     buttonText: {
-        color: 'black',
+        color: '#FFF',
+        fontFamily: 'OpenSans-Regular',
+        fontSize: 16,
+        textAlign: 'center',
     },
+    answerText: {
+        color: '#FFF',
+        margin: 10,
+    }
 });
 
 export default MultipleChoice;

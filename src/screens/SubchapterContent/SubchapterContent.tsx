@@ -97,8 +97,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     slideContent: {
-        paddingHorizontal: 20,
-        paddingVertical: 10,
+        flex: 1,
     },
 });
 
