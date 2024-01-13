@@ -1,15 +1,17 @@
 import React, { useMemo, useRef, useState } from "react";
 import { Text, ScrollView, StyleSheet } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
+import { usePageSelectionHandler } from "./usePageSelectionHandler";
+import { LearnStackParamList } from "../../components/LearnStackNavigator";
+import { useSubchapter } from "../SubchaptersScreen/SubchapterContext";
+import { useNavigation } from "@react-navigation/native";
+
 import PagerView from 'react-native-pager-view';
 import useSubchapterData from "../../utilities/useSubchapterData";
 import ContentSlide from "./ContentSlide";
 import QuizSlide from "./QuizSlide";
 import NextButton from "./NextButton";
-import { usePageSelectionHandler } from "./usePageSelectionHandler";
-import { LearnStackParamList } from "../../components/LearnStackNavigator";
-import { useSubchapter } from "../SubchaptersScreen/SubchapterContext";
-import { useNavigation } from "@react-navigation/native";
+
 
 interface CombinedDataItem {
     type: 'content' | 'quiz';
@@ -48,14 +50,16 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
         return <Text>Error fetching data.</Text>;
     }
 
-    const { unlockSubchapter } = useSubchapter();
+    const { unlockSubchapter, markSubchapterAsFinished } = useSubchapter();
 
     const goToNextPage = () => {
         if (currentIndex < combinedData.length - 1) {
-        // existing logic to navigate to the next page
+            const nextPage = currentIndex + 1;
+            pagerViewRef.current?.setPage(nextPage);
         } else {
-        unlockSubchapter(nextSubchapterId); // Unlock the next subchapter
-        navigation.goBack(); // Assuming you want to navigate back to the subchapters screen
+            unlockSubchapter(nextSubchapterId);
+            markSubchapterAsFinished(chapterId);
+            navigation.goBack();
         }
     };
 

@@ -11,6 +11,7 @@ interface SubchapterRowsProps {
 
 const SubchapterRows: React.FC<SubchapterRowsProps & { navigation: any }> = ({ subchapters, navigation }) => {
   const { unlockedSubchapters } = useSubchapter();
+  const { finishedSubchapters } = useSubchapter();
 
   // Function to create pairs of subchapters
   const createRows = (subchapters: Subchapter[]) => {
@@ -31,6 +32,7 @@ const SubchapterRows: React.FC<SubchapterRowsProps & { navigation: any }> = ({ s
             <SubchapterNode
               key={subchapter.id}
               isLocked={subchapter.isLocked}
+              isFinished={finishedSubchapters.includes(subchapter.id)}
               onPress={() => {
                 if (!subchapter.isLocked) {
                     navigation.navigate('SubchapterContent', { chapterId: subchapter.id, hideTabs: true })

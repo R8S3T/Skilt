@@ -1,10 +1,13 @@
 // SubchaptersScreen.tsx
 import React from "react";
 import { Text, View, StyleSheet, ScrollView, ImageBackground } from 'react-native';
-import SubchapterRows from "./SubchapterRows";
+
 import { subchapters } from "./subchaptersTitle";
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { useNavigation } from "@react-navigation/native";
+import { useSubchapter } from "./SubchapterContext";
+
+import SubchapterRows from "./SubchapterRows";
 
 export interface Subchapter {
   id: number;
@@ -18,12 +21,18 @@ const SubchaptersScreen: React.FC = () => {
   const navigation = useNavigation();
   const route = useRoute<SubchaptersScreenRouteProp>();
   const { chapterTitle } = route.params;
-  console.log("route.params in SubchaptersCreen:", route.params);
+  const { unlockedSubchapters } = useSubchapter();
+
+  const renderedSubchapters = subchapters.map(subchapter => ({
+    ...subchapter,
+    isLocked: !unlockedSubchapters.includes(subchapter.id),
+  }));
+
   return (
     <ScrollView style={styles.screenContainer}>
       <Text style={styles.heading}>{chapterTitle}</Text>
       <View style={styles.separator} />
-      <SubchapterRows subchapters={subchapters} navigation={navigation} />
+      <SubchapterRows subchapters={renderedSubchapters} navigation={navigation} />
     </ScrollView>
   );
 };

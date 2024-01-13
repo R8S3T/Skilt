@@ -5,11 +5,13 @@ import { getDynamicIconSize } from '../../utilities/utils';
 
 interface SubchapterNodeProps {
     isLocked: boolean;
+    isFinished: boolean;
     onPress: () => void;
 }
 
 const SubchapterNode: React.FC<SubchapterNodeProps> = ({
     isLocked,
+    isFinished,
     onPress,
 }) => {
     const dynamicNodeSize = getDynamicIconSize(80, 100);
@@ -17,7 +19,9 @@ const SubchapterNode: React.FC<SubchapterNodeProps> = ({
 
     const iconSource = isLocked
         ? require('../../../assets/Images/lock_icon.png')
-        : require('../../../assets/Images/play_icon.png');
+        : isFinished
+            ? require('../../../assets/Images/ok_icon.png')
+            : require('../../../assets/Images/play_icon.png');
 
     // Create dynamic styles within function
     const dynamicStyles = StyleSheet.create({
