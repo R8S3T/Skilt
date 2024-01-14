@@ -42,7 +42,13 @@ const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSub
 
     const content = (() => {
         if (quiz.Type === 'multiple_choice'){
-            return <MultipleChoice quiz={quiz} onContinue={onContinue} onAnswerSubmit={onAnswerSubmit} />;
+            return (
+                <MultipleChoice
+                    quiz={quiz}
+                    onContinue={onContinue}
+                    onAnswerSubmit={onAnswerSubmit} 
+                />
+                )
         } else if (quiz.Type === 'fill_in_the_blanks') {
             return <FillInTheBlanks quiz={quiz} onContinue={onContinue} />;
         } else {

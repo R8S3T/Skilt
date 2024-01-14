@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Text, ScrollView, StyleSheet } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { usePageSelectionHandler } from "./usePageSelectionHandler";
@@ -44,7 +44,13 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
         return acc;
     }, []), [contentData]);
 
-    const { currentIndex, handlePageSelected, currentSlideType } = usePageSelectionHandler(combinedData);
+    useEffect(() => {
+        if (combinedData.length > 0) {
+            setIsNextButtonActive(combinedData[0].type !== 'quiz');
+        }
+    }, [combinedData]);
+
+    const { currentIndex, handlePageSelected, currentSlideType, isQuizSlide } = usePageSelectionHandler(combinedData);
 
     if (error) {
         return <Text>Error fetching data.</Text>;
@@ -63,8 +69,12 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
         }
     };
 
+    const [isNextButtonActive, setIsNextButtonActive] = useState(!isQuizSlide); // State to manage NextButton's active state
 
-    const [isNextButtonActive, setIsNextButtonActive] = useState(true); // State to manage NextButton's active state
+    // Effect to update isNextButtonActive when isQuizSlide changes
+    useEffect(() => {
+        setIsNextButtonActive(!isQuizSlide);
+    }, [isQuizSlide]);
 
     const handleAnswerSubmit = (isCorrect: boolean) => {
         setIsNextButtonActive(isCorrect);
@@ -101,7 +111,11 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
                         />
                     )}
                     {hideTabs && (
-                        <NextButton onPress={goToNextPage} isActive={isNextButtonActive} />
+                        <NextButton
+                            onPress={goToNextPage}
+                            isActive={isNextButtonActive}
+                            style={isNextButtonActive ? styles.activeNextButton : styles.inactiveNextButton}
+                        />
                     )}
                 </ScrollView>
             ))}
@@ -123,6 +137,12 @@ const styles = StyleSheet.create({
     },
     quizBackground: {
         backgroundColor: '#2b4353',
+    },
+    activeNextButton: {
+        backgroundColor: 'orange',
+    },
+    inactiveNextButton: {
+        backgroundColor: 'gray',
     },
 });
 

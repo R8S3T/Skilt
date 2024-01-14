@@ -1,9 +1,10 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 
 interface NextButtonProps {
     onPress: () => void;
     isActive: boolean;
+    style?: StyleProp<ViewStyle>;
 }
 
 const NextButton: React.FC<NextButtonProps> = ({ onPress, isActive }) => {
