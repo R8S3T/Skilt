@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import useFetchData from "../../utilities/useFetchData";
 import MultipleChoice from '../Quizzes/MultipleChoice';
-import FillInTheBlanks from '../Quizzes/FillInTheBlanks';
+import DragDropAnswers from '../Quizzes/DragDropAnswers';
 
 interface QuizSlideProps {
     quizData: {
@@ -49,8 +49,8 @@ const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSub
                     onAnswerSubmit={onAnswerSubmit} 
                 />
                 )
-        } else if (quiz.Type === 'fill_in_the_blanks') {
-            return <FillInTheBlanks quiz={quiz} onContinue={onContinue} />;
+        } else if (quiz.Type === 'drag_drop_answers') {
+            return <DragDropAnswers quiz={quiz} onContinue={onContinue} />;
         } else {
             return <Text>Unsupported quiz type.</Text>;
         }
