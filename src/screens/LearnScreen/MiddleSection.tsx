@@ -11,7 +11,7 @@ const MiddleSection: React.FC<MiddleSectionProps> = ({ onButtonPress }) => {
     const navigation = useNavigation<NavigationProp<LearnStackParamList>>();
 
     const handlePress = () => {
-        console.log('Übungen button pressed');
+        navigation.navigate('TestDragDrop');
     };
 
     return (

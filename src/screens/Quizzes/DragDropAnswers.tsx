@@ -4,7 +4,7 @@ import DragDropLogic, { DropZoneValues } from './DragDropLogic';
 
 interface QuizData {
     Question: string;
-    options: string[];  // Array of options for the quiz
+    /* options: string[]; */  // Array of options for the quiz
 }
 
 interface DragDropAnswersProps {
@@ -13,9 +13,10 @@ interface DragDropAnswersProps {
 }
 
 const DragDropAnswers: React.FC<DragDropAnswersProps> = ({ quiz, onContinue }) => {
+    console.log("Rendering DragDropAnswers");
     // State to track the drop zone layout
     const [dropZoneValues, setDropZoneValues] = useState<DropZoneValues | null>(null);
-    const options = [
+    const staticOptions = [
         "100", // Correct for the first blank
         "1",   // Correct for the second blank
         "50",  // Incorrect option
@@ -44,6 +45,7 @@ const DragDropAnswers: React.FC<DragDropAnswersProps> = ({ quiz, onContinue }) =
             console.log('Item not dropped in the drop zone');
         }
     };
+    console.log("Quiz data:", quiz);
 
     return (
         <View style={styles.container}>
@@ -51,7 +53,7 @@ const DragDropAnswers: React.FC<DragDropAnswersProps> = ({ quiz, onContinue }) =
             <View onLayout={onLayout} style={styles.dropZone}>
                 <Text>Drop items here</Text>
             </View>
-            {dropZoneValues && quiz.options.map((option, index) => (
+            {dropZoneValues && staticOptions.map((option, index) => (
                 <DragDropLogic 
                     key={index}
                     itemText={option}

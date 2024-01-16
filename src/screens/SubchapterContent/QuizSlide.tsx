@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import useFetchData from "../../utilities/useFetchData";
 import MultipleChoice from '../Quizzes/MultipleChoice';
-import DragDropAnswers from '../Quizzes/DragDropAnswers';
+/* import DragDropAnswer from '../Quizzes/DragDropAnswers'; */
 
 interface QuizSlideProps {
     quizData: {
@@ -21,6 +21,7 @@ interface QuizData {
 }
 
 const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSubmit }) => {
+    console.log("Rendering QuizSlide");
     const query = 'SELECT * FROM Quiz WHERE ContentId =?';
 
     const { data, error } = useFetchData(query, [quizData.scContentId]);
@@ -49,8 +50,8 @@ const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSub
                     onAnswerSubmit={onAnswerSubmit} 
                 />
                 )
-        } else if (quiz.Type === 'drag_drop_answers') {
-            return <DragDropAnswers quiz={quiz} onContinue={onContinue} />;
+/*         } else if (quiz.Type === 'drag_drop_answers') {
+            return <DragDropAnswers quiz={quiz} onContinue={onContinue} />; */
         } else {
             return <Text>Unsupported quiz type.</Text>;
         }

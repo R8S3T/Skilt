@@ -7,7 +7,7 @@ import IntroSlider from './IntroSlider';
 import YearsScreen from '../screens/YearsScreen/YearsScreen';
 import ChaptersScreen from '../screens/ChaptersScreen/ChaptersScreen';
 import SubchaptersScreen from '../screens/SubchaptersScreen/SubchaptersScreen';
-
+import TestDragDrop from '../screens/TestScreen/TestDragDrop';
 
 export type LearnStackParamList = {
     LearnMain: undefined;
@@ -23,6 +23,7 @@ export type LearnStackParamList = {
         chapterId: number;
         hideTabs?: boolean;
     };
+    TestDragDrop: undefined;
 };
 
 const LearnStack = createNativeStackNavigator<LearnStackParamList>();
@@ -58,6 +59,11 @@ const LearnStackNavigator: React.FC = () => {
             <LearnStack.Screen
                 name='SubchaptersScreen'
                 component={SubchaptersScreen}
+                options={{ headerShown: false }}
+            />
+            <LearnStack.Screen
+                name='TestDragDrop' // The name used in navigation
+                component={TestDragDrop}
                 options={{ headerShown: false }}
             />
         </LearnStack.Navigator>
