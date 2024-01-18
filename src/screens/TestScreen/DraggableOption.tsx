@@ -16,23 +16,28 @@ const DraggableOption: React.FC<DraggableOptionProps> = ({ optionText, dropZoneL
             { useNativeDriver: false }
         ),
         onPanResponderRelease: (evt, gestureState) => {
-            // Calculate final position based on movement delta
-            const finalX = gestureState.dx;
-            const finalY = gestureState.dy;
+            // Calculate the final position of the draggable item
+            const finalX = gestureState.moveX - gestureState.x0 + gestureState.dx;
+            const finalY = gestureState.moveY - gestureState.y0 + gestureState.dy;
 
+            // Determine if the item was dropped over any of the drop zones
             const droppedOverZone = dropZoneLayouts.some(layout => {
                 return finalX >= layout.x && finalX <= layout.x + layout.width &&
                        finalY >= layout.y && finalY <= layout.y + layout.height;
             });
 
             if (!droppedOverZone) {
+                // Snap back to original position if not dropped over a zone
                 Animated.spring(pan, {
                     toValue: { x: 0, y: 0 },
                     useNativeDriver: false
                 }).start();
+            } else {
+                // Handle successful drop (e.g., update state, call callback)
+                // You might want to implement additional logic here
             }
 
-            // Reset pan for next drag
+            // Reset pan for the next drag
             pan.setValue({ x: 0, y: 0 });
         },
     });
