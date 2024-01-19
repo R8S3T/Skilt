@@ -6,12 +6,13 @@ export default class DragDrop2 extends Component {
     render() {
         return (
         <View style={styles.mainContainer}>
-            <View style={styles.dropZone}>
-            <Text style={styles.text}>Drop them here!</Text>
-            </View>
-            <View style={styles.ballContainer} />
+            <Text style={styles.questionText}>
+            The largest planet in our solar system is
+            <View style={styles.dropZone} />
+            and the smallest is
+            <View style={styles.dropZone} />.
+            </Text>
             <View style={styles.row}>
-            <Draggable />
             <Draggable />
             <Draggable />
             <Draggable />
@@ -20,35 +21,38 @@ export default class DragDrop2 extends Component {
         </View>
         );
     }
-    }
+}
 
-    const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     mainContainer: {
-        flex: 1
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
     },
-    ballContainer: {
-        height: 200,
-        width: 300,
-    },
-    row: {
-        flexDirection: "row"
+    questionText: {
+        fontSize: 18,
+        textAlign: 'center',
+        margin: 10,
     },
     dropZone: {
-        height: 200,
-        width: 300,
+        height: 40,
+        width: 100,
+        marginHorizontal: 5,
         backgroundColor: "#00334d",
-        margin: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    row: {
+        flexDirection: "row",
+        marginTop: 20,
     },
     text: {
-        marginTop: 25,
-        marginLeft: 5,
-        marginRight: 5,
-        textAlign: "center",
         color: "#fff",
-        fontSize: 25,
+        fontSize: 16,
         fontWeight: "bold"
-    }
-});
+    },
+    });
 
 
 

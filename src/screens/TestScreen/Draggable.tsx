@@ -20,7 +20,7 @@ export default class Draggable extends Component<IDraggableProps, IDraggableStat
         pan: new Animated.ValueXY(),
         opacity: new Animated.Value(1)
         };
-    this._val = { x: 0, y: 0 }; // Initialize _val
+    this._val = { x: 0, y: 0 };
     this.state.pan.addListener((value) => this._val = value);
 
     this.panResponder = PanResponder.create({

@@ -2,13 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 /* import DragDropAnswer from './DragDropAnswer'; */
 /* import DraxComponent from './Drax'; */
-import DragDrop2 from './DragDrop2';
+/* import DragDrop2 from './DragDrop2'; */
+import DragDropQuiz from './DragDropQuiz';
 
 const DragDropTest: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>DragDropAnswer Test</Text>
-      <DragDrop2 />
+      <DragDropQuiz />
     </View>
   );
 };
