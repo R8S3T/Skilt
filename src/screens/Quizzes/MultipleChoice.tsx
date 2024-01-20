@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
+import { Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import { Quiz } from "../../utilities/useFetchData";
 
 interface QuizData {

@@ -1,7 +1,6 @@
 import { getDatabase } from "./database";
 
 export const fetchData = async <T>(query: string, params: any[]): Promise<T[]> => {
-    console.log("Fetching data with params:", params);
     const db = getDatabase();
     return new Promise<T[]>((resolve, reject) => {
         db.transaction(tx => {

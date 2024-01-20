@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 /* import DraxComponent from './Drax'; */
 /* import DragDrop2 from './DragDrop2'; */
 /* import DragDropQuiz from './DragDropQuiz'; */
-import ClozeTest from './ClozeTest';
+import ClozeTest from '../Quizzes/ClozeTest/ClozeTest';
 
 const DragDropTest: React.FC = () => {
   return (

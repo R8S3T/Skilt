@@ -8,6 +8,7 @@ export interface Quiz {
     Question: string;
     Answer: string;
     options?: string[];
+    correctAnswers?: string[];
 }
 
 function useFetchData(query: string, parameters: any[]): { data: Quiz[]; error: any } {
@@ -73,6 +74,9 @@ function useFetchData(query: string, parameters: any[]): { data: Quiz[]; error: 
                                                 (_, result) => {
                                                     const optionsArray = result.rows._array;
                                                     quiz.options = optionsArray.map(opt => opt.OptionText);
+                                                    quiz.correctAnswers = quiz.Answer 
+                                                    ? quiz.Answer.split(",").map((answer: string) => answer.trim())
+                                                    : [];
                                                     resolve();
                                                 },
                                                 (_, err) => {

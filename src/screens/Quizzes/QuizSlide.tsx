@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import useFetchData from "../../utilities/useFetchData";
-import MultipleChoice from '../Quizzes/MultipleChoice';
-import ClozeTest from '../TestScreen/ClozeTest';
+import MultipleChoice from './MultipleChoice';
+import ClozeTest from './ClozeTest/ClozeTest';
 
 interface QuizSlideProps {
     quizData: {
@@ -21,7 +21,6 @@ interface QuizData {
 }
 
 const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSubmit }) => {
-    console.log("Rendering QuizSlide");
     const query = 'SELECT * FROM Quiz WHERE ContentId =?';
 
     const { data, error } = useFetchData(query, [quizData.scContentId]);
