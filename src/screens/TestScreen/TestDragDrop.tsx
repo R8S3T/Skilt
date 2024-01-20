@@ -3,13 +3,18 @@ import { View, Text, StyleSheet } from 'react-native';
 /* import DragDropAnswer from './DragDropAnswer'; */
 /* import DraxComponent from './Drax'; */
 /* import DragDrop2 from './DragDrop2'; */
-import DragDropQuiz from './DragDropQuiz';
+/* import DragDropQuiz from './DragDropQuiz'; */
+import ClozeTest from './ClozeTest';
 
 const DragDropTest: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>DragDropAnswer Test</Text>
-      <DragDropQuiz />
+      <ClozeTest
+        sentenceParts={["The largest planet is ", " and the smallest is ", "."]}
+        options={["Jupiter", "Mercury", "Mars", "Venus"]}
+        correctAnswers={["Jupiter", "Mercury"]}
+      />
     </View>
   );
 };
