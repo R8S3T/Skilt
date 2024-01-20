@@ -6,7 +6,7 @@ interface QuizData {
     Question: string;
 
     Answer: string;
-    options: string[]; // Adjust this based on the actual structure
+    options: string[];
 }
 
 type OptionType = string;

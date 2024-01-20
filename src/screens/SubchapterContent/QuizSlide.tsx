@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import useFetchData from "../../utilities/useFetchData";
 import MultipleChoice from '../Quizzes/MultipleChoice';
-/* import DragDropAnswer from '../Quizzes/DragDropAnswers'; */
+import ClozeTest from '../TestScreen/ClozeTest';
 
 interface QuizSlideProps {
     quizData: {
@@ -17,7 +17,7 @@ interface QuizData {
     QuizId: number;
     Question: string;
     Answer: string;
-    options: string[];
+    options?: string[];
 }
 
 const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSubmit }) => {
@@ -25,7 +25,6 @@ const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSub
     const query = 'SELECT * FROM Quiz WHERE ContentId =?';
 
     const { data, error } = useFetchData(query, [quizData.scContentId]);
-
 
     if (error) {
         return <Text>Error loading quiz.</Text>;
@@ -41,21 +40,31 @@ const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSub
         return <Text>Quiz data is not available.</Text>;
     }
 
-    const content = (() => {
-        if (quiz.Type === 'multiple_choice'){
-            return (
-                <MultipleChoice
-                    quiz={quiz}
-                    onContinue={onContinue}
-                    onAnswerSubmit={onAnswerSubmit} 
-                />
-                )
-/*         } else if (quiz.Type === 'drag_drop_answers') {
-            return <DragDropAnswers quiz={quiz} onContinue={onContinue} />; */
-        } else {
-            return <Text>Unsupported quiz type.</Text>;
-        }
-    })();
+    // Prepare content based on quiz type
+    let content;
+    if (quiz.Type === 'multiple_choice') {
+        content = (
+            <MultipleChoice
+                quiz={quiz}
+                onContinue={onContinue}
+                onAnswerSubmit={onAnswerSubmit}
+            />
+        );
+    } else if (quiz.Type === 'cloze_test') {
+        // Split the question and answers for cloze test
+        const sentenceParts = quiz.Question.split("___");
+        const correctAnswers = quiz.Answer.split(",");
+
+        content = (
+            <ClozeTest
+                sentenceParts={sentenceParts}
+                options={quiz.options || []}
+                correctAnswers={correctAnswers}
+            />
+        );
+    } else {
+        content = <Text>Unsupported quiz type.</Text>;
+    }
 
     return (
         <View style={styles.slide}>
@@ -63,7 +72,6 @@ const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSub
         </View>
     );
 };
-
 
 const styles = StyleSheet.create({
     slide: {
@@ -75,3 +83,4 @@ const styles = StyleSheet.create({
 });
 
 export default QuizSlide;
+

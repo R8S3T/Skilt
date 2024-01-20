@@ -57,6 +57,33 @@ function useFetchData(query: string, parameters: any[]): { data: Quiz[]; error: 
                                         }).catch(optionError => {
                                             console.error('Option promise error:', optionError);
                                         });
+                                    } else if (quiz.Type === 'cloze_test') {
+                                        const clozeOptionsQuery = `
+                                            SELECT OptionText
+                                            FROM ClozeTest
+                                            WHERE QuizId = ?
+                                            ORDER BY SortOrder ASC
+                                        `;
+                                        const clozeOptionsParams = [quiz.QuizId];
+
+                                        await new Promise<void>((resolve, reject) => {
+                                            tx.executeSql(
+                                                clozeOptionsQuery,
+                                                clozeOptionsParams,
+                                                (_, result) => {
+                                                    const optionsArray = result.rows._array;
+                                                    quiz.options = optionsArray.map(opt => opt.OptionText);
+                                                    resolve();
+                                                },
+                                                (_, err) => {
+                                                    console.error('Cloze test options fetch error:', err.message);
+                                                    reject(err);
+                                                    return true; // Indicate to roll back the transaction
+                                                }
+                                            );
+                                        }).catch(clozeOptionsError => {
+                                            console.error('Cloze test options promise error:', clozeOptionsError);
+                                        });
                                     }
                                 }
 
