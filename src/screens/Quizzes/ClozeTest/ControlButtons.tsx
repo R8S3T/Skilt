@@ -3,8 +3,8 @@ import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import { scaleFontSize, dynamicCardHeight, getDynamicIconSize } from "../../../utilities/utils";
 
 interface ControlButtonsProps {
-  onClear: () => void;
-  onSubmit: () => void;
+    onClear: () => void;
+    onSubmit: () => void;
 }
 
 const ControlButtons: React.FC<ControlButtonsProps> = ({ onClear, onSubmit }) => {
@@ -12,8 +12,8 @@ const ControlButtons: React.FC<ControlButtonsProps> = ({ onClear, onSubmit }) =>
     return (
         <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={onClear}>
-                <Image 
-                    source={require('../../../../assets/Images/backspace.png')} style={{ width: iconSize, height: iconSize, tintColor: '#e8630a' }}
+                <Image
+                    source={require('../../../../assets/Images/backspace.png')} style={styles.backspaceIcon}
                 />
             </TouchableOpacity>
             <TouchableOpacity style={styles.submitButton} onPress={onSubmit}>
@@ -27,19 +27,24 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
         padding: 10,
         marginTop: 20,
     },
     backspaceIcon: {
-        width: 50,
-        height: 50,
+        width: 30,
+        height: 30,
         margin: 10,
+        marginRight: 50,
+        tintColor: '#e8630a',
     },
     submitButton: {
-        backgroundColor: 'green',
-        padding: 10,
+        backgroundColor: '#2b4353',
+        borderWidth: 1,
+        borderColor: '#e8630a',
+        paddingVertical: 15,
+        paddingHorizontal: 20,
         borderRadius: 5,
-        marginTop: 20,
     },
     submitButtonText: {
         color: 'white',

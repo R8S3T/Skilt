@@ -24,14 +24,14 @@ const styles = StyleSheet.create({
         minWidth: 100,
         padding: 10,
         borderRadius: 5,
-        alignSelf: 'center', // Align button to the center horizontally
-        marginVertical: 20,  // Add some margin at the top and bottom
+        alignSelf: 'center',
+        marginVertical: 20,
     },
     active: {
-        backgroundColor: '#ff8f00',  // Active color
+        backgroundColor: '#ff8f00',
     },
     inactive: {
-        backgroundColor: 'gray',  // Inactive color
+        backgroundColor: 'gray',
     },
     text: {
         color: 'white',

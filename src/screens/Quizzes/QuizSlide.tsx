@@ -9,7 +9,7 @@ interface QuizSlideProps {
         scContentId: number;
     };
     onContinue: () => void;
-    onAnswerSubmit: (isCorrect: boolean) => void;
+    onAnswerSubmit?: (isCorrect: boolean) => void;
 }
 
 interface QuizData {
@@ -20,7 +20,7 @@ interface QuizData {
     options?: string[];
 }
 
-const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSubmit }) => {
+const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSubmit = () =>{} }) => {
     const query = 'SELECT * FROM Quiz WHERE ContentId =?';
 
     const { data, error } = useFetchData(query, [quizData.scContentId]);

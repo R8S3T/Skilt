@@ -44,12 +44,6 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
         return acc;
     }, []), [contentData]);
 
-    useEffect(() => {
-        if (combinedData.length > 0) {
-            setIsNextButtonActive(combinedData[0].type !== 'quiz');
-        }
-    }, [combinedData]);
-
     const { currentIndex, handlePageSelected, currentSlideType, isQuizSlide } = usePageSelectionHandler(combinedData);
 
     if (error) {
@@ -67,17 +61,6 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
             markSubchapterAsFinished(chapterId);
             navigation.goBack();
         }
-    };
-
-    const [isNextButtonActive, setIsNextButtonActive] = useState(!isQuizSlide); // State to manage NextButton's active state
-
-    // Effect to update isNextButtonActive when isQuizSlide changes
-    useEffect(() => {
-        setIsNextButtonActive(!isQuizSlide);
-    }, [isQuizSlide]);
-
-    const handleAnswerSubmit = (isCorrect: boolean) => {
-        setIsNextButtonActive(isCorrect);
     };
 
     // Ensure that darker backgroundcolor only applies to quiz
@@ -103,18 +86,12 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
                     contentContainerStyle={getContentContainerStyle(item.type)}
                 >
                     {item.type === 'content' && <ContentSlide contentData={item.data} />}
-                    {item.type === 'quiz' && (
-                        <QuizSlide
-                            quizData={item.data}
-                            onContinue={goToNextPage}
-                            onAnswerSubmit={handleAnswerSubmit}
-                        />
-                    )}
-                    {hideTabs && (
+                    {item.type === 'quiz' && <QuizSlide quizData={item.data} onContinue={goToNextPage} />}
+
+                    {hideTabs && item.type !== 'quiz' && (
                         <NextButton
                             onPress={goToNextPage}
-                            isActive={isNextButtonActive}
-                            style={isNextButtonActive ? styles.activeNextButton : styles.inactiveNextButton}
+                            isActive={true}
                         />
                     )}
                 </ScrollView>
@@ -137,12 +114,6 @@ const styles = StyleSheet.create({
     },
     quizBackground: {
         backgroundColor: '#2b4353',
-    },
-    activeNextButton: {
-        backgroundColor: 'orange',
-    },
-    inactiveNextButton: {
-        backgroundColor: 'gray',
     },
 });
 
