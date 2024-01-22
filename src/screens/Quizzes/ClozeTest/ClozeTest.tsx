@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import OptionButton from './OptionButton';
 import SentenceWithBlanks from './SentenceWithBlanks';
-import ControlButtons from './ControlButtons';
+import ControlButtons from '../ControlButtons';
 import { AnswerStatus } from './types';
 
 interface ClozeTestProps {
     sentenceParts: string[];
     options: string[];
     correctAnswers: string[];
+    onContinue: () => void; 
 }
 
-const ClozeTest: React.FC<ClozeTestProps> = ({ sentenceParts, options, correctAnswers }) => {
+const ClozeTest: React.FC<ClozeTestProps> = ({ sentenceParts, options, correctAnswers, onContinue }) => {
     const [filledAnswers, setFilledAnswers] = useState<AnswerStatus[]>(Array(sentenceParts.length - 1).fill({ answer: '', isCorrect: null }));
-
     const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+    const [feedbackMessage, setFeedbackMessage] = useState('');
+    const [submitButtonText, setSubmitButtonText] = useState('Bestätigen');
 
     const handleOptionSelect = (option: string) => {
         const nextBlankIndex = filledAnswers.findIndex(answerStatus => answerStatus.answer === '');
@@ -38,10 +40,20 @@ const ClozeTest: React.FC<ClozeTestProps> = ({ sentenceParts, options, correctAn
 
         setFilledAnswers(updatedAnswers);
         const isAllCorrect = updatedAnswers.every(answerStatus => answerStatus.isCorrect);
+
         if (isAllCorrect) {
-            alert("Correct!");
+            setFeedbackMessage("Correct! Well done.");
+            setSubmitButtonText("Weiter");
         } else {
-            alert("Incorrect, try again!");
+            setFeedbackMessage("Incorrect, please try again.");
+        }
+    };
+
+    const handleContinue = () => {
+        if (submitButtonText === "Weiter") {
+            onContinue(); // Call the provided onContinue function to navigate to the next page
+        } else {
+            handleSubmit(); // Otherwise, submit the answers
         }
     };
 
@@ -58,9 +70,17 @@ const ClozeTest: React.FC<ClozeTestProps> = ({ sentenceParts, options, correctAn
                 />
                 ))}
             </View>
-            <ControlButtons onClear={handleClearAnswers} onSubmit={handleSubmit} />
+            <Text style={styles.feedbackText}>{feedbackMessage}</Text>
+            <View style={styles.footer}>
+            <ControlButtons
+                    onClear={handleClearAnswers}
+                    onSubmit={handleContinue}
+                    showBackspaceButton={true}
+                    submitButtonText={submitButtonText}
+                />
+            </View>
         </View>
-        );
+    );
 };
 
 const styles = StyleSheet.create({
@@ -68,12 +88,21 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 12,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
     },
     optionsContainer: {
+        flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'space-around',
+    },
+    feedbackText: {
+        fontSize: 16,
+        color: '#FFF',
+        marginVertical: 10,
+    },
+    footer: {
+
     },
 });
 

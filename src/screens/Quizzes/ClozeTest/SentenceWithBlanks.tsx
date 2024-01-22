@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { AnswerStatus } from './types';
 
 interface SentenceWithBlanksProps {
@@ -9,26 +9,42 @@ interface SentenceWithBlanksProps {
 
 const SentenceWithBlanks: React.FC<SentenceWithBlanksProps> = ({ sentenceParts, filledAnswers }) => {
     return (
-        <Text style={styles.sentence}>
+        <View style={styles.container}>
             {sentenceParts.map((part, index) => (
-                <Text key={index}>
-                {part}
-                {index < sentenceParts.length - 1 && (
-                    <Text style={
-                        filledAnswers[index].answer !== ''
-                        ? (filledAnswers[index].isCorrect ? styles.correctBlank : styles.incorrectBlank)
-                        : styles.blank
-                    }>
-                    {filledAnswers[index].answer || '___'}
-                    </Text>
-                )}
-                </Text>
+                <View key={index} style={styles.line}>
+                    <Text style={styles.sentencePart}>{part}</Text>
+                    {index < sentenceParts.length - 1 && (
+                        <Text style={
+                            filledAnswers[index].isCorrect === null
+                            ? styles.blank
+                            : filledAnswers[index].isCorrect
+                                ? styles.correctBlank
+                                : styles.incorrectBlank
+                        }>
+                            {filledAnswers[index].answer || '___'}
+                        </Text>
+                    )}
+                </View>
             ))}
-        </Text>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
+    container: {
+        // Your container style
+    },
+    line: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 5,
+    },
+    sentencePart: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#FFF',
+    },
     sentence: {
         fontSize: 20,
         fontWeight: 'bold',
@@ -39,16 +55,20 @@ const styles = StyleSheet.create({
     blank: {
         fontWeight: 'bold',
         minWidth: 50,
+        fontSize: 20,
+        color: '#8fc2c2',
     },
     correctBlank: {
         fontWeight: 'bold',
         color: 'green',
         minWidth: 50,
+        fontSize: 20,
     },
     incorrectBlank: {
         fontWeight: 'bold',
         color: 'red',
         minWidth: 50,
+        fontSize: 20,
     },
 });
 

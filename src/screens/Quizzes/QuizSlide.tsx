@@ -46,7 +46,6 @@ const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSub
             <MultipleChoice
                 quiz={quiz}
                 onContinue={onContinue}
-                onAnswerSubmit={onAnswerSubmit}
             />
         );
     } else if (quiz.Type === 'cloze_test') {
@@ -59,6 +58,7 @@ const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSub
                 sentenceParts={sentenceParts}
                 options={quiz.options || []}
                 correctAnswers={correctAnswers}
+                onContinue={onContinue}
             />
         );
     } else {
@@ -82,4 +82,3 @@ const styles = StyleSheet.create({
 });
 
 export default QuizSlide;
-

@@ -1,27 +1,37 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
-import { scaleFontSize, dynamicCardHeight, getDynamicIconSize } from "../../../utilities/utils";
+import { scaleFontSize, dynamicCardHeight, getDynamicIconSize } from "../../utilities/utils";
 
 interface ControlButtonsProps {
     onClear: () => void;
     onSubmit: () => void;
+    showBackspaceButton: boolean;
+    submitButtonText?: string;
 }
 
-const ControlButtons: React.FC<ControlButtonsProps> = ({ onClear, onSubmit }) => {
-    const iconSize = getDynamicIconSize(30, 30);
+const ControlButtons: React.FC<ControlButtonsProps> = ({
+    onClear,
+    onSubmit,
+    showBackspaceButton = true, 
+    submitButtonText = "Bestätigen" // Default text
+}) => {
     return (
         <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={onClear}>
-                <Image
-                    source={require('../../../../assets/Images/backspace.png')} style={styles.backspaceIcon}
-                />
-            </TouchableOpacity>
+            {showBackspaceButton && (
+                <TouchableOpacity onPress={onClear}>
+                    <Image
+                        source={require('../../../assets/Images/backspace.png')} 
+                        style={styles.backspaceIcon}
+                    />
+                </TouchableOpacity>
+            )}
             <TouchableOpacity style={styles.submitButton} onPress={onSubmit}>
-                <Text style={styles.submitButtonText}>Bestätigen</Text>
+                <Text style={styles.submitButtonText}>{submitButtonText}</Text>
             </TouchableOpacity>
         </View>
     );
 };
+
 
 const styles = StyleSheet.create({
     buttonContainer: {
@@ -29,7 +39,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 10,
-        marginTop: 20,
+        marginTop: 50,
     },
     backspaceIcon: {
         width: 30,
