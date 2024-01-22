@@ -9,7 +9,7 @@ interface ClozeTestProps {
     sentenceParts: string[];
     options: string[];
     correctAnswers: string[];
-    onContinue: () => void; 
+    onContinue: () => void;
 }
 
 const ClozeTest: React.FC<ClozeTestProps> = ({ sentenceParts, options, correctAnswers, onContinue }) => {
@@ -20,12 +20,16 @@ const ClozeTest: React.FC<ClozeTestProps> = ({ sentenceParts, options, correctAn
 
     const handleOptionSelect = (option: string) => {
         const nextBlankIndex = filledAnswers.findIndex(answerStatus => answerStatus.answer === '');
+
         if (nextBlankIndex !== -1) {
             const newAnswers = [...filledAnswers];
             newAnswers[nextBlankIndex] = { answer: option, isCorrect: null }; // Storing as AnswerStatus
             setFilledAnswers(newAnswers);
+
+            setSelectedOptions([...selectedOptions, option]);
         }
     };
+
 
     const handleClearAnswers = () => {
         setFilledAnswers(Array(sentenceParts.length - 1).fill({ answer: '', isCorrect: false }));
@@ -42,37 +46,39 @@ const ClozeTest: React.FC<ClozeTestProps> = ({ sentenceParts, options, correctAn
         const isAllCorrect = updatedAnswers.every(answerStatus => answerStatus.isCorrect);
 
         if (isAllCorrect) {
-            setFeedbackMessage("Correct! Well done.");
+            setFeedbackMessage("Super! Alles richtig!");
             setSubmitButtonText("Weiter");
         } else {
-            setFeedbackMessage("Incorrect, please try again.");
+            setFeedbackMessage("Mindestens eine Antwort ist falsch. Bitte versuche es noch einmal.");
         }
     };
 
     const handleContinue = () => {
         if (submitButtonText === "Weiter") {
-            onContinue(); // Call the provided onContinue function to navigate to the next page
+            onContinue();
         } else {
-            handleSubmit(); // Otherwise, submit the answers
+            handleSubmit();
         }
     };
 
     return (
         <View style={styles.container}>
-            <SentenceWithBlanks sentenceParts={sentenceParts} filledAnswers={filledAnswers} />
+            <View style={styles.sentenceWithBlanks}>
+                <SentenceWithBlanks sentenceParts={sentenceParts} filledAnswers={filledAnswers} />
+            </View>
             <View style={styles.optionsContainer}>
                 {options.map((option, index) => (
-                <OptionButton
-                    key={index}
-                    option={option}
-                    onSelect={handleOptionSelect}
-                    isSelected={selectedOptions.includes(option)}
-                />
+                    <OptionButton
+                        key={index}
+                        option={option}
+                        onSelect={handleOptionSelect}
+                        isSelected={selectedOptions.includes(option)}
+                    />
                 ))}
             </View>
             <Text style={styles.feedbackText}>{feedbackMessage}</Text>
             <View style={styles.footer}>
-            <ControlButtons
+                <ControlButtons
                     onClear={handleClearAnswers}
                     onSubmit={handleContinue}
                     showBackspaceButton={true}
@@ -90,6 +96,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
     },
+    sentenceWithBlanks: {
+        marginTop: 60,
+        marginBottom: 50,
+    },
     optionsContainer: {
         flex: 1,
         flexDirection: 'row',
@@ -97,7 +107,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     feedbackText: {
-        fontSize: 16,
+        fontSize: 18,
         color: '#FFF',
         marginVertical: 10,
     },

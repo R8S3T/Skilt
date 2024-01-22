@@ -29,12 +29,12 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderWidth: 1,
         borderColor: '#8fc2c2',
-        width: '40%', 
+        width: '40%',
     },
     optionText: {
         color: '#FFF',
         fontFamily: 'OpenSans-Regular',
-        fontSize: 16,
+        fontSize: 18,
         textAlign: 'center',
     },
 });

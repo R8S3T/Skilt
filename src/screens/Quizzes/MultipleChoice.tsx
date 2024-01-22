@@ -76,7 +76,7 @@ const MultipleChoice: React.FC<MultipleChoiceProps> = ({ quiz, onContinue }) => 
                 ))}
                 {showFeedback && (
                     <Text style={styles.answerText}>
-                        {selectedOption === quiz.Answer ? 'Correct answer' : 'Wrong answer, please try again'}
+                        {selectedOption === quiz.Answer ? 'Richtige Antwort.' : 'Falsche Antwort, bitte versuche es noch einmal.'}
                     </Text>
                 )}
             </View>
@@ -111,8 +111,8 @@ const styles = StyleSheet.create({
     quizText: {
         fontSize: 20,
         fontWeight: 'bold',
-        marginTop: 50,
-        marginBottom: 30,
+        marginTop: 60,
+        marginBottom: 50,
         marginHorizontal: 20,
         textAlign: 'center',
         color: '#FFF',
@@ -132,13 +132,14 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#FFF',
         fontFamily: 'OpenSans-Regular',
-        fontSize: 16,
+        fontSize: 18,
         textAlign: 'center',
     },
     answerText: {
         color: '#FFF',
-        margin: 10,
-        textAlign: 'center', // Center the text
+        marginVertical: 50,
+        fontSize: 18,
+        textAlign: 'center',
     }
 });
 

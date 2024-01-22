@@ -60,13 +60,13 @@ const styles = StyleSheet.create({
     },
     correctBlank: {
         fontWeight: 'bold',
-        color: 'green',
+        color: '#32CD32',
         minWidth: 50,
         fontSize: 20,
     },
     incorrectBlank: {
         fontWeight: 'bold',
-        color: 'red',
+        color: '#FF6347',
         minWidth: 50,
         fontSize: 20,
     },
