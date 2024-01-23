@@ -26,11 +26,7 @@ const useSubchapterData = (chapterId: number) => {
                     ORDER BY SubchapterContent.ContentId ASC
                 `;
                 const subchapterParams = [chapterId];
-                console.log("useSubchapterData params:", subchapterParams);
-
                 const subchapterData: any[] = await fetchData(subchapterQuery, subchapterParams);
-
-                console.log("Fetched data: ", subchapterData);
 
                 const formattedDataPromises: Promise<SubchapterItem>[] = subchapterData.map(async (item: any) => {
                     let options: string[] | undefined = undefined;

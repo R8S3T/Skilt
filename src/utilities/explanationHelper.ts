@@ -6,7 +6,6 @@ export const getExplanation = async (word, contentId) => {
     try {
         const query = `SELECT Explanation FROM WordExplanations WHERE Word = ? AND ContentId =?`;
         const params = [word, contentId];
-        console.log("params in explanationHelper:", params);
         const explanations = await fetchData(query, params);
         // For now assume there will be only one word to explain per content
         return explanations.length > 0 ? explanations[0].Explanation : '';

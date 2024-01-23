@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Text, ScrollView, StyleSheet } from 'react-native';
+import { Text, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { usePageSelectionHandler } from "./usePageSelectionHandler";
 import { LearnStackParamList } from "../../components/LearnStackNavigator";
@@ -21,6 +21,7 @@ interface CombinedDataItem {
 interface SubchapterContentData {
     QuizId?: number;
     scContentId: number;
+    options?: string[];
 }
 
 type SubchapterContentProps = {
@@ -31,20 +32,37 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
     const chapterId = route.params.chapterId;
     const nextSubchapterId = chapterId + 1;
     const { hideTabs } = route.params;
-    const { data: contentData, error } = useSubchapterData(chapterId);
+    const { data: contentData, error, loading } = useSubchapterData(chapterId);
     const pagerViewRef = useRef<PagerView>(null);
     const navigation = useNavigation();
+    const [isLoading, setIsLoading] = useState(true);
 
-    const combinedData = useMemo(() => contentData.reduce((acc: CombinedDataItem[], curr: SubchapterContentData) => {
-        acc.push({ type: 'content', data: curr });
 
-        if (curr.QuizId && curr.scContentId) {
-            acc.push({ type: 'quiz', data: curr });
+    useEffect(() => {
+        // If there's no data and no error, we are still loading
+        if (!contentData && !error) {
+            setIsLoading(true);
+        } else {
+            // If we have data or an error, loading is complete
+            setIsLoading(false);
         }
-        return acc;
-    }, []), [contentData]);
+    }, [contentData, error]);
 
-    const { currentIndex, handlePageSelected, currentSlideType, isQuizSlide } = usePageSelectionHandler(combinedData);
+    const combinedData = useMemo(() => {
+        return contentData.reduce((acc: CombinedDataItem[], curr: any) => { // Notice 'any' type is used here
+            acc.push({ type: 'content', data: curr });
+
+            // Check if the 'options' property exists and is an array with elements
+            if (curr.QuizId && Array.isArray(curr.options) && curr.options.length > 0) {
+                acc.push({ type: 'quiz', data: curr });
+            }
+
+            return acc;
+        }, []);
+    }, [contentData]);
+
+    const { currentIndex, handlePageSelected, currentSlideType, isQuizSlide } = 
+    usePageSelectionHandler(combinedData);
 
     if (error) {
         return <Text>Error fetching data.</Text>;
@@ -71,6 +89,20 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
         ];
     };
 
+    if (loading) {
+        // While we're loading, show a spinner or similar loading indicator
+        return <ActivityIndicator size="large" color="#0000ff" />;
+    }
+
+    if (error) {
+        // If we've stopped loading and there's an error, show an error message
+        return <Text>Error fetching data.</Text>;
+    }
+
+    if (combinedData.length === 0) {
+        // If we've stopped loading and combinedData is empty, show a 'no content' message
+        return <Text>No content available.</Text>;
+    }
     return (
         <PagerView
             ref={pagerViewRef}
