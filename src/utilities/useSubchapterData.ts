@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "./fetchData";
 
-interface SubchapterItem {
+export interface SubchapterItem {
     scContentId: number;
     ContentData: string;
     QuizId?: number;
