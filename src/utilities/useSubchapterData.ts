@@ -17,6 +17,8 @@ const useSubchapterData = (chapterId: number) => {
 
     useEffect(() => {
         const loadSubchapterData = async () => {
+            console.log(`Fetching subchapter data for chapterId: ${chapterId}`);
+
             try {
                 const subchapterQuery = `
                     SELECT SubchapterContent.ContentId AS scContentId, ContentData, q.QuizId, q.ContentId AS quizContentId, q.Question
@@ -27,6 +29,8 @@ const useSubchapterData = (chapterId: number) => {
                 `;
                 const subchapterParams = [chapterId];
                 const subchapterData: any[] = await fetchData(subchapterQuery, subchapterParams);
+
+                console.log('Raw subchapter data:', subchapterData); // Log statement here
 
                 const formattedDataPromises: Promise<SubchapterItem>[] = subchapterData.map(async (item: any) => {
                     let options: string[] | undefined = undefined;
