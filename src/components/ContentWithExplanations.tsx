@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
 import { getWordsWithExplanations, getExplanation } from '../utilities/explanationHelper';
+import { scaleFontSize, screenWidth } from '../utilities/utils';
+
 
 const ExplanationModal = ({ visible, explanation, onClose }) => {
     return (
@@ -83,33 +85,34 @@ const styles = StyleSheet.create({
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
-        padding: 35,
+        padding: 20,
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 2
+            height: 1
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5
-        },
-        closeButton: {
+        elevation: 5,
+    },
+    closeButton: {
         marginTop: 20,
         backgroundColor: '#2196F3',
         color: 'white',
         padding: 10,
         borderRadius: 5,
-        },
-        contentText: {
-        fontSize: 16,
-        color: 'black',
-        },
-        explanationMarker: {
-        fontSize: 16,
+    },
+    contentText: {
+        fontFamily: 'OpenSans-Regular',
+        fontSize: scaleFontSize(18),
+    },
+    explanationMarker: {
+        fontSize: scaleFontSize(18),
         color: 'blue',
-        textDecorationLine: 'underline',
-        }
+        fontFamily: 'OpenSans-Regular',
+/*         textDecorationLine: 'underline', */
+    }
     });
 
     export default ContentWithExplanations;

@@ -21,7 +21,6 @@ const IntroSlider = ({ navigation }) => {
     }, []);
 
     const handleSlideChange = (index) => {
-        console.log('Current slide index:', index)
         setCurrentSlideIndex(index);
         if (index === slides.length -1) {
             setPlayAnimation(true);

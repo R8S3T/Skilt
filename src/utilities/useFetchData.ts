@@ -2,14 +2,43 @@ import { useState, useEffect } from "react";
 import { getDatabase } from "./database";
 import { isEqual } from "lodash";
 
-const useFetchData = (query: string, params: any[]) => {
-    interface Quiz {
-        Type: string;
-        QuizId: number;
-        options?: string[];
-    }
+export interface Quiz {
+    Type: string;
+    QuizId: number;
+    Question: string;
+    Answer: string;
+    options?: string[];
+    correctAnswers?: string[];
+}
+
+function useFetchData(query: string, parameters: any[]): { data: Quiz[]; error: any } {
     const [data, setData] = useState<Quiz[]>([]);
     const [error, setError] = useState<Error | null>(null);
+
+    // Function to fetch options based on the quiz type
+    const fetchOptions = async (tx, quiz) => {
+        const optionsQuery = quiz.Type === 'multiple_choice'
+            ? `SELECT OptionText FROM MultipleChoiceOptions WHERE QuizId = ? ORDER BY OptionId ASC`
+            : `SELECT OptionText FROM ClozeTest WHERE QuizId = ? ORDER BY SortOrder ASC`;
+
+        const optionsParams = [quiz.QuizId];
+
+        return new Promise((resolve, reject) => {
+            tx.executeSql(
+                optionsQuery,
+                optionsParams,
+                (_, result) => {
+                    const options = result.rows._array.map(opt => opt.OptionText);
+                    resolve(options);
+                },
+                (_, err) => {
+                    console.error(`${quiz.Type} options fetch error:`, err.message);
+                    reject(err);
+                    return true; // Returning true to rollback might be necessary depending on your error handling strategy
+                }
+            );
+        });
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,39 +50,26 @@ const useFetchData = (query: string, params: any[]) => {
                     db.transaction(tx => {
                         tx.executeSql(
                             query,
-                            params,
+                            parameters,
                             async (_, { rows: { _array } }) => {
                                 quizzes = _array;
 
                                 for (const quiz of quizzes) {
-                                    if (quiz.Type === 'multiple_choice') {
-                                        const optionsQuery = `
-                                            SELECT OptionText
-                                            FROM MultipleChoiceOptions
-                                            WHERE QuizId = ?
-                                            ORDER BY OptionId ASC
-                                        `;
-                                        const optionsParams = [quiz.QuizId];
+                                    // Fetch options for the quiz
+                                    try {
+                                        const options = await fetchOptions(tx, quiz);
+                                        quiz.options = options;
 
-                                        await new Promise<void>((resolve, reject) => {
-                                            tx.executeSql(
-                                                optionsQuery,
-                                                optionsParams,
-                                                (_, result: any) => {
-                                                    const _array = result.rows._array;
-                                                    quiz.options = _array.map((opt: any) => opt.OptionText);
-                                                    resolve();
-                                                },
-
-                                                (_, err: any) => { // Temporarily use 'any' if the exact error type is unknown
-                                                    console.error('Option fetch error:', err.message);
-                                                    reject(err);
-                                                    return true; // Indicate to roll back the transaction
-                                                }
-                                            );
-                                        }).catch(optionError => {
-                                            console.error('Option promise error:', optionError);
-                                        });
+                                        if (quiz.Type === 'cloze_test') {
+                                            quiz.correctAnswers = quiz.Answer 
+                                                ? quiz.Answer.split(",").map((answer: string) => answer.trim())
+                                                : [];
+                                        }
+                                    } catch (optionError) {
+                                        console.error('Option fetch error:', optionError);
+                                        // Consider how to handle this error. For example, you might want to:
+                                        // - set a flag on the quiz to indicate failed option fetch
+                                        // - handle it in a way that doesn't interrupt the rest of the processing
                                     }
                                 }
 
@@ -77,13 +93,15 @@ const useFetchData = (query: string, params: any[]) => {
 
             } catch (err) {
                 console.error('Fetch data error:', err);
+                setError(err instanceof Error ? err : new Error('An error occurred while fetching data'));
             }
         };
 
         fetchData();
-    }, [query, params]);
+    }, [query, ...parameters]);
 
     return { data, error };
-};
+}
 
 export default useFetchData;
+

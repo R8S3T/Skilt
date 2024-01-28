@@ -1,31 +1,41 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "./fetchData";
 
-const useSubchapterData = (chapterId) => {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(null);
+interface SubchapterItem {
+    scContentId: number;
+    ContentData: string;
+    QuizId?: number;
+    quizContentId?: number;
+    Question?: string;
+    options?: string[];
+}
+
+const useSubchapterData = (chapterId: number) => {
+    const [data, setData] = useState<SubchapterItem[]>([]);
+    const [error, setError] = useState<Error | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const loadSubchapterData = async () => {
+            setLoading(true);
+            console.log(`Fetching subchapter data for chapterId: ${chapterId}`);
+
             try {
-                console.log(`Fetching data for chapterId: ${chapterId}`); // Log the chapterId being used
                 const subchapterQuery = `
-                    SELECT SubchapterContent.ContentId AS scContentId, ContentData, q.QuizId, q.ContentId AS quizContentId, q.Question
+                    SELECT SubchapterContent.ContentId AS scContentId, ContentData, 
+                    q.QuizId, q.ContentId AS quizContentId, q.Question, q.Type
                     FROM SubchapterContent
                     LEFT JOIN Quiz q ON SubchapterContent.ContentId = q.ContentId
                     WHERE SubchapterId = ?
                     ORDER BY SubchapterContent.ContentId ASC
                 `;
                 const subchapterParams = [chapterId];
-                console.log(`Executing query: ${subchapterQuery}`); // Log the query
-                console.log(`With parameters: ${subchapterParams}`); // Log the parameters
+                const subchapterData: any[] = await fetchData(subchapterQuery, subchapterParams);
 
-                const subchapterData = await fetchData(subchapterQuery, subchapterParams);
-                console.log(`Query result: `, subchapterData); 
+                const formattedDataPromises = subchapterData.map(async (item) => {
+                    let options: string[] | undefined = undefined;
 
-                for (const item of subchapterData) {
-                    if (item.QuizId) {
+                    if (item.QuizId && item.Type === 'multiple_choice') {
                         const optionsQuery = `
                             SELECT OptionText
                             FROM MultipleChoiceOptions
@@ -33,14 +43,34 @@ const useSubchapterData = (chapterId) => {
                             ORDER BY OptionId ASC
                         `;
                         const optionsParams = [item.QuizId];
-                        console.log(`Fetching options for QuizId: ${item.QuizId}`); // Log the QuizId being used
-                        item.options = await fetchData(optionsQuery, optionsParams);
-                        console.log(`Options for QuizId ${item.QuizId}: `, item.options); // Log the options
+                        options = await fetchData(optionsQuery, optionsParams);
+                    } else if (item.QuizId && item.Type === 'cloze_test') {
+                        const clozeOptionsQuery = `
+                            SELECT OptionText
+                            FROM ClozeTest
+                            WHERE QuizId = ?
+                            ORDER BY SortOrder ASC
+                        `;
+                        const clozeOptionsParams = [item.QuizId];
+                        options = await fetchData(clozeOptionsQuery, clozeOptionsParams);
                     }
-                }
-                setData(subchapterData);
+
+                    return {
+                        scContentId: item.scContentId,
+                        ContentData: item.ContentData,
+                        QuizId: item.QuizId,
+                        quizContentId: item.quizContentId,
+                        Question: item.Question,
+                        options: options
+                    };
+                });
+
+                const formattedData = await Promise.all(formattedDataPromises);
+                setData(formattedData);
             } catch (e) {
-                setError(e);
+                if (e instanceof Error) {
+                    setError(e);
+                }
             } finally {
                 setLoading(false);
             }
@@ -50,6 +80,7 @@ const useSubchapterData = (chapterId) => {
     }, [chapterId]);
 
     return { data, error, loading };
-}
+};
 
 export default useSubchapterData;
+

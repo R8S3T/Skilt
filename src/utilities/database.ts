@@ -23,15 +23,10 @@ export async function initializeDatabase(dbAsset) {
 
             // Log asset resolution
             const asset = Asset.fromModule(dbAsset);
-            console.log("Asset resolved for database creation.");
-
-            // Download the database
-            console.log("Downloading the database file...");
             const downloadResult = await FileSystem.downloadAsync(
                 asset.uri,
                 FileSystem.documentDirectory + 'SQLite/skilt.db'
             );
-            console.log("Database file downloaded at:", downloadResult.uri);
         } else {
             console.log("Database file already exists. Path:", FileSystem.documentDirectory + 'SQLite/skilt.db');
         }

@@ -1,6 +1,6 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import { ScrollView, View, StyleSheet } from 'react-native';
-import { dynamicMargin, screenWidth } from "../../utilities/utils";
+import { dynamicMargin } from "../../utilities/utils";
 import TopSection from "./TopSection";
 import MiddleSection from "./MiddleSection";
 import BottomSection from "./BottomSection";

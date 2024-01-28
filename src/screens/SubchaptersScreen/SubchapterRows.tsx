@@ -2,12 +2,17 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import SubchapterNode from "./SubchapterNode";
 import { Subchapter } from './SubchaptersScreen';
+import { useSubchapter } from './SubchapterContext';
 
 interface SubchapterRowsProps {
   subchapters: Subchapter[];
+  navigation: any;
 }
 
 const SubchapterRows: React.FC<SubchapterRowsProps & { navigation: any }> = ({ subchapters, navigation }) => {
+  const { unlockedSubchapters } = useSubchapter();
+  const { finishedSubchapters } = useSubchapter();
+
   // Function to create pairs of subchapters
   const createRows = (subchapters: Subchapter[]) => {
     let rows = [];
@@ -27,11 +32,12 @@ const SubchapterRows: React.FC<SubchapterRowsProps & { navigation: any }> = ({ s
             <SubchapterNode
               key={subchapter.id}
               isLocked={subchapter.isLocked}
+              isFinished={finishedSubchapters.includes(subchapter.id)}
               onPress={() => {
                 if (!subchapter.isLocked) {
-                  navigation.navigate('SubchapterContent', { chapterId: subchapter.id })
+                    navigation.navigate('SubchapterContent', { chapterId: subchapter.id, hideTabs: true })
                 }
-              }}
+            }}
             />
           ))}
         </View>
@@ -49,7 +55,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     margin: 20,
-    
   },
 
 });
