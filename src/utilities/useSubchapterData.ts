@@ -17,11 +17,13 @@ const useSubchapterData = (chapterId: number) => {
 
     useEffect(() => {
         const loadSubchapterData = async () => {
+            setLoading(true);
             console.log(`Fetching subchapter data for chapterId: ${chapterId}`);
 
             try {
                 const subchapterQuery = `
-                    SELECT SubchapterContent.ContentId AS scContentId, ContentData, q.QuizId, q.ContentId AS quizContentId, q.Question
+                    SELECT SubchapterContent.ContentId AS scContentId, ContentData, 
+                    q.QuizId, q.ContentId AS quizContentId, q.Question, q.Type
                     FROM SubchapterContent
                     LEFT JOIN Quiz q ON SubchapterContent.ContentId = q.ContentId
                     WHERE SubchapterId = ?
@@ -30,12 +32,10 @@ const useSubchapterData = (chapterId: number) => {
                 const subchapterParams = [chapterId];
                 const subchapterData: any[] = await fetchData(subchapterQuery, subchapterParams);
 
-                console.log('Raw subchapter data:', subchapterData); // Log statement here
-
-                const formattedDataPromises: Promise<SubchapterItem>[] = subchapterData.map(async (item: any) => {
+                const formattedDataPromises = subchapterData.map(async (item) => {
                     let options: string[] | undefined = undefined;
 
-                    if (item.QuizId) {
+                    if (item.QuizId && item.Type === 'multiple_choice') {
                         const optionsQuery = `
                             SELECT OptionText
                             FROM MultipleChoiceOptions
@@ -44,6 +44,15 @@ const useSubchapterData = (chapterId: number) => {
                         `;
                         const optionsParams = [item.QuizId];
                         options = await fetchData(optionsQuery, optionsParams);
+                    } else if (item.QuizId && item.Type === 'cloze_test') {
+                        const clozeOptionsQuery = `
+                            SELECT OptionText
+                            FROM ClozeTest
+                            WHERE QuizId = ?
+                            ORDER BY SortOrder ASC
+                        `;
+                        const clozeOptionsParams = [item.QuizId];
+                        options = await fetchData(clozeOptionsQuery, clozeOptionsParams);
                     }
 
                     return {
@@ -74,3 +83,4 @@ const useSubchapterData = (chapterId: number) => {
 };
 
 export default useSubchapterData;
+

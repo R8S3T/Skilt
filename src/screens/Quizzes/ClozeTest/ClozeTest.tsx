@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import OptionButton from './OptionButton';
 import SentenceWithBlanks from './SentenceWithBlanks';
@@ -13,6 +13,10 @@ interface ClozeTestProps {
 }
 
 const ClozeTest: React.FC<ClozeTestProps> = ({ sentenceParts, options, correctAnswers, onContinue }) => {
+
+    useEffect(() => {
+        console.log("ClozeTest component mounted");
+    }, []);
     const [filledAnswers, setFilledAnswers] = useState<AnswerStatus[]>(Array(sentenceParts.length - 1).fill({ answer: '', isCorrect: null }));
     const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
     const [feedbackMessage, setFeedbackMessage] = useState('');

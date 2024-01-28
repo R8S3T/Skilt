@@ -20,7 +20,10 @@ interface QuizData {
     options?: string[];
 }
 
-const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSubmit = () =>{} }) => {
+const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSubmit = () => {} }) => {
+    useEffect(() => {
+        console.log("QuizSlide component mounted");
+    }, []); 
     const query = 'SELECT * FROM Quiz WHERE ContentId =?';
 
     const { data, error } = useFetchData(query, [quizData.scContentId]);
@@ -34,14 +37,12 @@ const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSub
     }
 
     const quiz = data[0] as QuizData;
-
-    if (!quiz) {
-        return <Text>Quiz data is not available.</Text>;
-    }
+    console.log('Rendering quiz type:', quiz.Type);
 
     // Prepare content based on quiz type
     let content;
     if (quiz.Type === 'multiple_choice') {
+        console.log('Rendering Multiple Choice Quiz');
         content = (
             <MultipleChoice
                 quiz={quiz}
@@ -49,7 +50,7 @@ const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSub
             />
         );
     } else if (quiz.Type === 'cloze_test') {
-        // Split the question and answers for cloze test
+        console.log('Rendering Cloze Test Quiz');
         const sentenceParts = quiz.Question.split("___");
         const correctAnswers = quiz.Answer.split(",");
 
@@ -62,8 +63,10 @@ const QuizSlide: React.FC<QuizSlideProps> = ({ quizData, onContinue, onAnswerSub
             />
         );
     } else {
+        console.log('Unsupported quiz type:', quiz.Type);
         content = <Text>Unsupported quiz type.</Text>;
     }
+
 
     return (
         <View style={styles.slide}>
