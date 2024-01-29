@@ -8,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import PagerView from 'react-native-pager-view';
 import useSubchapterData from "../../utilities/useSubchapterData";
+
 import ContentSlide from "./ContentSlide";
 import QuizSlide from "../Quizzes/QuizSlide";
 import NextButton from "./NextButton";

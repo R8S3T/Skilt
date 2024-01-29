@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import ContentWithExplanations from "../../components/ContentWithExplanations";
+import parseText from './parseText'; // Import parseText
 
 interface ContentSlideProps {
     contentData: {
@@ -8,11 +9,15 @@ interface ContentSlideProps {
         scContentId: number;
     };
 }
+
 const ContentSlide: React.FC<ContentSlideProps> = ({ contentData }) => {
+    // Use parseText to process and style the content
+    const styledContent = parseText({ content: contentData.ContentData });
+
     return (
         <View style={styles.slide}>
             <ContentWithExplanations
-                content={contentData.ContentData}
+                content={styledContent} // Pass the styled content as JSX elements
                 contentId={contentData.scContentId}
             />
         </View>
