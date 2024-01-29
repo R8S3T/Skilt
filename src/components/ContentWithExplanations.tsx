@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactNode } from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
 import { getWordsWithExplanations, getExplanation } from '../utilities/explanationHelper';
-import { scaleFontSize, screenWidth } from '../utilities/utils';
+import { scaleFontSize } from '../utilities/utils';
 
+interface ExplanationModalProps {
+    visible: boolean;
+    explanation: string;
+    onClose: () => void;
+}
 
-const ExplanationModal = ({ visible, explanation, onClose }) => {
+const ExplanationModal: React.FC<ExplanationModalProps> = ({ visible, explanation, onClose }) => {
     return (
         <Modal
-            animationType='slide'
+            animationType="slide"
             transparent={true}
             visible={visible}
-            onRequestClose={onClose}
-        >
+            onRequestClose={onClose}>
             <View style={styles.modalView}>
                 <Text>{explanation}</Text>
                 <TouchableOpacity onPress={onClose}>
@@ -22,13 +26,17 @@ const ExplanationModal = ({ visible, explanation, onClose }) => {
     );
 };
 
-const ContentWithExplanations = ({ content, contentId }) => {
-    const [modalVisible, setModalVisible] = useState(false);
-    const [selectedExplanation, setSelectedExplanation] = useState('');
-    const [wordsWithExplanations, setWordsWithExplanations] = useState([]);
+interface ContentWithExplanationsProps {
+    content: ReactNode;  // JSX content
+    contentId: number;
+}
+
+const ContentWithExplanations: React.FC<ContentWithExplanationsProps> = ({ content, contentId }) => {
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
+    const [selectedExplanation, setSelectedExplanation] = useState<string>('');
+    const [wordsWithExplanations, setWordsWithExplanations] = useState<string[]>([]);
 
     useEffect(() => {
-        // Corrected function call here
         const fetchWordsWithExplanations = async () => {
             const words = await getWordsWithExplanations(contentId);
             setWordsWithExplanations(words);
@@ -36,41 +44,17 @@ const ContentWithExplanations = ({ content, contentId }) => {
         fetchWordsWithExplanations();
     }, [contentId]);
 
-    const handleWordPress = async (word) => {
+    const handlePressWord = async (word: string) => {
         const explanation = await getExplanation(word, contentId);
-        if (explanation) { // Only show the modal if there is an explanation
-            setSelectedExplanation(explanation);
-            setModalVisible(true);
-        }
-    };
-
-    const renderContentWithLinks = () => {
-        return (
-            <Text>
-                {content.split(' ').map((word, index) => {
-                    const isWordWithExplanation = wordsWithExplanations.includes(word);
-                    return (
-                        <React.Fragment key={index}>
-                            {isWordWithExplanation ? (
-                                <TouchableOpacity onPress={() => handleWordPress(word)}>
-                                    <Text style={styles.explanationMarker}>{word}</Text>
-                                </TouchableOpacity>
-                            ) : (
-                                <Text>{word}</Text>
-                            )}
-                            {' '}
-                        </React.Fragment>
-                    )
-                })}
-            </Text>
-        )
+        setSelectedExplanation(explanation);
+        setModalVisible(true);
     };
 
     return (
         <View>
-            <Text style={styles.contentText}>
-                {renderContentWithLinks()}
-            </Text>
+            <View style={styles.contentText}>
+                {content}
+            </View>
             <ExplanationModal
                 visible={modalVisible}
                 explanation={selectedExplanation}
@@ -88,12 +72,9 @@ const styles = StyleSheet.create({
         padding: 20,
         alignItems: "center",
         shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1
-        },
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
-        shadowRadius: 4,
+        shadowRadius: 3.84,
         elevation: 5,
     },
     closeButton: {
@@ -104,15 +85,11 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     contentText: {
-        fontFamily: 'OpenSans-Regular',
-        fontSize: scaleFontSize(18),
+        // Style for the content text container
     },
     explanationMarker: {
-        fontSize: scaleFontSize(18),
-        color: 'blue',
-        fontFamily: 'OpenSans-Regular',
-/*         textDecorationLine: 'underline', */
-    }
-    });
+        // Style for words that have explanations
+    },
+});
 
-    export default ContentWithExplanations;
+export default ContentWithExplanations;

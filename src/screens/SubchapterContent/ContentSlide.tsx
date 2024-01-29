@@ -17,7 +17,7 @@ const ContentSlide: React.FC<ContentSlideProps> = ({ contentData }) => {
     return (
         <View style={styles.slide}>
             <ContentWithExplanations
-                content={styledContent} // Pass the styled content as JSX elements
+                content={styledContent}
                 contentId={contentData.scContentId}
             />
         </View>

@@ -25,10 +25,16 @@ const YearsScreen: React.FC = () => {
         return (
             <TouchableOpacity
                 key={item.year.toString()}
-                style={[styles.card]}
+                style={[
+                    styles.card,
+                    { borderColor: backgroundColors[globalIndex], borderWidth: 2.5 }
+                ]}
                 onPress={() => navigation.navigate('ChaptersScreen', { year: item.year })}
             >
-                <View style={[styles.yearRectangle, { backgroundColor: backgroundColors[globalIndex] }]}>
+                <View style={[
+                    styles.yearRectangle,
+                    { borderColor: backgroundColors[globalIndex], borderWidth: 2.5 }
+                ]}>
                     <Text style={styles.number}>{`${item.year}. Lehrjahr`}</Text>
                 </View>
                 <Text style={styles.learnArea}>
@@ -81,9 +87,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'transparent',
+        backgroundColor: '#f0f0f0', // Set card background to light gray
         borderWidth: 1,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
         marginTop: 15,
         marginBottom: 25,
         overflow: 'hidden',
@@ -114,8 +119,7 @@ const styles = StyleSheet.create({
     number: {
         fontFamily: 'Lato-Bold',
         fontSize: scaleFontSize(18),
-        fontWeight: 'bold',
-        color: '#fff',
+        color: '#2b4353',
     },
 });
 

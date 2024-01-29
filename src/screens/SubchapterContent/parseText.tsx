@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { Text, View, StyleSheet, TextComponent } from 'react-native';
 
 
@@ -6,8 +6,9 @@ interface TextComponentProps {
     content: string;
 }
 
+
 // This function parses the text and returns an array of React elements with applied styles
-const parseText = ({ content }) => {
+const parseText = ({ content }: TextComponentProps): JSX.Element[] => {
     return content.split('\n').map((line, index) => {
       if (line.startsWith('HEADER:')) {
         // Remove "HEADER:" and apply header styling
@@ -41,14 +42,13 @@ const parseText = ({ content }) => {
       marginVertical: 2,
     },
     bulletPoint: {
-      marginRight: 10, // Adds some space between the bullet point and the text
+      marginRight: 10,
     },
     listItemText: {
-      flex: 1, // Takes up the remaining space in the flex direction to ensure text alignment
-      fontSize: 16, // Matches the fontSize of listItem for consistency
-      // Add any additional text styling here
+      flex: 1,
+      fontSize: 16,
     },
-    // Add other styles as needed
+
   });
 
 export default parseText;
