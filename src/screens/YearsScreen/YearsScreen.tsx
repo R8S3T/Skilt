@@ -21,19 +21,21 @@ const YearsScreen: React.FC = () => {
     const renderYear = (item: EducationYear) => {
         const backgroundColors = ['#9ba6a5', '#2b4353', '#e8630a', '#a8d1d1'];
         const globalIndex = item.year - 1;
-
+    
         return (
             <TouchableOpacity
                 key={item.year.toString()}
-                style={[
-                    styles.card,
-                    { borderColor: backgroundColors[globalIndex], borderWidth: 2.5 }
-                ]}
+                style={styles.card}
                 onPress={() => navigation.navigate('ChaptersScreen', { year: item.year })}
             >
                 <View style={[
                     styles.yearRectangle,
-                    { borderColor: backgroundColors[globalIndex], borderWidth: 2.5 }
+                    {
+                        borderBottomColor: backgroundColors[globalIndex], // Apply color to the bottom border
+                        borderRightColor: backgroundColors[globalIndex], // Apply color to the right border
+                        borderBottomWidth: 2.5, // Set the width of the bottom border
+                        borderRightWidth: 2.5, // Set the width of the right border
+                    }
                 ]}>
                     <Text style={styles.number}>{`${item.year}. Lehrjahr`}</Text>
                 </View>
@@ -43,7 +45,6 @@ const YearsScreen: React.FC = () => {
             </TouchableOpacity>
         );
     };
-
     return (
         <EducationDataComponent>
             {educationData => (
@@ -87,14 +88,18 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#f0f0f0', // Set card background to light gray
-        borderWidth: 1,
+        backgroundColor: '#f0f0f0',
         marginTop: 15,
         marginBottom: 25,
         overflow: 'hidden',
         paddingTop: 0,
         paddingBottom: 30,
         paddingHorizontal: 20,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
     },
     yearRectangle: {
         width: '75%',
@@ -107,6 +112,8 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         zIndex: 1,
+        backgroundColor: '#f0f0f0', // Match the card's background color
+        // Only bottom and right borders are colored and visible
     },
     learnArea: {
         fontFamily: 'OpenSans-Regular',
