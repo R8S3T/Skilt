@@ -51,7 +51,7 @@ const YearsScreen: React.FC = () => {
                 <ScrollView style={styles.scrollView}>
                 <View style={styles.container}>
                     <Text style={styles.header}>Wähle Dein Lehrjahr</Text>
-                    {educationData.map((item, index) => renderYear(item, index))}
+                    {educationData.map((item) => renderYear(item))}
                 </View>
                 </ScrollView>
             )}
@@ -112,8 +112,7 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         zIndex: 1,
-        backgroundColor: '#f0f0f0', // Match the card's background color
-        // Only bottom and right borders are colored and visible
+        backgroundColor: '#f0f0f0',
     },
     learnArea: {
         fontFamily: 'OpenSans-Regular',
