@@ -33,8 +33,8 @@ const YearsScreen: React.FC = () => {
                     {
                         borderBottomColor: backgroundColors[globalIndex], // Apply color to the bottom border
                         borderRightColor: backgroundColors[globalIndex], // Apply color to the right border
-                        borderBottomWidth: 2.5, // Set the width of the bottom border
-                        borderRightWidth: 2.5, // Set the width of the right border
+                        borderBottomWidth: 1.5, // Set the width of the bottom border
+                        borderRightWidth: 1.5, // Set the width of the right border
                     }
                 ]}>
                     <Text style={styles.number}>{`${item.year}. Lehrjahr`}</Text>
@@ -50,7 +50,9 @@ const YearsScreen: React.FC = () => {
             {educationData => (
                 <ScrollView style={styles.scrollView}>
                 <View style={styles.container}>
-                    <Text style={styles.header}>Wähle Dein Lehrjahr</Text>
+                <View style={{ width: '85%', alignSelf: 'center' }}>
+                        <Text style={styles.header}>Wähle Dein Lehrjahr</Text>
+                    </View>
                     {educationData.map((item) => renderYear(item))}
                 </View>
                 </ScrollView>
@@ -74,7 +76,7 @@ const styles = StyleSheet.create({
         color: '#2b4353',
         fontFamily: 'Lato-Bold',
         fontWeight: 'bold',
-        textAlign: 'center',
+        textAlign: 'left',
         marginVertical: 20,
     },
     row: {
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#f0f0f0',
-        marginTop: 15,
+        marginTop: 25,
         marginBottom: 25,
         overflow: 'hidden',
         paddingTop: 0,
