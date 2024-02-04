@@ -23,6 +23,7 @@ interface SubchapterContentData {
     QuizId?: number;
     scContentId: number;
     options?: string[];
+    imagePaths?: string[];
 }
 
 type SubchapterContentProps = {
@@ -114,18 +115,19 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
         >
             {combinedData.map((item, index) => (
                 <ScrollView
-                    key={`${item.type}-${item.data.scContentId}`}
+                    key={`${item.type}-${item.data.scContentId}-${index}`} // Ensure keys are unique
                     style={styles.scrollView}
                     contentContainerStyle={getContentContainerStyle(item.type)}
                 >
-                    {item.type === 'content' && <ContentSlide contentData={item.data} />}
-                    {item.type === 'quiz' && <QuizSlide quizData={item.data} onContinue={goToNextPage} />}
+                    {item.type === 'content' && (
+                        <ContentSlide contentData={{ ...item.data, imagePaths: item.data.imagePaths }} />
+                    )}
+                    {item.type === 'quiz' && (
+                        <QuizSlide quizData={item.data} onContinue={goToNextPage} />
+                    )}
 
                     {hideTabs && item.type !== 'quiz' && (
-                        <NextButton
-                            onPress={goToNextPage}
-                            isActive={true}
-                        />
+                        <NextButton onPress={goToNextPage} isActive={true} />
                     )}
                 </ScrollView>
             ))}
