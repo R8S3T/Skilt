@@ -23,18 +23,20 @@ const ContentSlide: React.FC<ContentSlideProps> = ({ contentData }) => {
                 contentId={scContentId}
             />
             {imagePaths && imagePaths.map((key, index) => {
-                const image = imageMap[key];
-
-                if (!image) {
+                const imageData = imageMap[key];
+                const imageSource = imageData.source ? imageData.source : imageData;
+                const imageStyle = imageData.style ? imageData.style : {};
+    
+                if (!imageSource) {
                     console.log('Image not found for key:', key);
                     return null;
                 }
-
+    
                 return (
                     <Image
                         key={index}
-                        source={image}
-                        style={styles.image}
+                        source={imageSource}
+                        style={[styles.image, imageStyle]}
                     />
                 );
             })}
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
         height: 100,
         resizeMode: 'contain',
         marginVertical: 10,
-        marginTop: 80,
+        marginTop: 10,
     },
 });
 

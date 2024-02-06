@@ -7,5 +7,8 @@ export const imageMap: { [key: string]: any } = {
     Strichlinie: require('../../assets/Images/Strichlinie.png'),
     Strichpunktlinie: require('../../assets/Images/Strichpunktlinie.png'),
     Strichpunktpunktlinie: require('../../assets/Images/Strichpunktpunktlinie.png'),
-    // Add more mappings for each image key used in your database
+    Formel: {
+        source: require('../../assets/Images/Formel.png'),
+        style: {width: '85%', height: 300}
+    }
 };
