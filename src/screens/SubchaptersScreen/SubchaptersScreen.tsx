@@ -1,6 +1,6 @@
 // SubchaptersScreen.tsx
 import React from "react";
-import { Text, View, StyleSheet, ScrollView, ImageBackground } from 'react-native';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
 
 import { subchapters } from "./subchaptersTitle";
 import { useRoute, RouteProp } from '@react-navigation/native';

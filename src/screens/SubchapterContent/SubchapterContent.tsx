@@ -36,7 +36,7 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
     const { hideTabs } = route.params;
     const { data: contentData, error, loading } = useSubchapterData(chapterId);
     const pagerViewRef = useRef<PagerView>(null);
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>()
     const [isLoading, setIsLoading] = useState(true);
 
 
@@ -79,7 +79,7 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
         } else {
             unlockSubchapter(nextSubchapterId);
             markSubchapterAsFinished(chapterId);
-            navigation.goBack();
+            navigation.navigate('CongratsScreen');
         }
     };
 

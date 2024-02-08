@@ -8,6 +8,7 @@ import YearsScreen from '../screens/YearsScreen/YearsScreen';
 import ChaptersScreen from '../screens/ChaptersScreen/ChaptersScreen';
 import SubchaptersScreen from '../screens/SubchaptersScreen/SubchaptersScreen';
 import TestDragDrop from '../screens/TestScreen/TestDragDrop';
+import CongratsScreen from '../screens/SubchapterContent/CongratsScreen';
 
 export type LearnStackParamList = {
     LearnMain: undefined;
@@ -19,11 +20,12 @@ export type LearnStackParamList = {
         chapterId: number;
         chapterTitle: string;
     };
-    SubchapterContent: { 
+    SubchapterContent: {
         chapterId: number;
         hideTabs?: boolean;
     };
     TestDragDrop: undefined;
+    CongratsScreen: undefined;
 };
 
 const LearnStack = createNativeStackNavigator<LearnStackParamList>();
@@ -59,6 +61,11 @@ const LearnStackNavigator: React.FC = () => {
             <LearnStack.Screen
                 name='SubchaptersScreen'
                 component={SubchaptersScreen}
+                options={{ headerShown: false }}
+            />
+            <LearnStack.Screen
+                name='CongratsScreen'
+                component={CongratsScreen}
                 options={{ headerShown: false }}
             />
             <LearnStack.Screen
