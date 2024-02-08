@@ -8,7 +8,7 @@ import { loadFonts } from './src/utilities/font';
 import useDatabaseInitialization from './src/utilities/useDatabaseInit';
 
 import StartScreen from './src/screens/StartScreen';
-import IntroSlider from './src/components/IntroSlider';
+import IntroSlider from './src/screens/IntroSlider/IntroSlider';
 import LearnScreen from './src/screens/LearnScreen/LearnScreen';
 import BottomTabs from './src/components/BottomTabs';
 

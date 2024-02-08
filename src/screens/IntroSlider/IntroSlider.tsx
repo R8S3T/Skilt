@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, Keyboard } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import { saveUserName } from "../utilities/fetchData";
-import { slides, renderSlideItem } from '../utilities/homeScreenSlides';
+import { saveUserName } from "../../utilities/fetchData";
+import { slides, renderSlideItem } from './homeScreenSlides';
 
 const IntroSlider = ({ navigation }) => {
     const [currentSlideIndex, setCurrentSlideIndex] = useState(0);

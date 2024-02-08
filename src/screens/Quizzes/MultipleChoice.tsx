@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     },
     answerText: {
         color: '#FFF',
-        marginVertical: 50,
+        marginVertical: 20,
         fontSize: 18,
         textAlign: 'center',
     }

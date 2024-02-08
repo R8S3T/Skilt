@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import LearnScreen from '../screens/LearnScreen/LearnScreen';
 import SubchapterContent from '../screens/SubchapterContent/SubchapterContent';
-import IntroSlider from './IntroSlider';
+import IntroSlider from '../screens/IntroSlider/IntroSlider';
 import YearsScreen from '../screens/YearsScreen/YearsScreen';
 import ChaptersScreen from '../screens/ChaptersScreen/ChaptersScreen';
 import SubchaptersScreen from '../screens/SubchaptersScreen/SubchaptersScreen';

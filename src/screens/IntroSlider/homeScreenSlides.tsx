@@ -2,34 +2,34 @@ import React from 'react';
 import LottieView from 'lottie-react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { View, Text, StyleSheet } from 'react-native';
-import { scaleFontSize, getDynamicIconSize } from './utils';
+import { scaleFontSize, getDynamicIconSize } from '../../utilities/utils';
 
 
 const slides = [
     {
         key: 'one',
-        animation: require('../../assets/Animations/fireworks_animation.json'),
+        animation: require('../../../assets/Animations/fireworks_animation.json'),
         title: 'Willkommen bei Skilt',
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Amet nisl suscipit adipiscing bibendum est. ',
         backgroundColor: '#f6f5f5',
     },
     {
         key: 'two',
-        animation: require('../../assets/Animations/knowledge_donut_animation.json'),
+        animation: require('../../../assets/Animations/knowledge_donut_animation.json'),
         title: 'Lernen in kleinen Wissens-Häppchen',
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Amet nisl suscipit adipiscing bibendum est. ',
         backgroundColor: '#f6f5f5',
     },
     {
         key: 'three',
-        animation: require('../../assets/Animations/quiz_animation_3.json'),
+        animation: require('../../../assets/Animations/quiz_animation_3.json'),
         title: 'Interaktive Quizzes',
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Amet nisl suscipit adipiscing bibendum est. ',
         backgroundColor: '#f6f5f5',
     },
     {
         key: 'four',
-        animation: require('../../assets/Animations/user_animation_2.json'),
+        animation: require('../../../assets/Animations/user_animation_2.json'),
         title: 'Benutzername',
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt. ',
         backgroundColor: '#f6f5f5',
