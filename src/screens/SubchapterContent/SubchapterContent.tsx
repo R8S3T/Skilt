@@ -79,7 +79,10 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
         } else {
             unlockSubchapter(nextSubchapterId);
             markSubchapterAsFinished(chapterId);
-            navigation.navigate('CongratsScreen');
+            navigation.navigate('CongratsScreen', {
+                chapterId: chapterId, // Passing the current chapter ID
+                // chapterTitle: 'Some Title' // Include this if you have the chapter title available
+            });
         }
     };
 
