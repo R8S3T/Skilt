@@ -1,18 +1,28 @@
 import React from 'react';
-import { View, StyleSheet, Button } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import LottieView from 'lottie-react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { useSubchapter } from '../SubchaptersScreen/SubchapterContext';
+
+type CongratsScreenParams = {
+    chapterId: number | null;
+    chapterTitle: string;
+};
 
 const CongratsScreen: React.FC = () => {
     const navigation = useNavigation<any>();
-    const { setCurrentSubchapter } = useSubchapter();
+    const route = useRoute<RouteProp<{ params: CongratsScreenParams }, 'params'>>();
+
+    const { chapterId, chapterTitle } = route.params ?? { chapterId: null, chapterTitle: '' };
 
     const handleContinue = () => {
         console.log('handleContinue called');
-        setCurrentSubchapter(null, '');
-        console.log('Navigating to SubchaptersScreen');
-        navigation.navigate('SubchaptersScreen');
+        // Use chapterId and chapterTitle for navigation
+        console.log('Navigating to SubchaptersScreen with chapterId and chapterTitle');
+        navigation.navigate('SubchaptersScreen', {
+            chapterId,
+            chapterTitle,
+        });
     };
 
     return (
@@ -23,7 +33,9 @@ const CongratsScreen: React.FC = () => {
                 loop={false}
                 style={styles.animation}
             />
-            <Button title='Weiter' onPress={handleContinue}></Button>
+            <TouchableOpacity style={[styles.button, styles.active]} onPress={handleContinue}>
+                <Text style={styles.text}>Weiter</Text>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -35,8 +47,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     animation: {
-        width: 500,
-        height: 500,
+        width: 300,
+        height: 300,
+    },
+    button: {
+        minWidth: 100,
+        padding: 10,
+        borderRadius: 5,
+        alignSelf: 'center',
+        marginVertical: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    active: {
+        backgroundColor: '#ff8f00',
+    },
+    text: {
+        color: 'white',
+        fontSize: 18,
+        textAlign: 'center',
     },
 });
 

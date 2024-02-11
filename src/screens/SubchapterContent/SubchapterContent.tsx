@@ -81,7 +81,7 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
             markSubchapterAsFinished(chapterId);
             navigation.navigate('CongratsScreen', {
                 chapterId: chapterId, // Passing the current chapter ID
-                // chapterTitle: 'Some Title' // Include this if you have the chapter title available
+                // chapterTitle: 
             });
         }
     };
