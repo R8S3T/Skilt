@@ -39,7 +39,11 @@ const ChaptersScreen: React.FC = () => {
         <View style={styles.chapterContainer}>
             <TouchableOpacity
                 style={styles.playButton}
-                onPress={() => navigation.navigate('SubchaptersScreen', { chapterId: item.ChapterId, chapterTitle: item.ChapterIntro })}>
+                onPress={() => navigation.navigate('SubchaptersScreen', {
+                    chapterId: item.ChapterId,
+                    chapterTitle: item.ChapterIntro
+                })}
+            >
             <Image
                 source={require('../../../assets/Images/play.png')}
                 style={{ width: iconSize, height: iconSize, tintColor: '#e8630a' }}

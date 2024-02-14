@@ -22,6 +22,7 @@ export type LearnStackParamList = {
     };
     SubchapterContent: {
         chapterId: number;
+        chapterTitle: string;
         hideTabs?: boolean;
     };
     TestDragDrop: undefined;

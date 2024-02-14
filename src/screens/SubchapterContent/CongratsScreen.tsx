@@ -15,15 +15,22 @@ const CongratsScreen: React.FC = () => {
 
     const { chapterId, chapterTitle } = route.params ?? { chapterId: null, chapterTitle: '' };
 
-    const handleContinue = () => {
-        console.log('handleContinue called');
-        // Use chapterId and chapterTitle for navigation
-        console.log('Navigating to SubchaptersScreen with chapterId and chapterTitle');
-        navigation.navigate('SubchaptersScreen', {
-            chapterId,
-            chapterTitle,
-        });
-    };
+    console.log('CongratsScreen Params:', route.params);
+
+const handleContinue = () => {
+    console.log('Chapter ID:', chapterId, 'Chapter Title:', chapterTitle);
+
+    // Log to indicate that the handleContinue function is called
+    console.log('handleContinue called');
+
+    // Log to indicate navigation to SubchaptersScreen with chapterId and chapterTitle
+    console.log('Navigating to SubchaptersScreen with chapterId and chapterTitle');
+
+    navigation.navigate('SubchaptersScreen', {
+        chapterId: chapterId,
+        chapterTitle: chapterTitle, // Pass it along to SubchaptersScreen
+    });
+};
 
     return (
         <View style={styles.container}>

@@ -5,7 +5,7 @@ import { getDatabase } from "../utilities/database";
 const dbAsset = require('../../assets/skilt.db');
 
 const Chapters = ({ route, navigation }) => {
-    const { chapterId } = route.params;
+    const { chapterId, chapterTitle } = route.params;
     console.log("route.params in Chapters:", route.params);
     const [chapter, setChapter] = useState(null);
 

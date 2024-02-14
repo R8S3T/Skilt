@@ -7,9 +7,10 @@ import { useSubchapter } from './SubchapterContext';
 interface SubchapterRowsProps {
   subchapters: Subchapter[];
   navigation: any;
+  chapterTitle: string;
 }
 
-const SubchapterRows: React.FC<SubchapterRowsProps & { navigation: any }> = ({ subchapters, navigation }) => {
+const SubchapterRows: React.FC<SubchapterRowsProps> = ({ subchapters, navigation, chapterTitle }) => {
   const { unlockedSubchapters } = useSubchapter();
   const { finishedSubchapters } = useSubchapter();
 
@@ -35,7 +36,11 @@ const SubchapterRows: React.FC<SubchapterRowsProps & { navigation: any }> = ({ s
               isFinished={finishedSubchapters.includes(subchapter.id)}
               onPress={() => {
                 if (!subchapter.isLocked) {
-                    navigation.navigate('SubchapterContent', { chapterId: subchapter.id, hideTabs: true })
+                    navigation.navigate('SubchapterContent', {
+                      chapterId: subchapter.id,
+                      chapterTitle: chapterTitle,
+                      hideTabs: true,
+                    })
                 }
             }}
             />

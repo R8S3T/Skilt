@@ -1,10 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Text, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import { usePageSelectionHandler } from "./usePageSelectionHandler";
 import { LearnStackParamList } from "../../components/LearnStackNavigator";
 import { useSubchapter } from "../SubchaptersScreen/SubchapterContext";
-import { useNavigation } from "@react-navigation/native";
 
 import PagerView from 'react-native-pager-view';
 import useSubchapterData from "../../utilities/useSubchapterData";
@@ -31,7 +30,7 @@ type SubchapterContentProps = {
 };
 
 const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
-    const chapterId = route.params.chapterId;
+    const { chapterId, chapterTitle } = route.params;
     const nextSubchapterId = chapterId + 1;
     const { hideTabs } = route.params;
     const { data: contentData, error, loading } = useSubchapterData(chapterId);
@@ -78,10 +77,11 @@ const SubchapterContent: React.FC<SubchapterContentProps> = ({ route }) => {
             pagerViewRef.current?.setPage(nextPage);
         } else {
             unlockSubchapter(nextSubchapterId);
+            console.log('Navigating to CongratsScreen with chapterId and chapterTitle:', chapterId, chapterTitle);
             markSubchapterAsFinished(chapterId);
             navigation.navigate('CongratsScreen', {
                 chapterId: chapterId, // Passing the current chapter ID
-                // chapterTitle: 
+                chapterTitle: chapterTitle,
             });
         }
     };

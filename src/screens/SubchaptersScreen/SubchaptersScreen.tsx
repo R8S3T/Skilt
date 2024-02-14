@@ -19,7 +19,7 @@ type SubchaptersScreenRouteProp = RouteProp<{ SubchaptersScreen: { chapterId: nu
 
 const SubchaptersScreen: React.FC = () => {
   const navigation = useNavigation();
-  const route = useRoute<SubchaptersScreenRouteProp>();
+  const route = useRoute<RouteProp<{ SubchaptersScreen: { chapterId: number, chapterTitle: string } }, 'SubchaptersScreen'>>();
   const { chapterTitle } = route.params;
   const { unlockedSubchapters } = useSubchapter();
 
@@ -32,7 +32,11 @@ const SubchaptersScreen: React.FC = () => {
     <ScrollView style={styles.screenContainer}>
       <Text style={styles.heading}>{chapterTitle}</Text>
       <View style={styles.separator} />
-      <SubchapterRows subchapters={renderedSubchapters} navigation={navigation} />
+      <SubchapterRows
+        subchapters={renderedSubchapters}
+        navigation={navigation}
+        chapterTitle={chapterTitle}
+      />
     </ScrollView>
   );
 };
